@@ -5,15 +5,37 @@ let autoAjout = false;
 const learningRate = 0.5;
 const optimizer = tf.train.sgd(learningRate);
 
-function loss(pred, labels) {
-    return pred.sub(labels).square().mean();
-}
+let model;
 
-function predict(x) {
-    const xs = tf.tensor1d(x);
-    // y = mx + b;
-    const ys = xs.mul(m).add(b);
-    return ys;
+/*
+Création d'un premier réseau neuronal
+Couche d'entrée : 2 neurones (hauteur et largeur)
+1 couche cachée : 3 neurones
+Couche de sortie : 2 neurones ("Haut" et "Bas")
+*/
+function createNeuralNetwork(){
+    model = tf.sequential();
+
+    const hiddenConfig = {
+        inputShape : [2],
+        units: 3,
+        activation: 'relu'
+    };
+    const outputConfig = {
+      units: 1,
+      activation: 'softmax'
+    };
+    let hiddenLayer = tf.layers.dense(hiddenConfig);
+    let outputLayer = tf.layers.dense(outputConfig);
+    model.add(hiddenLayer);
+    model.add(outputLayer);
+    
+    model.compil({
+      optimizer: optimizer,
+      loss: 'meanSquaerError'
+    });
+
+
 }
 
 function addSquare() {
@@ -59,7 +81,7 @@ function draw() {
     // Arrière plan
     background(255);
 
-    // Draw le contours des 2 rectangles 
+    // Draw le contours des 2 rectangles
     noFill();
     strokeWeight(4);
     stroke('#222222');
