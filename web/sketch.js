@@ -48,11 +48,15 @@ function createNeuralNetwork(){
 
 
 async function train(){
-  await model.fit(dim_ts, pos_ts, {
-   shuffle: true,
-   epochs: 1
- });
+  for (let i=0; i<100; i++){
+    const reponse = await model.fit(dim_ts, pos_ts, {
+     shuffle: true,
+     epochs: 1
+   });
+   console.log(reponse.history.loss[0]);
+  }
 }
+
 
 
 
@@ -143,6 +147,7 @@ function draw() {
           let pos_values = pos.dataSync();
 
           //Vérifs console
+          /*
           print("dimensions");
           console.log(dimensions);
           print("positions");
@@ -153,6 +158,7 @@ function draw() {
           pos_ts.print();
           print("pos_values");
           console.log(pos_values);
+          */
       });
     }
 
