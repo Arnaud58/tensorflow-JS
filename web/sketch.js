@@ -68,10 +68,10 @@ function addSquare() {
     // Si grand rectangle, va en haut, sinon va en bas
     if (hauteur * largeur > 30000) {
         all_learn_squares["pos"].push("Haut");
-        positions.push([1]);
+        positions.push([5]);
     } else {
         all_learn_squares["pos"].push("Bas");
-        positions.push([0]);
+        positions.push([10]);
     }
 
     // Lui choisis une couleur random (pour affichage)
@@ -141,6 +141,17 @@ function draw() {
           const pos_ts = tf.tensor2d(positions);
           let pos = model.predict(dim_ts);
           let pos_values = pos.dataSync();
+
+          //Vérifs console
+          print("dimensions");
+          console.log(dimensions);
+          print("positions");
+          console.log(positions);
+          print("dim_ts");
+          dim_ts.print();
+          print("pos_ts");
+          pos_ts.print();
+          print("pos_values");
           console.log(pos_values);
       });
     }
