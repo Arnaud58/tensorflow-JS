@@ -6,7 +6,7 @@ const learningRate = 0.5;
 const optimizer = tf.train.sgd(learningRate);
 
 let model;
-history;
+let history;
 
 /*
 Création d'un premier réseau neuronal
@@ -53,13 +53,13 @@ function addSquare() {
 
         history = model.fit([tf.tensor([
             [largeur, hauteur]
-        ])], tf.tensor([1]));
+        ])], tf.tensor([5]));
     } else {
         all_learn_squares["pos"].push("Bas");
 
         history = model.fit([tf.tensor([
             [largeur, hauteur]
-        ])], tf.tensor([0]));
+        ])], tf.tensor([10]));
     }
     // Lui choisis une couleur random (pour affichage)
     all_learn_squares["color"].push({ r: random(255), g: random(255), b: random(255) });
