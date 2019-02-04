@@ -1,12 +1,14 @@
-let all_learn_squares = { squareCoord: [], pos: [], color: [] };
+let all_squares_display = { squareCoord: [], pos: [], color: [] };
+let all_squares_learn = { squareLearn: [], posLearn: [] };
+
 let buttonAutoAdd;
 let autoAjout = false;
 
-const learningRate = 0.5;
+const learningRate = 0.01;
 const optimizer = tf.train.sgd(learningRate);
 
-let model;
-history;
+let model, xs, ys;
+let history;
 
 /*
 Création d'un premier réseau neuronal
@@ -23,6 +25,7 @@ function createNeuralNetwork() {
         activation: 'relu'
     };
     const outputConfig = {
+        inputShape: [3],
         units: 1,
         activation: 'softmax'
     };
@@ -39,46 +42,48 @@ function createNeuralNetwork() {
 
 
 
-function addSquare() {
+async function addSquare() {
     // Calcul une hauteur et une largeur random
     largeur = int(random(10, 400));
     hauteur = int(random(10, 400));
 
-    // La met dans le tableau all_learn_squares
-    all_learn_squares["squareCoord"].push({ l: largeur, h: hauteur });
+    // La met dans le tableau all_squares_display
+    all_squares_display["squareCoord"].push({ l: largeur, h: hauteur });
+    all_squares_learn.squareLearn.push(largeur);
+    all_squares_learn.squareLearn.push(hauteur);
 
     // Si grand rectangle, va en haut, sinon va en bas
     if (hauteur * largeur > 30000) {
-        all_learn_squares["pos"].push("Haut");
-
-        history = model.fit([tf.tensor([
-            [largeur, hauteur]
-        ])], tf.tensor([1]));
+        all_squares_display["pos"].push("Haut");
+        all_squares_learn["posLearn"].push(5);
     } else {
-        all_learn_squares["pos"].push("Bas");
-
-        history = model.fit([tf.tensor([
-            [largeur, hauteur]
-        ])], tf.tensor([0]));
+        all_squares_display["pos"].push("Bas");
+        all_squares_learn["posLearn"].push(2);
     }
     // Lui choisis une couleur random (pour affichage)
-    all_learn_squares["color"].push({ r: random(255), g: random(255), b: random(255) });
+    all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
 
-    // model.predict(tf.variable(tf.tensor([[80,10]]))).print()
+    xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_display.squareCoord.length, 2]);
+    ys = tf.tensor1d(all_squares_learn.posLearn);
+
+    console.info("Tranning !");
+    history = await model.fit(xs, ys);
+    // model.predict(tf.variable(tf.tensor2d([[80,10]],[1,2]))).print()
 }
 
 function setup() {
     // 2 rectangle de 600*800 avec un gap de 100 entre les 2
-    createCanvas(1300, 800);
+    canvas = createCanvas(1300, 800);
+    canvas.parent('sketch-holder');
     // frameRate(1);  // Change les fps à 1 images par secondes
 
-    button = createButton('Add one learn square');
+    button = c = select("#Add1");
     button.mousePressed(addSquare);
 
-    button = createButton('Add 100 learn squares');
+    button = select("#Add100");
     button.mousePressed(function() { for (i = 0; i < 100; i++) { addSquare(); } });
 
-    buttonAutoAdd = createButton('Ajout auto : désactivé');
+    buttonAutoAdd = select("#AddFrame");
     buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
 
     createNeuralNetwork();
@@ -103,18 +108,18 @@ function draw() {
     stroke('#222222');
     rect(600, 0, 100, 800);
 
-    // Déssine chaque rectangle d'entrainement de all_learn_squares
-    for (i = 0; i < all_learn_squares["squareCoord"].length; i++) {
+    // Déssine chaque rectangle d'entrainement de all_squares_display
+    for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
         xGap = (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
-        if (all_learn_squares.pos[i] == "Bas") {
+        if (all_squares_display.pos[i] == "Bas") {
             yGap += 400;
         }
 
 
-        fill(all_learn_squares.color[i].r, all_learn_squares.color[i].g, all_learn_squares.color[i].b);
-        rect(xGap, yGap, all_learn_squares.squareCoord[i].l, all_learn_squares.squareCoord[i].h);
+        fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
+        rect(xGap, yGap, all_squares_display.squareCoord[i].l, all_squares_display.squareCoord[i].h);
     }
 
     // Si activé par le bouton, rajoute un nouveau rectangle d'entrainement
