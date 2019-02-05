@@ -27,7 +27,7 @@ function createNeuralNetwork() {
     const outputConfig = {
         inputShape: [3],
         units: 1,
-        activation: 'sigmoid'
+        //   activation: 'sigmoid'
     };
     let hiddenLayer = tf.layers.dense(hiddenConfig);
     let outputLayer = tf.layers.dense(outputConfig);
