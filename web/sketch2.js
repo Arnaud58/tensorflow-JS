@@ -41,7 +41,7 @@ function createNeuralNetwork(){
 
   model.compile({
     optimizer: optimizer,
-    loss: 'meanSquaredError',
+    loss: 'binaryCrossentropy',
     lr: learningRate
   });
 }
@@ -49,6 +49,7 @@ function createNeuralNetwork(){
 
 
 async function predictOutput(){
+
   createNeuralNetwork();
   console.log("Neural network created");
 
@@ -61,16 +62,12 @@ async function predictOutput(){
 }
 
 
-
 generateDataSet();
-console.log(dimensions);
-console.log(positions);
-
-x_train = tf.tensor2d(dimensions);
-y_train = tf.tensor2d(positions);
+let x_train = tf.tensor2d(dimensions);
+console.log("x_train");
 x_train.print();
+let y_train = tf.tensor2d(positions);
+console.log("y_train");
 y_train.print();
 
-tf.tidy(() => {
-  predictOutput();
-});
+predictOutput();
