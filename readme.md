@@ -26,3 +26,9 @@ Ils faudras déterminé à partir d'une inf JS si une classe est petite, grande,
 Ex: Largeur -> le nom le plus long
 
 ![](assets/d2.png)
+
+
+Lien
+====
+
+ [Enregistrer JSON](https://stackoverflow.com/questions/34156282/how-do-i-save-json-to-local-text-file)
