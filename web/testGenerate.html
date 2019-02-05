@@ -33,6 +33,31 @@
                 <button style="width: 300px;" class="mdl-button mdl-js-button mdl-button--raised" id="AddFrame">Ajout auto : désactivé</button>
             </div>
         </div>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--2-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="largeur">
+                    <label class="mdl-textfield__label" for="largeur">Largeur</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="hauteur">
+                    <label class="mdl-textfield__label" for="hauteur">Hauteur</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col">
+                <button class="mdl-button mdl-js-button mdl-button--raised" id="predict">Predict</button>
+            </div>
+        </div>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--2-col">
+                <button class="mdl-button mdl-js-button mdl-button--raised" id="predictTests">Predict the tests</button>
+                <p id="percentSuccess"></p>
+            </div>
+        </div>
     </main>
 </body>
 
