@@ -3,7 +3,8 @@ let buttonAutoAdd;
 let autoAjout = false;
 
 const learningRate = 0.5;
-const optimizer = tf.train.sgd(learningRate);
+//const optimizer = tf.train.sgd(learningRate);
+const optimizer = 'sgd';
 
 let model;
 
@@ -17,7 +18,7 @@ let positions = [];
 /*
 Création d'un premier réseau neuronal
 Couche d'entrée : 2 neurones (hauteur et largeur)
-1 couche cachée : 3 neurones (activation : relu)
+1 couche cachée : 4 neurones (activation : relu)
 Couche de sortie : 2 neurones ("Haut" et "Bas")
 */
 function createNeuralNetwork(){
@@ -25,7 +26,7 @@ function createNeuralNetwork(){
 
     const hiddenConfig = {
         inputShape : [2],
-        units: 5,
+        units: 4,
         activation: 'relu'
     };
     const outputConfig = {
@@ -39,7 +40,8 @@ function createNeuralNetwork(){
 
     model.compile({
       optimizer: optimizer,
-      loss: 'meanSquaredError'
+      loss: 'meanSquaredError',
+      lr: learningRate
     });
 
 
@@ -47,6 +49,8 @@ function createNeuralNetwork(){
 
 
 
+
+/*
 async function train(){
   for (let i=0; i<100; i++){
     const reponse = await model.fit(dim_ts, pos_ts, {
@@ -55,6 +59,23 @@ async function train(){
    });
    console.log(reponse.history.loss[0]);
   }
+}
+*/
+
+
+async function predictOutput(){
+  createNeuralNetwork();
+
+  //create the tensors for the data set
+  const xs = tf.tensor2d(dimensions);
+  xs.print();
+  const ys = tf.tensor2d(positions);
+  ys.print();
+
+  //train the model
+  await model.fit(xs,ys, {batchsize:1, epochs:5000});
+
+  console.log(model.predict(xs));
 }
 
 
@@ -72,10 +93,10 @@ function addSquare() {
     // Si grand rectangle, va en haut, sinon va en bas
     if (hauteur * largeur > 30000) {
         all_learn_squares["pos"].push("Haut");
-        positions.push([5]);
+        positions.push([1]);
     } else {
         all_learn_squares["pos"].push("Bas");
-        positions.push([10]);
+        positions.push([0]);
     }
 
     // Lui choisis une couleur random (pour affichage)
@@ -92,7 +113,7 @@ function setup() {
     createCanvas(1300, 800);
     frameRate(1);
 
-    createNeuralNetwork();
+    //createNeuralNetwork();
 
     button = createButton('Add one learn square');
     button.mousePressed(addSquare);
@@ -138,7 +159,15 @@ function draw() {
     if (autoAjout) {
         addSquare();
     }
+    if (dimensions.length>0){
+      tf.tidy(() => {
+        predictOutput();
+      });
+    }
+      console.log(dimensions);
+      console.log(positions);
 
+    /*
     if (dimensions.length>0){
       tf.tidy(() => {
           const dim_ts = tf.tensor2d(dimensions);
@@ -147,7 +176,7 @@ function draw() {
           let pos_values = pos.dataSync();
 
           //Vérifs console
-          /*
+
           print("dimensions");
           console.log(dimensions);
           print("positions");
@@ -158,8 +187,9 @@ function draw() {
           pos_ts.print();
           print("pos_values");
           console.log(pos_values);
-          */
+
       });
-    }
+      */
+
 
 }
