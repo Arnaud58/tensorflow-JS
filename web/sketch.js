@@ -26,8 +26,7 @@ function createNeuralNetwork() {
     };
     const outputConfig = {
         inputShape: [3],
-        units: 1,
-        activation: 'softmax'
+        units: 1
     };
     let hiddenLayer = tf.layers.dense(hiddenConfig);
     let outputLayer = tf.layers.dense(outputConfig);
@@ -35,8 +34,9 @@ function createNeuralNetwork() {
     model.add(outputLayer);
 
     model.compile({
-        optimizer: optimizer,
-        loss: 'meanSquaredError'
+        optimizer: 'sgd',
+        loss: 'meanSquaredError',
+        lr: 0.1
     });
 }
 
@@ -49,16 +49,16 @@ async function addSquare() {
 
     // La met dans le tableau all_squares_display
     all_squares_display["squareCoord"].push({ l: largeur, h: hauteur });
-    all_squares_learn.squareLearn.push(largeur);
-    all_squares_learn.squareLearn.push(hauteur);
+    all_squares_learn.squareLearn.push((largeur - 10) / 390);
+    all_squares_learn.squareLearn.push((hauteur - 10) / 390);
 
     // Si grand rectangle, va en haut, sinon va en bas
     if (hauteur * largeur > 30000) {
         all_squares_display["pos"].push("Haut");
-        all_squares_learn["posLearn"].push(5);
+        all_squares_learn["posLearn"].push(1);
     } else {
         all_squares_display["pos"].push("Bas");
-        all_squares_learn["posLearn"].push(2);
+        all_squares_learn["posLearn"].push(0);
     }
     // Lui choisis une couleur random (pour affichage)
     all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
