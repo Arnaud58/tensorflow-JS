@@ -9,7 +9,7 @@ Fonctions d'activation à tester :
  - Relu
  - pRelu
  - leakyRelu
- - softmax pour la couche de sortie
+ - softmax ou sigmoid pour la couche de sortie
 
  Dans un premier temps, on prend en compte la grosseur des classes (taille des rectangles) mais on pourra aussi compliquer la chose par la suite avec plus de paramètres d'entrée et de sortie. <br/>
 => Récupérer ces données à l'aide de fichiers JSON <br/>
@@ -22,8 +22,8 @@ Un jeu de données est créé (aléatoirement pour l'instant). Ce jeu de donnée
 Le réseau neuronal fait l'apprentissage à partir de ces données et fait une prédiction de la position à partir des dimensions des rectangles.
 Pour l'affichage nous avons un canevas divisé en deux partie :
 - la partie de gauche sert à afficher les rectangles du jeu de données
-- la partie de droite affiche les rectangles positionnés selon la prédiction. Ceux qui sont bien placés sont en vert, ceux qui sont au mauvais endroit sont en rouge. 
-  
+- la partie de droite affiche les rectangles positionnés selon la prédiction. Ceux qui sont bien placés sont en vert, ceux qui sont au mauvais endroit sont en rouge.
+
 On affiche également sur la console le pourcentage de bonnes prédictions.
 
 

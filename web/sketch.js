@@ -4,7 +4,7 @@ let positions = [];
 let all_learn_squares = { squareCoord: [], pos: [], color: [] };
 let all_predict_squares = { squareCoord: [], pos: [], color: [] };
 
-const learningRate = 0.5;
+const learningRate = 0.2;
 const optimizer = 'sgd';
 let model;
 
@@ -44,18 +44,33 @@ Crée un réseau neuronal
 function createNeuralNetwork(){
   model = tf.sequential();
 
-  const hiddenConfig = {
+  const hiddenConfig1 = {
       inputShape : [2],
-      units: 4,
+      units: 6,
       activation: 'relu'
   };
+
+  const hiddenConfig2 = {
+      units: 6,
+      activation: 'relu'
+  };
+
+  const hiddenConfig3 = {
+      units: 2,
+      activation: 'relu'
+  };
+
   const outputConfig = {
     units: 1,
     activation: 'sigmoid'
   };
-  let hiddenLayer = tf.layers.dense(hiddenConfig);
+  let hiddenLayer1 = tf.layers.dense(hiddenConfig1);
+  let hiddenLayer2 = tf.layers.dense(hiddenConfig2);
+  let hiddenLayer3 = tf.layers.dense(hiddenConfig3);
   let outputLayer = tf.layers.dense(outputConfig);
-  model.add(hiddenLayer);
+  model.add(hiddenLayer1);
+  model.add(hiddenLayer2);
+  //model.add(hiddenLayer3);
   model.add(outputLayer);
 
   model.compile({
@@ -63,6 +78,7 @@ function createNeuralNetwork(){
     loss: 'binaryCrossentropy',
     lr: learningRate
   });
+
 }
 
 /**
@@ -73,13 +89,14 @@ async function predictOutput(){
   console.log("Neural network created");
 
   const xs = tf.tensor2d(dimensions);
-  xs.print();
+  //xs.print();
 
   await model.fit(x_train,y_train, {batchsize:1, epochs:1});
   ys = model.predict(xs);
-  console.log("Résultat :");
-  ys.print();
+  //ys.print();
   res = Array.from(ys.dataSync());
+  console.log("Résultat :");
+  console.log(res);
   setPredictSquares();
   console.log("Pourcentage de réussite : "+calcSuccessPercent()+" %" );
 }
@@ -103,7 +120,7 @@ function setPredictSquares(){
       all_predict_squares["squareCoord"].push({ l: dimensions[i][1], h: dimensions[i][0] });
       all_predict_squares["pos"].push(res[i]);
 
-      if (isCorrect(positions[i], res[i])){
+      if (isCorrect(positions[i][0], res[i])){
         all_predict_squares["color"].push({ r: 0, g: 255, b: 0 });
       }
       else{
@@ -135,13 +152,15 @@ function setup(){
   createCanvas(1300, 800);
   frameRate(1);
   generateDataSet();
+  console.log("Positions initiales :");
+  console.log(positions);
   setLearnSquares();
   x_train = tf.tensor2d(dimensions);
-  console.log("x_train");
-  x_train.print();
+  //console.log("x_train");
+  //x_train.print();
   y_train = tf.tensor2d(positions);
-  console.log("y_train");
-  y_train.print();
+  //console.log("y_train");
+  //y_train.print();
   predictOutput();
 
 }
