@@ -15,11 +15,17 @@ let res;
 let x_train;
 let y_train;
 
+/**
+Génère un entier aléatoire compris entre 0 et max
+*/
 function randomInt(max){
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 
+/**
+Génère un jeu de données
+*/
 function generateDataSet(){
   for (var i = 0; i<100; i++){
     largeur = randomInt(400);
@@ -32,6 +38,9 @@ function generateDataSet(){
   }
 }
 
+/**
+Crée un réseau neuronal
+*/
 function createNeuralNetwork(){
   model = tf.sequential();
 
@@ -56,7 +65,9 @@ function createNeuralNetwork(){
   });
 }
 
-
+/**
+Crée le réseau neuronal, réalise la prédiction, génère les rectangles issus de la prédiction et affiche un pourcentage de succès
+*/
 async function predictOutput(){
   createNeuralNetwork();
   console.log("Neural network created");
@@ -73,6 +84,9 @@ async function predictOutput(){
   console.log("Pourcentage de réussite : "+calcSuccessPercent()+" %" );
 }
 
+/**
+Remplit la structure de données contenant tous les rectangles du jeu de données
+*/
 function setLearnSquares(){
   for (var i=0; i<dimensions.length; i++){
     all_learn_squares["squareCoord"].push({ l: dimensions[i][1], h: dimensions[i][0] });
@@ -81,6 +95,9 @@ function setLearnSquares(){
   }
 }
 
+/**
+Remplit la structure de données contenant tous les rectangles à tracer après la prédiction
+*/
 function setPredictSquares(){
     for (var i=0; i<res.length; i++){
       all_predict_squares["squareCoord"].push({ l: dimensions[i][1], h: dimensions[i][0] });
@@ -96,10 +113,16 @@ function setPredictSquares(){
 }
 
 
+/**
+Prend en paramètre une position du jeu de données et la position prédite correspondante et vérifie si la prédiction est correcte ou non
+*/
 function isCorrect(pos, predict_pos){
   return (pos==0 && predict_pos<0.5) || (pos==1 && predict_pos>0.5);
 }
 
+/**
+Calcule le pourcentage de prédictions correctes
+*/
 function calcSuccessPercent(){
   var correctPosCount = 0;
   for (var i=0; i<positions.length; i++){
@@ -160,7 +183,6 @@ function draw() {
         if (all_predict_squares.pos[i]<0.5) {
             yGap += 400;
         }
-
         fill(all_predict_squares.color[i].r, all_predict_squares.color[i].g, all_predict_squares.color[i].b);
         rect(xGap, yGap, all_predict_squares.squareCoord[i].l, all_predict_squares.squareCoord[i].h);
     }
