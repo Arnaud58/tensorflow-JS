@@ -1,128 +1,126 @@
-let all_learn_squares = { squareCoord: [], pos: [], color: [] };
-let buttonAutoAdd;
-let autoAjout = false;
-
-const learningRate = 0.5;
-//const optimizer = tf.train.sgd(learningRate);
-const optimizer = 'sgd';
-
-let model;
-
-//Contient les dimensions de chaque rectangle sous la forme [h,l]
 let dimensions = [];
-//Contient la position de chaque rectange sous la forme [0] (pour bas) ou [1]
 let positions = [];
 
+let all_learn_squares = { squareCoord: [], pos: [], color: [] };
+let all_predict_squares = { squareCoord: [], pos: [], color: [] };
 
+const learningRate = 0.5;
+const optimizer = 'sgd';
+let model;
 
-/*
-Création d'un premier réseau neuronal
-Couche d'entrée : 2 neurones (hauteur et largeur)
-1 couche cachée : 4 neurones (activation : relu)
-Couche de sortie : 2 neurones ("Haut" et "Bas")
-*/
-function createNeuralNetwork(){
-    model = tf.sequential();
+//Là où on stocke les positions obtenues en résultat
+let res;
 
-    const hiddenConfig = {
-        inputShape : [2],
-        units: 4,
-        activation: 'relu'
-    };
-    const outputConfig = {
-      units: 1,
-      activation: 'softmax'
-    };
-    let hiddenLayer = tf.layers.dense(hiddenConfig);
-    let outputLayer = tf.layers.dense(outputConfig);
-    model.add(hiddenLayer);
-    model.add(outputLayer);
+//les tensors utilisés pour l'apprentissage
+let x_train;
+let y_train;
 
-    model.compile({
-      optimizer: optimizer,
-      loss: 'meanSquaredError',
-      lr: learningRate
-    });
-
-
+function randomInt(max){
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 
-
-
-/*
-async function train(){
-  for (let i=0; i<100; i++){
-    const reponse = await model.fit(dim_ts, pos_ts, {
-     shuffle: true,
-     epochs: 1
-   });
-   console.log(reponse.history.loss[0]);
+function generateDataSet(){
+  for (var i = 0; i<100; i++){
+    largeur = randomInt(400);
+    hauteur = randomInt(400);
+    dimensions.push([hauteur, largeur]);
+    if (hauteur*largeur>30000)
+      positions[i] = [1];
+    else
+      positions[i] = [0];
   }
 }
-*/
+
+function createNeuralNetwork(){
+  model = tf.sequential();
+
+  const hiddenConfig = {
+      inputShape : [2],
+      units: 4,
+      activation: 'relu'
+  };
+  const outputConfig = {
+    units: 1,
+    activation: 'sigmoid'
+  };
+  let hiddenLayer = tf.layers.dense(hiddenConfig);
+  let outputLayer = tf.layers.dense(outputConfig);
+  model.add(hiddenLayer);
+  model.add(outputLayer);
+
+  model.compile({
+    optimizer: optimizer,
+    loss: 'binaryCrossentropy',
+    lr: learningRate
+  });
+}
 
 
 async function predictOutput(){
   createNeuralNetwork();
+  console.log("Neural network created");
 
-  //create the tensors for the data set
   const xs = tf.tensor2d(dimensions);
   xs.print();
-  const ys = tf.tensor2d(positions);
+
+  await model.fit(x_train,y_train, {batchsize:1, epochs:1});
+  ys = model.predict(xs);
+  console.log("Résultat :");
   ys.print();
-
-  //train the model
-  await model.fit(xs,ys, {batchsize:1, epochs:5000});
-
-  console.log(model.predict(xs));
+  res = Array.from(ys.dataSync());
+  setPredictSquares();
+  console.log("Pourcentage de réussite : "+calcSuccessPercent()+" %" );
 }
 
-
-
-
-function addSquare() {
-    // Calcul une hauteur et une largeur random
-    largeur = int(random(10, 400));
-    hauteur = int(random(10, 400));
-
-    // La met dans le tableau all_learn_squares
-    all_learn_squares["squareCoord"].push({ l: largeur, h: hauteur });
-    dimensions.push([hauteur, largeur]);
-
-    // Si grand rectangle, va en haut, sinon va en bas
-    if (hauteur * largeur > 30000) {
-        all_learn_squares["pos"].push("Haut");
-        positions.push([1]);
-    } else {
-        all_learn_squares["pos"].push("Bas");
-        positions.push([0]);
-    }
-
-    // Lui choisis une couleur random (pour affichage)
+function setLearnSquares(){
+  for (var i=0; i<dimensions.length; i++){
+    all_learn_squares["squareCoord"].push({ l: dimensions[i][1], h: dimensions[i][0] });
+    all_learn_squares["pos"].push(positions[i]);
     all_learn_squares["color"].push({ r: random(255), g: random(255), b: random(255) });
-
+  }
 }
 
-function autoAdd() {
+function setPredictSquares(){
+    for (var i=0; i<res.length; i++){
+      all_predict_squares["squareCoord"].push({ l: dimensions[i][1], h: dimensions[i][0] });
+      all_predict_squares["pos"].push(res[i]);
 
+      if (isCorrect(positions[i], res[i])){
+        all_predict_squares["color"].push({ r: 0, g: 255, b: 0 });
+      }
+      else{
+        all_predict_squares["color"].push({ r: 255, g: 0, b: 0 });
+      }
+    }
 }
 
-function setup() {
-    // 2 rectangle de 600*800 avec un gap de 100 entre les 2
-    createCanvas(1300, 800);
-    frameRate(1);
 
-    //createNeuralNetwork();
+function isCorrect(pos, predict_pos){
+  return (pos==0 && predict_pos<0.5) || (pos==1 && predict_pos>0.5);
+}
 
-    button = createButton('Add one learn square');
-    button.mousePressed(addSquare);
+function calcSuccessPercent(){
+  var correctPosCount = 0;
+  for (var i=0; i<positions.length; i++){
+    if (isCorrect(positions[i], res[i])) correctPosCount++;
+  }
+  return correctPosCount*100/positions.length;
+}
 
-    button = createButton('Add 100 learn squares');
-    button.mousePressed(function() { for (i = 0; i < 100; i++) { addSquare(); } });
+function setup(){
+  createCanvas(1300, 800);
+  frameRate(1);
+  generateDataSet();
+  setLearnSquares();
+  x_train = tf.tensor2d(dimensions);
+  console.log("x_train");
+  x_train.print();
+  y_train = tf.tensor2d(positions);
+  console.log("y_train");
+  y_train.print();
+  predictOutput();
 
-    buttonAutoAdd = createButton('Ajout auto : désactivé');
-    buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
 }
 
 
@@ -142,54 +140,32 @@ function draw() {
     stroke('#222222');
     rect(600, 0, 100, 800);
 
-    // Draw all rectangle for the test
+    // Draw all learning rectangles
     for (i = 0; i < all_learn_squares["squareCoord"].length; i++) {
         xGap = (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
-        if (all_learn_squares.pos[i] == "Bas") {
+        if (all_learn_squares.pos[i] == "0") {
+            yGap += 400;
+        }
+      fill(all_learn_squares.color[i].r, all_learn_squares.color[i].g, all_learn_squares.color[i].b);
+      rect(xGap, yGap, all_learn_squares.squareCoord[i].l, all_learn_squares.squareCoord[i].h);
+    }
+
+    // Draw all the predicted rectangles
+    for (i = 0; i < res.length; i++) {
+        xGap = 700 + (i % 50) * 5;
+        yGap = (int(i / 50) * 20) + 20;
+
+        if (all_predict_squares.pos[i]<0.5) {
             yGap += 400;
         }
 
-
-        fill(all_learn_squares.color[i].r, all_learn_squares.color[i].g, all_learn_squares.color[i].b);
-        rect(xGap, yGap, all_learn_squares.squareCoord[i].l, all_learn_squares.squareCoord[i].h);
+        fill(all_predict_squares.color[i].r, all_predict_squares.color[i].g, all_predict_squares.color[i].b);
+        rect(xGap, yGap, all_predict_squares.squareCoord[i].l, all_predict_squares.squareCoord[i].h);
     }
 
-    if (autoAjout) {
-        addSquare();
-    }
-    if (dimensions.length>0){
-      tf.tidy(() => {
-        predictOutput();
-      });
-    }
-      console.log(dimensions);
-      console.log(positions);
 
-    /*
-    if (dimensions.length>0){
-      tf.tidy(() => {
-          const dim_ts = tf.tensor2d(dimensions);
-          const pos_ts = tf.tensor2d(positions);
-          let pos = model.predict(dim_ts);
-          let pos_values = pos.dataSync();
-
-          //Vérifs console
-
-          print("dimensions");
-          console.log(dimensions);
-          print("positions");
-          console.log(positions);
-          print("dim_ts");
-          dim_ts.print();
-          print("pos_ts");
-          pos_ts.print();
-          print("pos_values");
-          console.log(pos_values);
-
-      });
-      */
 
 
 }
