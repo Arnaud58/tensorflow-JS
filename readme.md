@@ -17,12 +17,13 @@ Fonctions d'activation à tester :
 
 Ce qui a été réalisé
 ====================
-(dans branche ellie)
+(dans branche ellie) <br/>
 Un jeu de données est créé (aléatoirement pour l'instant). Ce jeu de données contient une série de rectangles définis par leurs dimensions et leur position. <br/>
 Le réseau neuronal fait l'apprentissage à partir de ces données et fait une prédiction de la position à partir des dimensions des rectangles.
 Pour l'affichage nous avons un canevas divisé en deux partie :
 - la partie de gauche sert à afficher les rectangles du jeu de données
-- la partie de droite affiche les rectangles positionnés selon la prédiction. Ceux qui sont bien placés sont en vert, ceux qui sont au mauvais endroit sont en rouge. <br/>
+- la partie de droite affiche les rectangles positionnés selon la prédiction. Ceux qui sont bien placés sont en vert, ceux qui sont au mauvais endroit sont en rouge. 
+  
 On affiche également sur la console le pourcentage de bonnes prédictions.
 
 
