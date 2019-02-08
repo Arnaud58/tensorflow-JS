@@ -27,7 +27,7 @@ function randomInt(max) {
 Génère un jeu de données
 */
 function generateDataSet() {
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 500; i++) {
         largeur = randomInt(400);
         hauteur = randomInt(400);
         dimensions.push([hauteur, largeur]);
