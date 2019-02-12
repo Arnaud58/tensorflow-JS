@@ -45,6 +45,9 @@ Liens
 
  [Enregistrer JSON](https://stackoverflow.com/questions/34156282/how-do-i-save-json-to-local-text-file)
  
+ Pour sauvegarder le modèle : <br/>
+ https://js.tensorflow.org/tutorials/model-save-load.html
+ 
 NB
 ==
 Nous utilisons P5 et MDL pour l'affichage de la page et le dessins dans le canvas.
