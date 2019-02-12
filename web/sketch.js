@@ -15,8 +15,6 @@ function getNetworksParam() {
     activationType = document.getElementById("activation").value;
     inputNBrepetition = parseInt(document.getElementById("repetition").value);
     learningRate = parseFloat(document.getElementById("learningrate").value);
-
-    //consoleText = document.getElementById("console");
 }
 
 
@@ -54,9 +52,10 @@ function createNeuralNetwork() {
 
     ///couche de sortie
     let outputLayer = tf.layers.dense({
-        units: 1,
+        units: 2,
         activation: 'softmax'
     });
+    model.add(outputLayer);
 
     model.compile({
         optimizer: 'sgd',
@@ -67,6 +66,9 @@ function createNeuralNetwork() {
 
 function download(content, fileName, contentType = "application/json") {
     var a = document.createElement("a");
+    if (contentType === "application/json") {
+        content=JSON.stringify(content);
+    }
     var file = new Blob([content], { type: contentType });
     a.href = URL.createObjectURL(file);
     a.download = fileName;
@@ -112,7 +114,6 @@ function predictAndDisplay(lgr, htr) {
         [(lgr - 10) / 390, (htr - 10) / 390]
     ], [1, 2])));
 
-
     // The result of the prediction in an Array
     let res = Array.from(tensorRes.dataSync());
     // Say if the prediction correspond to the reality
@@ -139,8 +140,8 @@ function predictAndDisplay(lgr, htr) {
     }
 
     // Log et retourne le résultat
-    tensorRes.print();
-    console.log(isCorrect);
+    //tensorRes.print();
+    //console.log(isCorrect);
     return [res, isCorrect];
 }
 
@@ -165,16 +166,16 @@ async function addSquare() {
     // Si grand rectangle, va en haut, sinon va en bas
     if (predictLH(hauteur, largeur)) {
         all_squares_display["pos"].push("Haut");
-        all_squares_learn["posLearn"].push(1);
+        all_squares_learn["posLearn"].push([1,0]);
     } else {
         all_squares_display["pos"].push("Bas");
-        all_squares_learn["posLearn"].push(0);
+        all_squares_learn["posLearn"].push([0,1]);
     }
     // Lui choisis une couleur random (pour affichage)
     all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
 
     xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_display.squareCoord.length, 2]);
-    ys = tf.tensor1d(all_squares_learn.posLearn);
+    ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_display.squareCoord.length, 2]);
 
     console.warn("Tranning !");
     history = await model.fit(xs, ys);
