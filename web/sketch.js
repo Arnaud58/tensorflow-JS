@@ -54,7 +54,7 @@ function createNeuralNetwork() {
     ///couche de sortie
     let outputLayer = tf.layers.dense({
       units:1,
-      activation:'sigmoid'
+      activation:'softmax'
     });
 
     model.compile({
