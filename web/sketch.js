@@ -63,29 +63,6 @@ function createNeuralNetwork() {
         loss: 'meanSquaredError',
         lr: learningRate
     });
-
-    /*
-    const hiddenConfig = {
-        inputShape: [2],
-        units: 3,
-        activation: 'relu'
-    };
-    const outputConfig = {
-        inputShape: [3],
-        units: 1,
-        //   activation: 'sigmoid'
-    };
-    let hiddenLayer = tf.layers.dense(hiddenConfig);
-    let outputLayer = tf.layers.dense(outputConfig);
-    model.add(hiddenLayer);
-    model.add(outputLayer);
-
-    model.compile({
-        optimizer: 'sgd',
-        loss: 'meanSquaredError',
-        lr: 0.1
-    });
-    */
 }
 
 function download(content, fileName, contentType = "application/json") {
