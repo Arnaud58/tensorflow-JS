@@ -56,11 +56,12 @@ function createNeuralNetwork(){
   };
 
   const hiddenConfig3 = {
-      units: 2,
+      units: 3,
       activation: 'relu'
   };
 
   const outputConfig = {
+    inputShape : [3],
     units: 1,
     activation: 'sigmoid'
   };

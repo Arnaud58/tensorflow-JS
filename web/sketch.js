@@ -1,24 +1,70 @@
 let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [] };
 
+let inputNBCouches;
+let inputNBNeurones;
+let activationType;
+let inputNBrepetition;
+let inputLearningRate;
+let learningRate;
+//const consoleText;
+
+function getNetworksParam(){
+  inputNBCouches = parseInt(document.getElementById("couches").value);
+  inputNBNeurones = parseInt(document.getElementById("neurones").value);
+  activationType = document.getElementById("activation").value;
+  inputNBrepetition = parseInt(document.getElementById("repetition").value);
+  learningRate = parseFloat(document.getElementById("learningrate").value);
+
+  //consoleText = document.getElementById("console");
+}
+
+
 let buttonAutoAdd;
 let autoAjout = false;
 
-const learningRate = 0.01;
+//const learningRate = 0.01;
 const optimizer = tf.train.sgd(learningRate);
 
 let model, xs, ys;
 let history;
 
 /*
-Création d'un premier réseau neuronal
-Couche d'entrée : 2 neurones (hauteur et largeur)
-1 couche cachée : 3 neurones
-Couche de sortie : 2 neurones ("Haut" et "Bas")
+Création d'un réseau neuronal à partir des paramètres choisis par l'utilisateur
 */
 function createNeuralNetwork() {
-    model = tf.sequential();
+    getNetworksParam();
 
+    model = tf.sequential();repetition
+
+    //première couche traîtée à part car il faut rajouter l'inputShape
+    let firstHiddenLayer = tf.layers.dense({
+      inputShape: [2],
+      units: inputNBNeurones,
+      activation:activationType
+    });
+    model.add(firstHiddenLayer);
+
+    for (let i=1; i<inputNBCouches; i++){
+      model.add(tf.layers.dense({
+        units: inputNBNeurones,
+        activation:activationType
+      }));
+    }
+
+    ///couche de sortie
+    let outputLayer = tf.layers.dense({
+      units:1,
+      activation:'sigmoid'
+    });
+
+    model.compile({
+        optimizer: 'sgd',
+        loss: 'meanSquaredError',
+        lr: 0.1
+    });
+
+    /*
     const hiddenConfig = {
         inputShape: [2],
         units: 3,
@@ -39,6 +85,7 @@ function createNeuralNetwork() {
         loss: 'meanSquaredError',
         lr: 0.1
     });
+    */
 }
 
 function download(content, fileName, contentType = "application/json") {
