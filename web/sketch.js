@@ -24,7 +24,6 @@ let buttonAutoAdd;
 let autoAjout = false;
 
 //const learningRate = 0.01;
-const optimizer = tf.train.sgd(learningRate);
 
 let model, xs, ys;
 let history;
@@ -61,7 +60,7 @@ function createNeuralNetwork() {
     model.compile({
         optimizer: 'sgd',
         loss: 'meanSquaredError',
-        lr: 0.1
+        lr: learningRate
     });
 
     /*
