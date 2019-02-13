@@ -33,6 +33,8 @@ async function addSquare() {
  * Train the current model with the given square
  * The return of the train funcion is stock in a promise
  * inside the var history
+ * @param {int} l A normalise largeur between 0 and 1
+ * @param {int} h 
  */
 async function trainSquare(l, h) {
     let res;
@@ -55,9 +57,20 @@ async function trainSquare(l, h) {
  * inside the var history
  */
 async function trainAllSquares() {
-    xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_display.squareCoord.length, 2]);
-    ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_display.squareCoord.length, 2]);
+    xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
+    ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
     console.warn("Tranning !");
     history = await model.fit(xs, ys);
 };
+
+async function loadAndTrain(ev) {
+    let contents = JSON.parse(decodeURIComponent(ev.target.result));
+    resetTrain();
+    all_squares_learn=contents;
+    
+    for (i = 0 ;i<inputNBrepetition;i++) {
+        trainAllSquares();
+    }
+    textToUser("Train the data !");
+}

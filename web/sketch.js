@@ -45,6 +45,13 @@ function resetPredict() {
     all_squares_display["colorPredict"] = [];
 }
 
+function resetTrain() {
+    all_squares_learn = { squareLearn: [], posLearn: [] };
+    all_squares_display.squareCoord=[];
+    all_squares_display.pos=[];
+    all_squares_display.color=[];
+}
+
 function textToUser(msg) {
     var data = {
         message: msg,
@@ -63,9 +70,6 @@ function setup() {
     let button = select("#Add1");
     button.mousePressed(addSquare);
 
-    button = select("#Add100");
-    button.mousePressed(function() { for (i = 0; i < 100; i++) { addSquare(); } });
-
     button = select("#predict");
     button.mousePressed(predictFromUser);
 
@@ -76,21 +80,29 @@ function setup() {
     button.mousePressed(reset);
 
     button = select("#saveLearn");
-    button.mousePressed(function() { download(all_squares_learn.squareLearn, "training.json"); });
+    button.mousePressed(function() { download(all_squares_learn, "training.json"); });
 
     buttonAutoAdd = select("#AddFrame");
     buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
 
-    var fileLoader = document.querySelector("#file");
-    var reader = new FileReader();
+    var fileP = document.querySelector("#predictFile");
+    var readerPredict = new FileReader();
+    readerPredict.onload = loadAndPredict;
 
-    reader.onload = loadAndPredict;
+    var fileT = document.querySelector("#trainFile");
+    var readerTrain = new FileReader();
+    readerTrain.onload = loadAndTrain;
 
-    fileLoader.addEventListener("change", function() {
+    fileP.addEventListener("change", function() {
         var file = this.files[0];
-        reader.readAsText(file);
+        readerPredict.readAsText(file);
     });
 
+    fileT.addEventListener("change", function() {
+        var file = this.files[0];
+        readerTrain.readAsText(file);
+    });
+    
     createNeuralNetwork();
 }
 

@@ -103,8 +103,8 @@ function loadAndPredict(ev) {
     console.log(contents);
 
     // Parcourt tous les carré de la partie apprentisage et les prédict
-    for (i = 0; i < contents.length; i += 2) {
-        let res = predictAndDisplay(contents[i] * 390 + 10, contents[i + 1] * 390 + 10);
+    for (i = 0; i < contents.squareLearn.length; i += 2) {
+        let res = predictAndDisplay(contents.squareLearn[i] * 390 + 10, contents.squareLearn[i + 1] * 390 + 10);
         if (res[1]) {
             correctTest++;
         }
