@@ -25,18 +25,19 @@ Ce qui a été réalisé
 ====================
 
 (dans branche Master) <br/>
+
+Une interface permet de paramétrer le réseau neuronal (nb de couches, nb de neurones, fonctions d'activation, learning rate)
 Interaction avec des boutons permettant de décider le nombre de rectangles qui vont servir pour l'apprentissage et décider des données d'entrée pour la prédiction.
 - Add one learn square. Ajoute un seul rectangle à l'apprentissage du modèle
-- Add 100 learn squares. Ajoute 100 rectangles à l'apprentissage du modèle (déprécié !)
+- Learn from a file. Permet de charger des données à partir d'un fichier et de faire l'apprentissage (pas encore fonctionnel)
 - Ajout auto. Ajoute un rectangle à l'apprentissage du modèle par seconde.
+- Save. Permet d'enregistrer les données générées dans un fichier json (ne marche pas sur Firefox, mais fonctionne sur Chrome)
 
 - Predict. Essaye de prédire la position d'un rectangle et l'affiche à droite. (hauteur et largueur doivent être < 400 !)
 - Predict the test. Envoie les données d'apprentissage sur la prédiction et affiche le pourcentage de réussite.
-- Predict from a file. Ne marche pas encore.
+- Predict from a file. Permet d'afficher les prédictions à partir de données stockées dans un fichier json 
 
-(dans branche ellie) <br/>
-Une deuxième version a été faite, où cette fois un jeu de données est généré dès le début et le résultat est directement affiché (avec les rectangles des données à gauche et les rectangles prédits à droite).
-On affiche également sur la console le pourcentage de bonnes prédictions.
+
 
 
 
