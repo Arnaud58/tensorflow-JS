@@ -26,6 +26,8 @@ async function addSquare() {
     // Lui choisis une couleur random (pour affichage)
     all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
 
+    select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length);
+
     await trainAllSquares();
 }
 
@@ -34,7 +36,7 @@ async function addSquare() {
  * The return of the train funcion is stock in a promise
  * inside the var history
  * @param {int} l A normalise largeur between 0 and 1
- * @param {int} h 
+ * @param {int} h
  */
 async function trainSquare(l, h) {
     let res;
@@ -51,7 +53,7 @@ async function trainSquare(l, h) {
 }
 
 /**
- * Train the current model with the squares 
+ * Train the current model with the squares
  * inside the all_squares_learn.squareLearn array
  * The return of the train funcion is stock in a promise
  * inside the var history
@@ -68,7 +70,7 @@ async function loadAndTrain(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
     resetTrain();
     all_squares_learn=contents;
-    
+
     for (i = 0 ;i<inputNBrepetition;i++) {
         trainAllSquares();
     }

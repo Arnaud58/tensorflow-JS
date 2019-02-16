@@ -36,7 +36,7 @@ function reset() {
     all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
     all_squares_learn = { squareLearn: [], posLearn: [] };
 
-    textToUser("Nouveau réseau créér !");
+    textToUser("Nouveau réseau créé !");
 }
 
 function resetPredict() {
@@ -102,7 +102,7 @@ function setup() {
         var file = this.files[0];
         readerTrain.readAsText(file);
     });
-    
+
     createNeuralNetwork();
 }
 
