@@ -62,7 +62,7 @@ async function trainAllSquares() {
     xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
     ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
-    console.warn("Tranning !");
+    console.warn("Training !");
     history = await model.fit(xs, ys);
 };
 
