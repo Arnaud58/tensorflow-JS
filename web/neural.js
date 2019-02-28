@@ -54,3 +54,14 @@ function createNeuralNetwork() {
         lr: learningRate
     });
 }
+
+async function saveModel(){
+  const saveResult = await model.save('downloads://my-model-1');
+  console.log("Modèle sauvegardé");
+}
+
+async function loadModel(){
+  const model = await tf.loadModel(
+    tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
+  console.log("Modèle chargé");
+}

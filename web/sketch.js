@@ -1,6 +1,9 @@
 let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [] };
 
+const jsonUpload = document.getElementById('json-upload');
+const weightsUpload = document.getElementById('weights-upload');
+
 let buttonAutoAdd;
 let autoAjout = false;
 
@@ -78,6 +81,14 @@ function setup() {
 
     button = select("#create");
     button.mousePressed(reset);
+
+
+    button = select("#saveModel");
+    button.mousePressed(saveModel);
+
+
+    button = select("#loadModel");
+    button.mousePressed(loadModel);
 
     button = select("#saveLearn");
     button.mousePressed(function() { download(all_squares_learn, "training.json"); });

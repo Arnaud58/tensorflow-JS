@@ -32,7 +32,13 @@
                 <a href="#neural-panel" class="mdl-tabs__tab is-active">Neural</a>
                 <a href="#learning-panel" class="mdl-tabs__tab">Learning</a>
                 <a href="#predictions-panel" class="mdl-tabs__tab">Predictions</a>
+<<<<<<< HEAD
                 <p id="nbRect"></p>
+=======
+                <a href="#saveloadmodel-panel" class="mdl-tabs__tab">Save or Load Model</a>
+
+               <p id="nbRect"></p> <!-- affiche le nb de rectanges générés -->
+>>>>>>> ellie
             </div>
 
             <div class="mdl-tabs__panel is-active" id="neural-panel">
@@ -105,7 +111,11 @@
                     <div class="mdl-cell mdl-cell--2-col">
                         <button class="mdl-button mdl-js-button mdl-button--raised" id="saveLearn">Save</button>
                     </div>
+<<<<<<< HEAD
                     <p id="nbRect"></p>
+=======
+                    <!--<p id="nbRect"></p> -->
+>>>>>>> ellie
                 </div>
             </div>
             <div class="mdl-tabs__panel" id="predictions-panel">
@@ -140,6 +150,30 @@
                     </div>
                 </div>
             </div>
+            <div class="mdl-tabs__panel" id="saveloadmodel-panel">
+                <!-- <div class="mdl-grid"> -->
+                  <div class="mdl-cell mdl-cell--2-col">
+                      <button class="mdl-button mdl-js-button mdl-button--raised" id="saveModel">Save model</button>
+                  </div>
+                  <!-- récupérer le fichier json du modèle -->
+                  <div class="mdl-cell mdl-cell--2-col">
+                          <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
+                              <i>Upload Json Model</i>
+                              <input type="file" id="json-upload" >
+                          </label>
+                  </div>
+                  <!-- récupérer fichier contenant les poids -->
+                  <div class="mdl-cell mdl-cell--2-col">
+                          <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
+                              <i>Upload weights</i>
+                              <input type="file" id="weights-upload">
+                          </label>
+                  </div>
+                  <!-- charger le modèle -->
+                  <div class="mdl-cell mdl-cell--2-col">
+                      <button class="mdl-button mdl-js-button mdl-button--raised" id="loadModel">Load model</button>
+                  </div>
+                <!-- </div> -->
         </div>
 
         <div id="demo-snackbar" class="mdl-js-snackbar mdl-snackbar">
