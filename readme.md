@@ -38,7 +38,7 @@ Interaction avec des boutons permettant de décider le nombre de rectangles qui 
 - *Predict from a file*. Permet d'afficher les prédictions à partir de données stockées dans un fichier json
 
 (dans branche ellie) </br>
-Onglet _Save and Load Model_ :
+Onglet _Save and Load Model_ : <br/>
 __REMARQUE :__ Ne fonctionne qu'avec Google Chrome
 - *Save Model*. Télécharge la confiugation du modèle et les poids dans deux fichiers `my-model-1.json` et `my-model-1.weights.bin`
 - *Upload Json Model* et *Upload weights*. Charge le fichier json et le .bin contenant le modèle et les poids (de la même forme que ceux téléchargeables via *Save Model*)
