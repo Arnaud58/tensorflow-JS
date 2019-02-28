@@ -56,11 +56,12 @@ function createNeuralNetwork() {
 }
 
 async function saveModel(){
-  const saveResult = await model.save('localstorage://my-model-1');
+  const saveResult = await model.save('downloads://my-model-1');
   console.log("Modèle sauvegardé");
 }
 
 async function loadModel(){
-  model = tf.loadModel('localstorage://my-model-1');
+  const model = await tf.loadModel(
+    tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
   console.log("Modèle chargé");
 }

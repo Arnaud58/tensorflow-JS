@@ -32,12 +32,29 @@
                 <a href="#neural-panel" class="mdl-tabs__tab is-active">Neural</a>
                 <a href="#learning-panel" class="mdl-tabs__tab">Learning</a>
                 <a href="#predictions-panel" class="mdl-tabs__tab">Predictions</a>
-                <!-- BOUTONS SAVE AND LOAD MODEL A INSERER ICI -->
+
+                <!-- SAUVEGARDER ET CHARGER MODELE -->
+                <!-- sauvegarder -->
                <div class="mdl-cell mdl-cell--2-col">
                    <button class="mdl-button mdl-js-button mdl-button--raised" id="saveModel">Save model</button>
                </div>
+               <!-- récupérer le fichier json du modèle -->
                <div class="mdl-cell mdl-cell--2-col">
-                     <input class="mdl-button mdl-js-button mdl-button--raised" type="button" value="Load Model" id="loadModel" />
+                       <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
+                           <i>Upload Json Model</i>
+                           <input type="file" id="json-upload" style="display: none;">
+                       </label>
+               </div>
+               <!-- récupérer fichier contenant les poids -->
+               <div class="mdl-cell mdl-cell--2-col">
+                       <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
+                           <i>Upload weights</i>
+                           <input type="file" id="weights-upload" style="display: none;">
+                       </label>
+               </div>
+               <!-- charger le modèle -->
+               <div class="mdl-cell mdl-cell--2-col">
+                   <button class="mdl-button mdl-js-button mdl-button--raised" id="loadModel">Load model</button>
                </div>
 
                <p id="nbRect"></p> <!-- affiche le nb de rectanges générés -->
