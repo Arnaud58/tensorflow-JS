@@ -54,11 +54,3 @@ function createNeuralNetwork() {
         lr: learningRate
     });
 }
-
-async function saveModel(path){
-  model.save(path);
-}
-
-async function loadModel(path){
-  model = tf.loadModel(path);
-}

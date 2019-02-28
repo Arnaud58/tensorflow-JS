@@ -1,5 +1,5 @@
 let xs, ys;
-let history;
+let oldHistory;
 
 /**
  * Add a square to the learning array
@@ -26,7 +26,7 @@ async function addSquare() {
     // Lui choisis une couleur random (pour affichage)
     all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
 
-    select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length);
+    select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length/2);
 
     await trainAllSquares();
 }
@@ -34,7 +34,7 @@ async function addSquare() {
 /**
  * Train the current model with the given square
  * The return of the train funcion is stock in a promise
- * inside the var history
+ * inside the var oldHistory
  * @param {int} l A normalise largeur between 0 and 1
  * @param {int} h
  */
@@ -49,21 +49,21 @@ async function trainSquare(l, h) {
     ys = tf.tensor2d(res, [1, 2]);
 
     console.warn("Tranning !");
-    history = await model.fit(xs, ys);
+    oldHistory = await model.fit(xs, ys);
 }
 
 /**
  * Train the current model with the squares
  * inside the all_squares_learn.squareLearn array
  * The return of the train funcion is stock in a promise
- * inside the var history
+ * inside the var oldHistory
  */
 async function trainAllSquares() {
     xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
     ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
-    console.warn("Training !");
-    history = await model.fit(xs, ys);
+    console.warn("Tranning !");
+    await model.fit(xs, ys);
 };
 
 async function loadAndTrain(ev) {
@@ -71,8 +71,10 @@ async function loadAndTrain(ev) {
     resetTrain();
     all_squares_learn=contents;
 
-    for (i = 0 ;i<inputNBrepetition;i++) {
-        trainAllSquares();
-    }
     textToUser("Train the data !");
+    for (i = 0 ;i<inputNBrepetition;i++) {
+        window.setTimeout(trainAllSquares,1000);
+        //trainAllSquares();
+    }
+    textToUser("All data are train !");
 }
