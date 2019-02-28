@@ -26,20 +26,22 @@ Ce qui a été réalisé
 
 (dans branche Master) <br/>
 
+Onglet _Neural_ : <br/>
 Une interface permet de paramétrer le réseau neuronal (nb de couches, nb de neurones, fonctions d'activation, learning rate)
+
+Onglet _Learning_ : <br/>
 Interaction avec des boutons permettant de décider le nombre de rectangles qui vont servir pour l'apprentissage et décider des données d'entrée pour la prédiction.
 - *Add one learn square*. Ajoute un seul rectangle à l'apprentissage du modèle
 - *Learn from a file*. Permet de charger des données à partir d'un fichier et de faire l'apprentissage (pas encore fonctionnel)
 - *Ajout auto*. Ajoute un rectangle à l'apprentissage du modèle par seconde.
 - *Save*. Permet d'enregistrer les données générées dans un fichier json (ne marche pas sur Firefox, mais fonctionne sur Chrome)
 
+Onglet _Predict_ : <br/>
 - *Predict*. Essaye de prédire la position d'un rectangle et l'affiche à droite. (hauteur et largueur doivent être < 400 !)
 - *Predict the test*. Envoie les données d'apprentissage sur la prédiction et affiche le pourcentage de réussite.
 - *Predict from a file*. Permet d'afficher les prédictions à partir de données stockées dans un fichier json
 
-(dans branche ellie) </br>
-Onglet _Save and Load Model_ : <br/>
-__REMARQUE :__ Ne fonctionne qu'avec Google Chrome
+Onglet _Save and Load Model_ : (__REMARQUE :__ Ne fonctionne qu'avec Google Chrome)
 - *Save Model*. Télécharge la confiugation du modèle et les poids dans deux fichiers `my-model-1.json` et `my-model-1.weights.bin`
 - *Upload Json Model* et *Upload weights*. Charge le fichier json et le .bin contenant le modèle et les poids (de la même forme que ceux téléchargeables via *Save Model*)
 - *Load Model*. Charge le modèle après que l'on ait préalablement chargé les fichiers requis via les deux boutons précédents. ( Ne fonctionne pas encore)
@@ -57,4 +59,4 @@ Liens
 
 NB
 ==
-Nous utilisons P5 et MDL pour l'affichage de la page et le dessins dans le canvas.
+Nous utilisons P5 et MDL pour l'affichage de la page et le dessin dans le canvas.
