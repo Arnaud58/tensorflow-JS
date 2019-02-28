@@ -55,11 +55,17 @@ function createNeuralNetwork() {
     });
 }
 
+/**
+Save the model and downland it in two files called "my-model-1.json" and "my-model-1.weights.bin"
+*/
 async function saveModel(){
   const saveResult = await model.save('downloads://my-model-1');
   console.log("Modèle sauvegardé");
 }
 
+/**
+Load a model
+*/
 async function loadModel(){
   const model = await tf.loadModel(
     tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
