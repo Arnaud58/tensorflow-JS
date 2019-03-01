@@ -1,8 +1,8 @@
 let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [] };
 
-const jsonUpload = document.getElementById('json-upload');
-const weightsUpload = document.getElementById('weights-upload');
+let jsonUpload;
+let weightsUpload;
 
 let buttonAutoAdd;
 let autoAjout = false;
@@ -69,6 +69,9 @@ function setup() {
     let canvas = createCanvas(1300, 800);
     canvas.parent('sketch-holder');
     // frameRate(1);  // Change les fps à 1 images par secondes
+
+    jsonUpload = document.getElementById('json-upload');
+    weightsUpload = document.getElementById('weights-upload');
 
     let button = select("#Add1");
     button.mousePressed(addSquare);
