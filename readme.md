@@ -49,7 +49,7 @@ Onglet _Save and Load Model_ : (__REMARQUE :__ Ne fonctionne qu'avec Google Chro
 Serveur
 =======
 
-Se mettre dans le dossier et éxécuter la commande `php -S localhost:8000` pour lancer un serveur qui renvéras vers ce lien : [localhost:8000/testGenerate.html](http://localhost:8000/testGenerate.html)
+Se mettre dans le dossier et exécuter la commande `php -S localhost:8000` pour lancer un serveur qui renverra vers ce lien : [localhost:8000/testGenerate.html](http://localhost:8000/testGenerate.html)
 
 Faire : 
 ~~~~
