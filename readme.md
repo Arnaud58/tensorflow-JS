@@ -41,10 +41,11 @@ Onglet _Predict_ : <br/>
 - *Predict the test*. Envoie les données d'apprentissage sur la prédiction et affiche le pourcentage de réussite.
 - *Predict from a file*. Permet d'afficher les prédictions à partir de données stockées dans un fichier json
 
-Onglet _Save and Load Model_ : (__REMARQUE :__ Ne fonctionne qu'avec Google Chrome)
+Onglet _Save and Load Model_ : (__REMARQUE :__ Ne fonctionne qu'avec Google Chrome et Chromium)
 - *Save Model*. Télécharge la confiugation du modèle et les poids dans deux fichiers `my-model-1.json` et `my-model-1.weights.bin`
 - *Upload Json Model* et *Upload weights*. Charge le fichier json et le .bin contenant le modèle et les poids (de la même forme que ceux téléchargeables via *Save Model*)
 - *Load Model*. Charge le modèle après que l'on ait préalablement chargé les fichiers requis via les deux boutons précédents.
+
 Serveur
 =======
 
