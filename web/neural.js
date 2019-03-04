@@ -61,13 +61,15 @@ Save the model and downland it in two files called "my-model-1.json" and "my-mod
 async function saveModel(){
   saveResult = await model.save('downloads://my-model-1');
   console.log("Modèle sauvegardé");
+  textToUser("Modèle sauvegardé");
 }
 
 /**
 Load a model
 */
 async function loadModel(){
- // model = await tf.loadModel(
- //   tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
+  model = await tf.loadModel(
+    tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
   console.log("Modèle chargé");
+  textToUser("Modèle chargé");
 }

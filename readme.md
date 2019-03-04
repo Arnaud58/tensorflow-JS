@@ -46,7 +46,16 @@ Onglet _Save and Load Model_ : (__REMARQUE :__ Ne fonctionne qu'avec Google Chro
 - *Upload Json Model* et *Upload weights*. Charge le fichier json et le .bin contenant le modèle et les poids (de la même forme que ceux téléchargeables via *Save Model*)
 - *Load Model*. Charge le modèle après que l'on ait préalablement chargé les fichiers requis via les deux boutons précédents. ( Ne fonctionne pas encore)
 
+Serveur
+=======
 
+Se mettre dans le dossier et éxécuter la commande `php -S localhost:8000` pour lancer un serveur qui renvéras vers ce lien : [localhost:8000/testGenerate.html](http://localhost:8000/testGenerate.html)
+
+Faire : 
+~~~~
+cd web
+php -S localhost:8000
+~~~~
 
 
 Liens
