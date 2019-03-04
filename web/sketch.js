@@ -89,10 +89,10 @@ function setup() {
     button = select("#saveModel");
     button.mousePressed(saveModel);
 
-
+    /*
     button = select("#loadModel");
     button.mousePressed(loadModel);
-    
+    */
 
     button = select("#saveLearn");
     button.mousePressed(function() { download(all_squares_learn, "training.json"); });
@@ -118,10 +118,10 @@ function setup() {
         readerTrain.readAsText(file);
     });
 
-    /*
+
     var fileLoadModel = document.querySelector("#loadModel");
     fileLoadModel.addEventListener("click", loadModel);
-    */
+    
 
 
     createNeuralNetwork();
