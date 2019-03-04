@@ -48,7 +48,7 @@ async function trainSquare(l, h) {
     xs = tf.tensor2d([l, h], [1, 2]);
     ys = tf.tensor2d(res, [1, 2]);
 
-    console.warn("Tranning !");
+    console.warn("Training !");
     oldHistory = await model.fit(xs, ys);
 }
 
@@ -62,7 +62,7 @@ async function trainAllSquares() {
     xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
     ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
-    console.warn("Tranning !");
+    console.warn("Training !");
     await model.fit(xs, ys);
 };
 
@@ -76,5 +76,5 @@ async function loadAndTrain(ev) {
         window.setTimeout(trainAllSquares,1000);
         //trainAllSquares();
     }
-    textToUser("All data are train !");
+    textToUser("All data are trained !");
 }

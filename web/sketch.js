@@ -92,6 +92,7 @@ function setup() {
 
     button = select("#loadModel");
     button.mousePressed(loadModel);
+    
 
     button = select("#saveLearn");
     button.mousePressed(function() { download(all_squares_learn, "training.json"); });
@@ -116,6 +117,12 @@ function setup() {
         var file = this.files[0];
         readerTrain.readAsText(file);
     });
+
+    /*
+    var fileLoadModel = document.querySelector("#loadModel");
+    fileLoadModel.addEventListener("click", loadModel);
+    */
+
 
     createNeuralNetwork();
 }
