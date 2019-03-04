@@ -120,18 +120,20 @@ function setup() {
     });
 
     var fileLoadJsonModel = document.querySelector("#json-upload");
-    fileLoadJsonModel.addEventListener("input", function(){
+    fileLoadJsonModel.addEventListener("change", function(){
       console.log("fichier json contenant le modèle mis à jour");
     });
     var fileLoadWeightsModel = document.querySelector("#weights-upload");
-    fileLoadJsonModel.addEventListener("input", function(){
+    fileLoadJsonModel.addEventListener("change", function(){
       console.log("fichier contenant les poids mis à jour");
     });
 
     var fileLoadModel = document.querySelector("#loadModel");
     fileLoadModel.addEventListener("click", function(){
+      console.log(jsonUpload.files[0]);
+      console.log(weightsUpload.files[0]);
       console.log("LoadModel appelée");
-      loadModel();
+      loadModelFromFiles();
     });
 
 
