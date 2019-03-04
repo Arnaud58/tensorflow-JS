@@ -1,6 +1,7 @@
 let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [] };
 
+
 let jsonUpload;
 let weightsUpload;
 
@@ -118,10 +119,21 @@ function setup() {
         readerTrain.readAsText(file);
     });
 
+    var fileLoadJsonModel = document.querySelector("#json-upload");
+    fileLoadJsonModel.addEventListener("input", function(){
+      console.log("fichier json contenant le modèle mis à jour");
+    });
+    var fileLoadWeightsModel = document.querySelector("#weights-upload");
+    fileLoadJsonModel.addEventListener("input", function(){
+      console.log("fichier contenant les poids mis à jour");
+    });
 
     var fileLoadModel = document.querySelector("#loadModel");
-    fileLoadModel.addEventListener("click", loadModel);
-    
+    fileLoadModel.addEventListener("click", function(){
+      console.log("LoadModel appelée");
+      loadModel();
+    });
+
 
 
     createNeuralNetwork();

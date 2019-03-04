@@ -69,10 +69,10 @@ async function saveModel(){
 Load a model
 */
 async function loadModel(){
-  /*
+  console.log("dans loadModel");
   model = await tf.loadModel(
     tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
-    */
+
   //model = await tf.loadModel('localstorage://my-model-1');
 
   console.log("Modèle chargé");
