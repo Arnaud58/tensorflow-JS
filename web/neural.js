@@ -59,8 +59,7 @@ function createNeuralNetwork() {
 Save the model and downland it in two files called "my-model-1.json" and "my-model-1.weights.bin"
 */
 async function saveModel(){
-  //saveResult = await model.save('downloads://my-model-1');
-  //saveResult = await model.save('localstorage://my-model-1');
+  saveResult = await model.save('downloads://my-model-1');
   console.log("Modèle sauvegardé");
   textToUser("Modèle sauvegardé");
 }
@@ -69,11 +68,14 @@ async function saveModel(){
 Load a model
 */
 async function loadModelFromFiles(){
-  console.log("dans loadModel");
   model = await tf.loadModel(
     tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
 
-  //model = await tf.loadModel('localstorage://my-model-1');
+    model.compile({
+        optimizer: 'sgd',
+        loss: 'meanSquaredError',
+        lr: learningRate
+    });
 
   console.log("Modèle chargé");
   textToUser("Modèle chargé");
