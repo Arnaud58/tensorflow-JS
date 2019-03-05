@@ -49,10 +49,8 @@ async function trainSquare(l, h) {
     xs = tf.tensor2d([l, h], [1, 2]);
     ys = tf.tensor2d(res, [1, 2]);
 
-    // tf.tidy(() => {
     console.warn("Training !");
     await model.fit(xs, ys);
-    // });
 }
 
 /**
@@ -65,10 +63,8 @@ async function trainAllSquares() {
     xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
     ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
-    // tf.tidy(() => {
     console.warn("Training !");
     await model.fit(xs, ys);
-    // });
 };
 
 async function loadAndTrain(ev) {
@@ -77,18 +73,24 @@ async function loadAndTrain(ev) {
     all_squares_learn = contents;
 
     textToUser("Train the data !");
-    console.log(contents)
+
 
     for (i = 0; i < inputNBrepetition; i++) {
-        for (j = 0; j < contents.posLearn.length; j++) {
-            all_squares_learn = { squareLearn: contents.squareLearn.splice(0, j * 2), posLearn: contents.posLearn.splice(0, j) };
-            await trainAllSquares();
-            //await trainSquare(all_squares_learn.squareLearn[i * 2], all_squares_learn.squareLearn[i * 2 + 1]);
-        }
+        for (j = 1; j < contents.posLearn.length; j++) {
+            subSquare = contents.squareLearn.splice(0, j * 2);
+            subPos = contents.posLearn.splice(0, j);
 
-        //window.setTimeout(trainAllSquares,1000);
-        // await trainAllSquares();
+            all_squares_learn = { squareLearn: subSquare, posLearn: subPos };
+
+            addToDisplayLearn(contents.squareLearn[j * 2], contents.squareLearn[j * 2 + 1]);
+            await trainAllSquares();
+
+            contents.squareLearn = subSquare.concat(contents.squareLearn);
+            contents.posLearn = subPos.concat(contents.posLearn);
+        }
     }
+
+    console.warn("Train finish ");
 
     textToUser("All data are trained !");
 }

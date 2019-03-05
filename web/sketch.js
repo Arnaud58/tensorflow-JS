@@ -51,17 +51,41 @@ function resetPredict() {
 
 function resetTrain() {
     all_squares_learn = { squareLearn: [], posLearn: [] };
-    all_squares_display.squareCoord=[];
-    all_squares_display.pos=[];
-    all_squares_display.color=[];
+    all_squares_display.squareCoord = [];
+    all_squares_display.pos = [];
+    all_squares_display.color = [];
 }
 
+/**
+ * Envoie un message à l'utilisateur dans une div en bas de son éran
+ * @param {String} msg Le message à afficher
+ */
 function textToUser(msg) {
     var data = {
         message: msg,
         timeout: 2000,
     };
     _snackbarContainer.MaterialSnackbar.showSnackbar(data);
+}
+
+/**
+ * Ajoute un rectangle sur la partie gauche du canvas
+ * @param {int} l 
+ * @param {int} h 
+ */
+function addToDisplayLearn(l, h) {
+    all_squares_display["squareCoord"].push({ l: l, h: h });
+
+    // Si grand rectangle, va en haut, sinon va en bas
+    if (predictLH(h, l)) {
+        all_squares_display["pos"].push("Haut");
+    } else {
+        all_squares_display["pos"].push("Bas");
+    }
+
+    // Lui choisis une couleur random (pour affichage)
+    all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
+
 }
 
 function setup() {
@@ -120,20 +144,20 @@ function setup() {
     });
 
     var fileLoadJsonModel = document.querySelector("#json-upload");
-    fileLoadJsonModel.addEventListener("change", function(){
-      console.log("fichier json contenant le modèle mis à jour");
+    fileLoadJsonModel.addEventListener("change", function() {
+        console.log("fichier json contenant le modèle mis à jour");
     });
     var fileLoadWeightsModel = document.querySelector("#weights-upload");
-    fileLoadJsonModel.addEventListener("change", function(){
-      console.log("fichier contenant les poids mis à jour");
+    fileLoadJsonModel.addEventListener("change", function() {
+        console.log("fichier contenant les poids mis à jour");
     });
 
     var fileLoadModel = document.querySelector("#loadModel");
-    fileLoadModel.addEventListener("click", function(){
-      console.log(jsonUpload.files[0]);
-      console.log(weightsUpload.files[0]);
-      console.log("LoadModel appelée");
-      loadModelFromFiles();
+    fileLoadModel.addEventListener("click", function() {
+        console.log(jsonUpload.files[0]);
+        console.log(weightsUpload.files[0]);
+        console.log("LoadModel appelée");
+        loadModelFromFiles();
     });
 
 
