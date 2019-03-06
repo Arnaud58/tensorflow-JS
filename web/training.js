@@ -26,9 +26,10 @@ async function addSquare() {
     // Lui choisis une couleur random (pour affichage)
     all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
 
-    select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length/2);
+    select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);
 
     await trainAllSquares();
+    //trainSquare((largeur - 10) / 390, (hauteur - 10) / 390);
 }
 
 /**
@@ -49,7 +50,7 @@ async function trainSquare(l, h) {
     ys = tf.tensor2d(res, [1, 2]);
 
     console.warn("Training !");
-    oldHistory = await model.fit(xs, ys);
+    await model.fit(xs, ys);
 }
 
 /**
@@ -69,12 +70,27 @@ async function trainAllSquares() {
 async function loadAndTrain(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
     resetTrain();
-    all_squares_learn=contents;
+    all_squares_learn = contents;
 
     textToUser("Train the data !");
-    for (i = 0 ;i<inputNBrepetition;i++) {
-        window.setTimeout(trainAllSquares,1000);
-        //trainAllSquares();
+
+
+    for (i = 0; i < inputNBrepetition; i++) {
+        for (j = 1; j < contents.posLearn.length; j++) {
+            subSquare = contents.squareLearn.splice(0, j * 2);
+            subPos = contents.posLearn.splice(0, j);
+
+            all_squares_learn = { squareLearn: subSquare, posLearn: subPos };
+
+            addToDisplayLearn(contents.squareLearn[j * 2], contents.squareLearn[j * 2 + 1]);
+            await trainAllSquares();
+
+            contents.squareLearn = subSquare.concat(contents.squareLearn);
+            contents.posLearn = subPos.concat(contents.posLearn);
+        }
     }
+
+    console.warn("Train finish ");
+
     textToUser("All data are trained !");
 }
