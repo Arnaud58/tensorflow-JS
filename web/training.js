@@ -24,7 +24,8 @@ async function addSquare() {
         all_squares_learn["posLearn"].push([0, 1]);
     }
     // Lui choisis une couleur random (pour affichage)
-    all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
+    let color = chooseColor();
+    all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
     select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);
 
