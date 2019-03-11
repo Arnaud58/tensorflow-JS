@@ -24,7 +24,8 @@ async function addSquare() {
         all_squares_learn["posLearn"].push([0, 1]);
     }
     // Lui choisis une couleur random (pour affichage)
-    all_squares_display["color"].push({ r: random(255), g: random(255), b: random(255) });
+    let color = chooseColor();
+    all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
     select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);
 
@@ -72,24 +73,34 @@ async function loadAndTrain(ev) {
     resetTrain();
     all_squares_learn = contents;
 
-    textToUser("Train the data !");
+    textToUser("Train the data ! ");
+    let trainSize = contents.posLearn.length; 
 
 
     for (i = 0; i < inputNBrepetition; i++) {
-        for (j = 1; j < contents.posLearn.length; j++) {
+        for (j = 1; j < trainSize; j++) {
             subSquare = contents.squareLearn.splice(0, j * 2);
             subPos = contents.posLearn.splice(0, j);
 
             all_squares_learn = { squareLearn: subSquare, posLearn: subPos };
 
-            addToDisplayLearn(contents.squareLearn[j * 2], contents.squareLearn[j * 2 + 1]);
+            // Add to the display screen
+            addToDisplayLearn(contents.squareLearn[j * 2]*390+10, contents.squareLearn[j * 2 + 1]*390+10);
+            // Train the data
             await trainAllSquares();
 
+            // Show the percent of data train
+            let percent=(j/trainSize)*100;
+            document.querySelector('#progress1').MaterialProgress.setProgress(parseInt(percent.toFixed(0)));
+            document.querySelector('#progress2').innerHTML = percent.toFixed(2) + " %";
+            
             contents.squareLearn = subSquare.concat(contents.squareLearn);
             contents.posLearn = subPos.concat(contents.posLearn);
         }
     }
 
+    document.querySelector('#progress1').MaterialProgress.setProgress(100);
+    document.querySelector('#progress2').innerHTML = "100 %";
     console.warn("Train finish ");
 
     textToUser("All data are trained !");
