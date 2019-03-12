@@ -31,12 +31,42 @@
 
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
             <div class="mdl-tabs__tab-bar">
-                <a href="#neural-panel" class="mdl-tabs__tab is-active">Neural</a>
+                <a href="#params-panel" class="mdl-tabs__tab is-active">Parameters</a>
+                <a href="#neural-panel" class="mdl-tabs__tab">Neural</a>
                 <a href="#learning-panel" class="mdl-tabs__tab">Learning</a>
                 <a href="#predictions-panel" class="mdl-tabs__tab">Predictions</a>
                 <a href="#saveloadmodel-panel" class="mdl-tabs__tab">Save or Load Model</a>
 
                <p id="nbRect"></p> <!-- affiche le nb de rectanges générés -->
+            </div>
+
+            <div class="mdl-tabs__panel is-active" id="params-panel">
+              <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                      <thead>
+                        <tr>
+                          <th class="mdl-data-table__cell--non-numeric">Parameters</th>
+                          <th>Entry</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Scale</td>
+                          <td>2</td>
+                        </tr>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Link</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Color</td>
+                          <td>3</td>
+                        </tr>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Other</td>
+                          <td>?</td>
+                      </tr>
+                      </tbody>
+              </table>
             </div>
 
             <div class="mdl-tabs__panel is-active" id="neural-panel">
@@ -173,7 +203,7 @@
                   </div>
                 <!-- </div> -->
         </div>
-
+      </div>
         <div id="demo-snackbar" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>
