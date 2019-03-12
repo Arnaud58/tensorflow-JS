@@ -70,8 +70,8 @@ function textToUser(msg) {
 
 /**
  * Ajoute un rectangle sur la partie gauche du canvas
- * @param {int} l 
- * @param {int} h 
+ * @param {int} l
+ * @param {int} h
  */
 function addToDisplayLearn(l, h) {
     all_squares_display["squareCoord"].push({ l: l, h: h });
@@ -110,9 +110,11 @@ function setup() {
     button = select("#create");
     button.mousePressed(reset);
 
-
     button = select("#saveModel");
     button.mousePressed(saveModel);
+
+    button = select("#chooseParams");
+    button.mousePressed(checkActiveParams);
 
     /*
     button = select("#loadModel");
@@ -159,6 +161,7 @@ function setup() {
         console.log("LoadModel appelée");
         loadModelFromFiles();
     });
+
 
 
 
