@@ -13,11 +13,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.js"></script>
 
+    <script src="params.js"></script>
     <script src="neural.js"></script>
     <script src="training.js"></script>
     <script src="predict.js"></script>
     <script src="color.js"></script>
-    <script src="params.js"></script>
     <script src="sketch.js"></script>
 
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-amber.min.css">
@@ -37,37 +37,38 @@
                 <a href="#predictions-panel" class="mdl-tabs__tab">Predictions</a>
                 <a href="#saveloadmodel-panel" class="mdl-tabs__tab">Save or Load Model</a>
 
-               <p id="nbRect"></p> <!-- affiche le nb de rectanges générés -->
+                <p id="nbRect"></p>
+                <!-- affiche le nb de rectanges générés -->
             </div>
 
             <div class="mdl-tabs__panel is-active" id="params-panel">
-              <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-                      <thead>
+                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                    <thead>
                         <tr>
-                          <th class="mdl-data-table__cell--non-numeric">Parameters</th>
-                          <th>Entry</th>
+                            <th class="mdl-data-table__cell--non-numeric">Parameters</th>
+                            <th>Entry</th>
                         </tr>
-                      </thead>
-                      <tbody>
+                    </thead>
+                    <tbody>
                         <tr id="scaleParam">
-                          <td class="mdl-data-table__cell--non-numeric">Scale</td>
-                          <td>2</td>
+                            <td class="mdl-data-table__cell--non-numeric">Scale</td>
+                            <td>2</td>
                         </tr>
                         <tr id="linkParam">
-                          <td class="mdl-data-table__cell--non-numeric">Link</td>
-                          <td>1</td>
+                            <td class="mdl-data-table__cell--non-numeric">Link</td>
+                            <td>1</td>
                         </tr>
                         <tr id="colorParam">
-                          <td class="mdl-data-table__cell--non-numeric">Color</td>
-                          <td>3</td>
+                            <td class="mdl-data-table__cell--non-numeric">Color</td>
+                            <td>3</td>
                         </tr>
                         <tr id="otherParam">
-                          <td class="mdl-data-table__cell--non-numeric">Other</td>
-                          <td>?</td>
-                      </tr>
-                      </tbody>
-              </table>
-              <input class="mdl-button mdl-js-button mdl-button--raised" type="button" value="Validate" id="chooseParams" />
+                            <td class="mdl-data-table__cell--non-numeric">Other</td>
+                            <td>?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <input class="mdl-button mdl-js-button mdl-button--raised" type="button" value="Validate" id="chooseParams" />
             </div>
 
             <div class="mdl-tabs__panel" id="neural-panel">
@@ -129,7 +130,7 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised" id="Add1">Add one learn square</button>
                     </div>
                     <div class="mdl-cell mdl-cell--2-col">
-                            <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
+                        <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
                                 <i>Train from file</i>
                                 <input type="file" id="trainFile" style="display: none;">
                             </label>
@@ -181,30 +182,30 @@
             </div>
             <div class="mdl-tabs__panel" id="saveloadmodel-panel">
                 <!-- <div class="mdl-grid"> -->
-                  <div class="mdl-cell mdl-cell--2-col">
-                      <button class="mdl-button mdl-js-button mdl-button--raised" id="saveModel">Save model</button>
-                  </div>
-                  <!-- récupérer le fichier json du modèle -->
-                  <div class="mdl-cell mdl-cell--2-col">
-                          <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
+                <div class="mdl-cell mdl-cell--2-col">
+                    <button class="mdl-button mdl-js-button mdl-button--raised" id="saveModel">Save model</button>
+                </div>
+                <!-- récupérer le fichier json du modèle -->
+                <div class="mdl-cell mdl-cell--2-col">
+                    <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
                               <i>Upload Json Model</i>
                               <input type="file" id="json-upload" >
                           </label>
-                  </div>
-                  <!-- récupérer fichier contenant les poids -->
-                  <div class="mdl-cell mdl-cell--2-col">
-                          <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
+                </div>
+                <!-- récupérer fichier contenant les poids -->
+                <div class="mdl-cell mdl-cell--2-col">
+                    <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
                               <i>Upload weights</i>
                               <input type="file" id="weights-upload">
                           </label>
-                  </div>
-                  <!-- charger le modèle -->
-                  <div class="mdl-cell mdl-cell--2-col">
-                      <button class="mdl-button mdl-js-button mdl-button--raised" id="loadModel">Load model</button>
-                  </div>
+                </div>
+                <!-- charger le modèle -->
+                <div class="mdl-cell mdl-cell--2-col">
+                    <button class="mdl-button mdl-js-button mdl-button--raised" id="loadModel">Load model</button>
+                </div>
                 <!-- </div> -->
+            </div>
         </div>
-      </div>
         <div id="demo-snackbar" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>

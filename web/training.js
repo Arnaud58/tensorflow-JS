@@ -27,10 +27,12 @@ async function addSquare() {
     let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
+    all_squares_learn.linksLearn.push(int(random(0, 10)));
+    all_squares_learn.colorLearn.push(color);
+
     select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);
 
     await trainAllSquares();
-    //trainSquare((largeur - 10) / 390, (hauteur - 10) / 390);
 }
 
 /**
@@ -40,14 +42,16 @@ async function addSquare() {
  * @param {int} l A normalise largeur between 0 and 1
  * @param {int} h
  */
-async function trainSquare(l, h) {
+async function trainSquare(l, h, color, link) {
     let res;
     if (predictLH(l, h)) {
         res = [1, 0];
     } else {
         res = [0, 1];
     }
-    xs = tf.tensor2d([l, h], [1, 2]);
+    // xs = tf.tensor2d([l, h], [1, 2]);
+
+    xs = generateTensorFor1Square(l, h, color, link);
     ys = tf.tensor2d(res, [1, 2]);
 
     console.warn("Training !");
@@ -61,7 +65,9 @@ async function trainSquare(l, h) {
  * inside the var oldHistory
  */
 async function trainAllSquares() {
-    xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
+    // xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
+
+    xs = generateTensorForAllSquare();
     ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
     console.warn("Training !");
@@ -74,28 +80,32 @@ async function loadAndTrain(ev) {
     all_squares_learn = contents;
 
     textToUser("Train the data ! ");
-    let trainSize = contents.posLearn.length; 
+    let trainSize = contents.posLearn.length;
 
 
     for (i = 0; i < inputNBrepetition; i++) {
         for (j = 1; j < trainSize; j++) {
             subSquare = contents.squareLearn.splice(0, j * 2);
             subPos = contents.posLearn.splice(0, j);
+            subLinks = contents.linksLearn.splice(0, j);
+            subColor = contents.colorLearn.splice(0, j);
 
-            all_squares_learn = { squareLearn: subSquare, posLearn: subPos };
+            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor };
 
             // Add to the display screen
-            addToDisplayLearn(contents.squareLearn[j * 2]*390+10, contents.squareLearn[j * 2 + 1]*390+10);
+            addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10);
             // Train the data
             await trainAllSquares();
 
             // Show the percent of data train
-            let percent=(j/trainSize)*100;
+            let percent = (j / trainSize) * 100;
             document.querySelector('#progress1').MaterialProgress.setProgress(parseInt(percent.toFixed(0)));
             document.querySelector('#progress2').innerHTML = percent.toFixed(2) + " %";
-            
+
             contents.squareLearn = subSquare.concat(contents.squareLearn);
             contents.posLearn = subPos.concat(contents.posLearn);
+            contents.linksLearn = subLinks.concat(contents.linksLearn);
+            contents.colorLearn = subColor.concat(contents.colorLearn);
         }
     }
 

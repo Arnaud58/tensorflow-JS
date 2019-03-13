@@ -28,7 +28,7 @@ function createNeuralNetwork() {
 
     //première couche traîtée à part car il faut rajouter l'inputShape
     let firstHiddenLayer = tf.layers.dense({
-        inputShape: [2],
+        inputShape: [nbinputShape],
         units: inputNBNeurones,
         activation: activationType
     });
@@ -58,18 +58,18 @@ function createNeuralNetwork() {
 /**
 Save the model and downland it in two files called "my-model-1.json" and "my-model-1.weights.bin"
 */
-async function saveModel(){
-  saveResult = await model.save('downloads://my-model-1');
-  console.log("Modèle sauvegardé");
-  textToUser("Modèle sauvegardé");
+async function saveModel() {
+    saveResult = await model.save('downloads://my-model-1');
+    console.log("Modèle sauvegardé");
+    textToUser("Modèle sauvegardé");
 }
 
 /**
 Load a model
 */
-async function loadModelFromFiles(){
-  model = await tf.loadModel(
-    tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
+async function loadModelFromFiles() {
+    model = await tf.loadModel(
+        tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
 
     model.compile({
         optimizer: 'sgd',
@@ -77,6 +77,6 @@ async function loadModelFromFiles(){
         lr: learningRate
     });
 
-  console.log("Modèle chargé");
-  textToUser("Modèle chargé");
+    console.log("Modèle chargé");
+    textToUser("Modèle chargé");
 }

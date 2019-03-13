@@ -1,24 +1,80 @@
-scaleIsActive = true;
-linksIsActive = false;
-colorIsActive = false;
+let scaleIsActive = true;
+let linksIsActive = false;
+let colorIsActive = false;
+let nbinputShape = 2;
 
-function checkActiveParams(){
+function checkActiveParams() {
 
-  if (document.getElementById('scaleParam').className=='is-selected')
-    scaleIsActive = true;
-  else scaleIsActive = false;
+    if (document.getElementById('scaleParam').className == 'is-selected')
+        scaleIsActive = true;
+    else scaleIsActive = false;
 
-  if (document.getElementById('linkParam').className=='is-selected')
-    linksIsActive = true;
-  else linksIsActive = false;
+    if (document.getElementById('linkParam').className == 'is-selected')
+        linksIsActive = true;
+    else linksIsActive = false;
 
-  if (document.getElementById('colorParam').className=='is-selected')
-    colorIsActive = true;
-  else colorIsActive = false;
+    if (document.getElementById('colorParam').className == 'is-selected')
+        colorIsActive = true;
+    else colorIsActive = false;
 
-  console.log("Activation des params :")
-  console.log(scaleIsActive);
-  console.log(linksIsActive);
-  console.log(colorIsActive);
+    console.log("Activation des params :")
+    console.log(scaleIsActive);
+    console.log(linksIsActive);
+    console.log(colorIsActive);
 
+    nbinputShape = computeNbinputShape();
+}
+
+function computeNbinputShape() {
+    res = 0;
+    if (scaleIsActive) {
+        res += 2;
+    }
+    if (linksIsActive) {
+        res += 1;
+    }
+    if (colorIsActive) {
+        res += 3;
+    }
+    return res;
+}
+
+function generateTensorFor1Square(l, h, colorSquare, link) {
+    res = [];
+
+    if (scaleIsActive) {
+        append(res, l);
+        append(res, h);
+    }
+    if (linksIsActive) {
+        append(res, link / 10);
+    }
+    if (colorIsActive) {
+        append(res, colorSquare[0] / 255);
+        append(res, colorSquare[1] / 255);
+        append(res, colorSquare[2] / 255);
+    }
+
+    return tf.tensor2d(res, [1, nbinputShape]);
+}
+
+function generateTensorForAllSquare() {
+    res = [];
+
+    for (j = 0; j < all_squares_learn.posLearn.length; j++) {
+        if (scaleIsActive) {
+            append(res, all_squares_learn.squareLearn[j * 2]);
+            append(res, all_squares_learn.squareLearn[j * 2 + 1]);
+        }
+        if (linksIsActive) {
+            append(res, all_squares_learn.linksLearn[j] / 10);
+        }
+        if (colorIsActive) {
+            append(res, all_squares_learn.colorLearn[j][0] / 255);
+            append(res, all_squares_learn.colorLearn[j][1] / 255);
+            append(res, all_squares_learn.colorLearn[j][2] / 255);
+        }
+    }
+
+    return tf.tensor2d(res, [all_squares_learn.posLearn.length, nbinputShape]);
 }

@@ -31,8 +31,14 @@ function predictTheTests() {
     resetPredict();
 
     // Parcourt tous les carré de la partie apprentisage et les prédict
-    for (i = 0; i < all_squares_learn.squareLearn.length; i += 2) {
-        let res = predictAndDisplay(all_squares_learn.squareLearn[i] * 390 + 10, all_squares_learn.squareLearn[i + 1] * 390 + 10);
+    for (i = 0; i < all_squares_learn.posLearn.length; i += 1) {
+        let res = predictAndDisplay(
+            all_squares_learn.squareLearn[i * 2] * 390 + 10,
+            all_squares_learn.squareLearn[i * 2 + 1] * 390 + 10,
+            all_squares_learn.colorLearn[i],
+            all_squares_learn.linksLearn[i]
+        );
+
         if (res[1]) {
             correctTest++;
         }
@@ -52,7 +58,7 @@ function predictTheTests() {
  * @param {int} htr La hauteur du rectangle
  * @returns {[array,boolean]} Le tableau contient un tableau qui représente le tensor de la prédiction, le boolen vaux Vrai si la prédiction est mauvaise et Faux sinon
  */
-function predictAndDisplay(lgr, htr) {
+function predictAndDisplay(lgr, htr, color, link) {
     // Si la hauteur et la largeur n'es pas bonne, ne rien faire et alerter
     if (lgr > 400 || htr > 400 || lgr < 10 || htr < 10) {
         console.error("Largeur et hauteur doivent être entre 10 et 400");
@@ -60,9 +66,11 @@ function predictAndDisplay(lgr, htr) {
     }
 
     // Predict en donnant la largeur et la hauteur normalisé
-    tensorRes = model.predict(tf.variable(tf.tensor2d([
-        [(lgr - 10) / 390, (htr - 10) / 390]
-    ], [1, 2])));
+    // tensorRes = model.predict(tf.variable(tf.tensor2d([
+    //     [(lgr - 10) / 390, (htr - 10) / 390]
+    // ], [1, 2])));
+    tensorRes = model.predict(tf.variable(generateTensorFor1Square((lgr - 10) / 390, (htr - 10) / 390, color, link)));
+    // generateTensorFor1Square(lgr, htr)
 
     // The result of the prediction in an Array
     let res = Array.from(tensorRes.dataSync());

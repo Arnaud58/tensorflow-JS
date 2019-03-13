@@ -38,7 +38,7 @@ function reset() {
     createNeuralNetwork();
 
     all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
-    all_squares_learn = { squareLearn: [], posLearn: [] };
+    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
     textToUser("Nouveau réseau créé !");
 }
@@ -50,7 +50,7 @@ function resetPredict() {
 }
 
 function resetTrain() {
-    all_squares_learn = { squareLearn: [], posLearn: [] };
+    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
     all_squares_display.squareCoord = [];
     all_squares_display.pos = [];
     all_squares_display.color = [];
@@ -161,9 +161,6 @@ function setup() {
         console.log("LoadModel appelée");
         loadModelFromFiles();
     });
-
-
-
 
     createNeuralNetwork();
 }
