@@ -1,5 +1,5 @@
 let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
-let all_squares_learn = { squareLearn: [], posLearn: [] };
+let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
 
 let jsonUpload;
