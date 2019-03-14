@@ -43,7 +43,8 @@ function createNeuralNetwork() {
 
     ///couche de sortie
     let outputLayer = tf.layers.dense({
-        units: 2,
+        //units: 2,
+        units: 6,  //si 6 zones de classification possibles
         activation: 'softmax'
     });
     model.add(outputLayer);

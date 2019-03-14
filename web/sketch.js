@@ -1,8 +1,8 @@
 //let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 //let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
-let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zone: [] };
-let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
+let all_squares_display = { squareCoord: [], pos: [], color: [], zone:[], predictSquare: [], posPredict: [], zonePredict: [] };
+let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn:[] };
 
 let zones;
 
@@ -47,8 +47,8 @@ function reset() {
     //all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
     //all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
-    let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zone: [] };
-    let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
+    let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zonePredict: [] };
+    let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn:[] };
 
     textToUser("Nouveau réseau créé !");
 }
@@ -57,13 +57,15 @@ function resetPredict() {
     all_squares_display["predictSquare"] = [];
     all_squares_display["posPredict"] = [];
     all_squares_display["colorPredict"] = [];
+    all_squares_display["zonePredict"] = [];
 }
 
 function resetTrain() {
-    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
+    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: []};
     all_squares_display.squareCoord = [];
     all_squares_display.pos = [];
     all_squares_display.color = [];
+    all_squares_display.zone = [];
 }
 
 /**
@@ -84,7 +86,7 @@ function textToUser(msg) {
  * @param {int} h
  */
 function addToDisplayLearn(l, h) {
-    all_squares_display["squareCoord"].push({ l: l, h: h });
+    all_squares_display["squareCoord"].push({ l: l, h: h});
 
     // Si grand rectangle, va en haut, sinon va en bas
     if (predictLH(h, l)) {
@@ -94,8 +96,7 @@ function addToDisplayLearn(l, h) {
     }
 
 
-
-    // Lui choisis une couleur random (pour affichage)
+    // Lui choisit une couleur random (pour affichage)
     let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 }
@@ -247,8 +248,8 @@ function draw() {
     //Trace les délimitations de zones
     //Côté apprentissage
     noFill();
-    strokeWeight(4);
-    stroke('#D3D3D3');
+    strokeWeight(1);
+    //stroke('#D3D3D3');
     for (let i = 0; i<zones.length; i++){
       line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
       line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
@@ -274,6 +275,7 @@ function draw() {
     }
 
     strokeWeight(1);
+    stroke('#222222');
     // Dessine les rectangles prédits
     for (i = 0; i < all_squares_display.predictSquare.length; i++) {
         xGap = 700 + (i % 50) * 5;

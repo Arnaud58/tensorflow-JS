@@ -30,6 +30,9 @@ async function addSquare() {
     all_squares_learn.linksLearn.push(int(random(0, 10)));
     all_squares_learn.colorLearn.push(color);
 
+    //détermine la zone où il doit être placé
+    all_squares_learn.zoneLearn.push(expectedZone(hauteur, largeur, color));
+
     select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);
 
     await trainAllSquares();
@@ -44,16 +47,25 @@ async function addSquare() {
  */
 async function trainSquare(l, h, color, link) {
     let res;
+    /*
     if (predictLH(l, h)) {
         res = [1, 0];
     } else {
         res = [0, 1];
     }
+    */
+    let zoneExpected = expectedZone(h, l, color);
+    let res = []  //construit un vecteur de la forme [0,0,1,0,0,0] pour représenter les zones possibles
+    for (let i=0; i<6; i++){
+      if (i==zoneExpected) res.push(1);
+      else res.push(0);
+    }
+
 
     // xs = tf.tensor2d([l, h], [1, 2]);
 
     xs = generateTensorFor1Square(l, h, color, link);
-    ys = tf.tensor2d(res, [1, 2]);
+    ys = tf.tensor2d(res, [1, 6]);
 
 
 
@@ -72,7 +84,7 @@ async function trainAllSquares() {
     // xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
 
     xs = generateTensorForAllSquare();
-    ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
+    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.posLearn.length, 2]);
 
     console.warn("Training !");
     await model.fit(xs, ys);
@@ -86,7 +98,7 @@ async function loadAndTrain(ev) {
     textToUser("Train the data ! ");
     let trainSize = contents.posLearn.length;
 
-
+    // A  MODIFIER POUR RAJOUTER LES ZONES
     for (i = 0; i < inputNBrepetition; i++) {
         for (j = 1; j < trainSize; j++) {
             subSquare = contents.squareLearn.splice(0, j * 2);
@@ -94,7 +106,7 @@ async function loadAndTrain(ev) {
             subLinks = contents.linksLearn.splice(0, j);
             subColor = contents.colorLearn.splice(0, j);
 
-            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor };
+            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor};
 
             // Add to the display screen
             addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10);
