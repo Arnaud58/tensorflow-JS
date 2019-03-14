@@ -78,3 +78,7 @@ function generateTensorForAllSquare() {
 
     return tf.tensor2d(res, [all_squares_learn.posLearn.length, nbinputShape]);
 }
+
+function expectedZone(square){
+  //TODO
+}

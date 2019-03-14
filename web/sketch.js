@@ -1,6 +1,7 @@
 let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
+let zones;
 
 let jsonUpload;
 let weightsUpload;
@@ -88,6 +89,44 @@ function addToDisplayLearn(l, h) {
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 }
 
+/*
+Pour pouvoir classifier les rectangles selon leur couleur et leur taille, on découpe la zone
+de placement en plusieurs zones, chaque zone correspondant à des caractéristiques particulières.
+Pour l'instant, voici le découpage choisi, arbitrairement :
+*-------*-------*-------*
+|   0   |   1   |  2    |
+| (0,0) | (1,0) | (2,0) |
+*-------*-------*-------*
+|   4   |   5   |   6   |
+| (0,1) | (1,1) | (2,1) |
+*-------*-------*-------*
+(x,0) : Grand rectangle
+(x,1) : Petit rectangle
+(0,x) : couleurs LIGHT_FUCHSIA_PINK, ULTRA_PINK, PALE_PINK
+(1,x) : couleurs BANANA_MANIA, DANDELION, SUNSET_ORANGE
+(2,x) : couleurs CEIL, BLUE_YONDER, VERDIGRIS, COLUMBIA_BLUE
+Exemple : un petit rectangle rose sera dans la zone 4, un grand rectangle jaune sera dans la zone 1.
+*/
+
+/**
+* Découpe l'aire de travail en plusieurs zones pour permettre la classification
+* @param {int} height hauteur de la zone à découper
+* @param {int} width largeur de la zone à découper
+* @param {int} shift décalage de la zone par rapport au bord gauche du canvas
+* @param {xZones} nombre de zones voulue sur l'axe horizontal
+* @param {yZones} nombre de zones voulue sur l'axe vertical
+*/
+function sliceInZones(height, width, xZones, yZones){
+  let zones = []
+  let k = 0;
+  for (let i=0; i<xZones;i++){
+    for (let j=0; j<yZones; j++){
+      zones[k++] = [i*width/xZones, j*height/yZones];
+    }
+  }
+  return zones;
+}
+
 function setup() {
     // 2 rectangle de 600*800 avec un gap de 100 entre les 2
     _snackbarContainer = document.querySelector('#demo-snackbar');
@@ -172,19 +211,44 @@ function draw() {
     // Arrière plan
     background(255);
 
+    const canvasHeight = 800;
+    const canvasWidth = 1300;
+    const gapPosition = 600;
+
+    const xZones = 3;
+    const yZones = 2;
+
     // Draw le contours des 2 rectangles
     noFill();
     strokeWeight(4);
     stroke('#222222');
-    rect(0, 0, 1300, 800);
+    rect(0, 0, canvasWidth, canvasHeight);
 
     // Draw le gap entre les deux
     fill(0);
     strokeWeight(2);
     stroke('#222222');
-    rect(600, 0, 100, 800);
+    rect(gapPosition, 0, 100, 800);
 
-    // Déssine chaque rectangle d'entrainement de all_squares_display
+    zones = sliceInZones(canvasHeight, gapPosition, xZones, yZones);
+    //console.log(zones);
+
+    //Trace les délimitations de zones
+    //Côté apprentissage
+    noFill();
+    strokeWeight(4);
+    stroke('#D3D3D3');
+    for (let i = 0; i<zones.length; i++){
+      line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
+      line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
+    }
+    //Côté prédictions
+    for (let i = 0; i<zones.length; i++){
+      line(zones[i][0]+gapPosition+100, 0, zones[i][0]+gapPosition+100, canvasHeight); //lignes verticales
+      line(gapPosition+100, zones[i][1], canvasWidth, zones[i][1]); //lignes horizontales
+    }
+
+    // Dessine chaque rectangle d'entrainement de all_squares_display
     for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
         xGap = (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
@@ -199,7 +263,7 @@ function draw() {
     }
 
     strokeWeight(1);
-    // Déssine les rectangles prédits
+    // Dessine les rectangles prédits
     for (i = 0; i < all_squares_display.predictSquare.length; i++) {
         xGap = 700 + (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
