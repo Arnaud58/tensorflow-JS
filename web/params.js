@@ -23,6 +23,8 @@ function checkActiveParams() {
     console.log(colorIsActive);
 
     nbinputShape = computeNbinputShape();
+
+    textToUser("Nouveaux paramètres enregistrés");
 }
 
 function computeNbinputShape() {
