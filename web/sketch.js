@@ -11,6 +11,9 @@ let autoAjout = false;
 
 let _snackbarContainer;
 
+//aire au delà de laquelle un rectangle est considéré comme étant grand
+const areaLimit = 30000;
+
 /**
  * Sert à télécharger une variable sur son bureau
  * Ne fonction pas sous firefox

@@ -79,6 +79,18 @@ function generateTensorForAllSquare() {
     return tf.tensor2d(res, [all_squares_learn.posLearn.length, nbinputShape]);
 }
 
-function expectedZone(square){
-  //TODO
+function expectedZone(height, width, color){
+  let area = height*width;
+  if (color == LIGHT_FUCHSIA_PINK || ULTRA_PINK || PALE_PINK){
+    if (area>areaLimit) return 0;
+    else return 3;
+  }
+  else if (color == BANANA_MANIA || DANDELION || SUNSET_ORANGE){
+    if (area>areaLimit) return 1;
+    else return 4;
+  }
+  else{
+    if (area>areaLimit) return 2;
+    else return 5;
+  }
 }

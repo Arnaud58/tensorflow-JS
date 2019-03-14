@@ -1,6 +1,7 @@
 /**
  * Fonction qui ajoute aux tableau à prédire la séléction de l'utilisateur
  */
+
 function predictFromUser() {
     let lgr = parseInt(select("#largeur").value());
     let htr = parseInt(select("#hauteur").value());
@@ -14,7 +15,7 @@ function predictFromUser() {
  * @param {int} h La hauteur du rectangle
  */
 function predictLH(l, h) {
-    if (h * l > 30000) {
+    if (h * l > areaLimit) {
         return true;
     }
     return false;
