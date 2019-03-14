@@ -49,10 +49,14 @@ async function trainSquare(l, h, color, link) {
     } else {
         res = [0, 1];
     }
+
     // xs = tf.tensor2d([l, h], [1, 2]);
 
     xs = generateTensorFor1Square(l, h, color, link);
     ys = tf.tensor2d(res, [1, 2]);
+
+
+
 
     console.warn("Training !");
     await model.fit(xs, ys);

@@ -1,4 +1,7 @@
-let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
+//let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
+//let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
+
+let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zone: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
 let zones;
@@ -41,8 +44,11 @@ function download(content, fileName, contentType = "application/json") {
 function reset() {
     createNeuralNetwork();
 
-    all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
-    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
+    //all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
+    //all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
+
+    let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zone: [] };
+    let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
     textToUser("Nouveau réseau créé !");
 }
@@ -86,6 +92,8 @@ function addToDisplayLearn(l, h) {
     } else {
         all_squares_display["pos"].push("Bas");
     }
+
+
 
     // Lui choisis une couleur random (pour affichage)
     let color = chooseColor();
