@@ -108,10 +108,10 @@ Pour pouvoir classifier les rectangles selon leur couleur et leur taille, on dé
 de placement en plusieurs zones, chaque zone correspondant à des caractéristiques particulières.
 Pour l'instant, voici le découpage choisi, arbitrairement :
 *-------*-------*-------*
-|   0   |   1   |  2    |
+|   0   |   2   |   4   |
 | (0,0) | (1,0) | (2,0) |
 *-------*-------*-------*
-|   4   |   5   |   6   |
+|   1   |   3   |   5   |
 | (0,1) | (1,1) | (2,1) |
 *-------*-------*-------*
 (x,0) : Grand rectangle
