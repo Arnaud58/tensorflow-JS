@@ -26,7 +26,6 @@ async function addSquare() {
     // Lui choisis une couleur random (pour affichage)
     let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
-    console.log(color);
 
     all_squares_learn.linksLearn.push(int(random(0, 10)));
     all_squares_learn.colorLearn.push(color);
@@ -34,7 +33,6 @@ async function addSquare() {
     //détermine la zone où il doit être placé
     let expectZone = expectedZone(hauteur, largeur, color);
     all_squares_display.zone.push(expectZone);
-    //console.log(vectorFromExpectedZone(expectZone));
     all_squares_learn.zoneLearn.push(vectorFromExpectedZone(expectZone));
 
     select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);

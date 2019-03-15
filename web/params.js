@@ -83,15 +83,12 @@ function generateTensorForAllSquare() {
 }
 
 function expectedZone(height, width, color){
-  console.log(color);
   let area = height*width;
   if (color == LIGHT_FUCHSIA_PINK || color == ULTRA_PINK || color == PALE_PINK){
-    console.log("LIGHT_FUCHSIA_PINK || ULTRA_PINK || PALE_PINK");
     if (area>areaLimit) return 0;
     else return 3;
   }
   else if (color == BANANA_MANIA || color == DANDELION || color == SUNSET_ORANGE){
-    console.log("BANANA_MANIA || DANDELION || SUNSET_ORANGE");
     if (area>areaLimit) return 1;
     else return 4;
   }
@@ -108,6 +105,5 @@ function vectorFromExpectedZone(zoneExpected){
     if (i==zoneExpected) res.push(1);
     else res.push(0);
   }
-  console.log(res);
   return res;
 }
