@@ -245,7 +245,7 @@ function draw() {
     rect(gapPosition, 0, 100, 800);
 
     zones = sliceInZones(canvasHeight, gapPosition, xZones, yZones);
-    //console.log(zones);
+    console.log(zones);
 
     //Trace les délimitations de zones
     //Côté apprentissage
@@ -271,9 +271,11 @@ function draw() {
             yGap += 400;
         }
 
+        let squareZone = zones[all_squares_display["zone"]];
+        console.log(squareZone);
 
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
-        rect(xGap, yGap, all_squares_display.squareCoord[i].l, all_squares_display.squareCoord[i].h);
+        rect(xGap+squareZone[0], yGap+squareZone[1], all_squares_display.squareCoord[i].l, all_squares_display.squareCoord[i].h);
     }
 
     strokeWeight(1);
