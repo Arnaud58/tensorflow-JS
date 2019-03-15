@@ -5,6 +5,7 @@ let all_squares_display = { squareCoord: [], pos: [], color: [], zone:[], predic
 let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn:[] };
 
 let zones;
+let nbZones;
 
 let jsonUpload;
 let weightsUpload;
@@ -99,6 +100,7 @@ function addToDisplayLearn(l, h) {
     // Lui choisit une couleur random (pour affichage)
     let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
+
 }
 
 /*

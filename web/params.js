@@ -41,6 +41,7 @@ function computeNbinputShape() {
     return res;
 }
 
+
 function generateTensorFor1Square(l, h, colorSquare, link) {
     res = [];
 
@@ -95,4 +96,14 @@ function expectedZone(height, width, color){
     if (area>areaLimit) return 2;
     else return 5;
   }
+}
+
+function vectorFromExpectedZone(zoneExpected){
+  let res = []  //construit un vecteur de la forme [0,0,1,0,0,0] pour représenter les zones possibles
+  for (let i=0; i<6; i++){
+    if (i==zoneExpected) res.push(1);
+    else res.push(0);
+  }
+  console.log(res);
+  return res;
 }

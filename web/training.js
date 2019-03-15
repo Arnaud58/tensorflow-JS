@@ -31,7 +31,10 @@ async function addSquare() {
     all_squares_learn.colorLearn.push(color);
 
     //détermine la zone où il doit être placé
-    all_squares_learn.zoneLearn.push(expectedZone(hauteur, largeur, color));
+    let expectZone = expectedZone(hauteur, largeur, color);
+    all_squares_display.zone.push(expectZone);
+    //console.log(vectorFromExpectedZone(expectZone));
+    all_squares_learn.zoneLearn.push(vectorFromExpectedZone(expectZone));
 
     select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);
 
@@ -55,11 +58,7 @@ async function trainSquare(l, h, color, link) {
     }
     */
     let zoneExpected = expectedZone(h, l, color);
-    let res = []  //construit un vecteur de la forme [0,0,1,0,0,0] pour représenter les zones possibles
-    for (let i=0; i<6; i++){
-      if (i==zoneExpected) res.push(1);
-      else res.push(0);
-    }
+    let vectorZoneExpected = vectorFromExpectedZone(zoneExpected);
 
 
     // xs = tf.tensor2d([l, h], [1, 2]);
@@ -83,8 +82,10 @@ async function trainSquare(l, h, color, link) {
 async function trainAllSquares() {
     // xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
 
+
     xs = generateTensorForAllSquare();
-    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.posLearn.length, 2]);
+    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.zoneLearn.length, 6]);
+    //ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
     console.warn("Training !");
     await model.fit(xs, ys);
