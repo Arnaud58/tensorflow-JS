@@ -291,13 +291,15 @@ function draw() {
         xGap = 700 + (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
-
+        /*
         if (all_squares_display.posPredict[i] == "Bas") {
             yGap += 400;
         }
-
+        */
+        let predictSquareZone = zones[all_squares_display["zonePredict"][i]];
+        //console.log(all_squares_display["zonePredict"][i]);
         fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
-        rect(xGap, yGap, all_squares_display.predictSquare[i].l, all_squares_display.predictSquare[i].h);
+        rect(xGap+predictSquareZone[0], yGap+predictSquareZone[1], all_squares_display.predictSquare[i].l, all_squares_display.predictSquare[i].h);
     }
 
     // Si activé par le bouton, rajoute un nouveau rectangle d'entrainement

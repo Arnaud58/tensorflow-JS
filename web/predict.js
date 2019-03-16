@@ -21,6 +21,26 @@ function predictLH(l, h) {
     return false;
 }
 
+
+
+/**
+* Retourne le numéro de la zone obtenue en résultat en fonction du tableau retourné
+* par le réseau neuronal
+* @param {float[int]} resArray le tableau contenant les résultats retournés par TensorFlow
+* @return le numéro de la zone correpondante
+*/
+function checkResZone(resArray){
+  let res = 0;
+  let maxValue = 0;
+  for (let i = 0; i<6; i++){
+    if (resArray[i]>maxValue) {
+      maxValue = resArray[i];
+      res = i;
+    }
+  }
+  return res;
+}
+
 /**
  * Prédit les donnée d'apprentisage (all_squares_learn.squareLearn)
  * et les affiches sur la partie droite du canvas
@@ -31,7 +51,7 @@ function predictTheTests() {
     let correctTest = 0;
     resetPredict();
 
-    // Parcourt tous les carré de la partie apprentisage et les prédict
+    // Parcourt tous les carré de la partie apprentissage et les prédict
     for (i = 0; i < all_squares_learn.posLearn.length; i += 1) {
         let res = predictAndDisplay(
             all_squares_learn.squareLearn[i * 2] * 390 + 10,
@@ -81,7 +101,18 @@ function predictAndDisplay(lgr, htr, color, link) {
     // Rajoute le carré a prédire dans les carré à affiché
     all_squares_display.predictSquare.push({ l: lgr, h: htr });
 
-    // Lui donne une couleur en fonction de si il est bien placé où nonS
+    // Lui donne une couleur en fonction de si il est bien placé où non
+    let resZone = checkResZone(res);
+    console.log(resZone);
+    all_squares_display["zonePredict"].push(resZone);
+    if (resZone==expectedZone(htr, lgr, color)){
+      isCorrect = true;
+      all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
+    }else{
+      all_squares_display["colorPredict"].push({ r: 255, g: 0, b: 0 });
+      isCorrect = false;
+    }
+    /*
     if (res[0] > 0.5) {
         if (predictLH(lgr, htr)) {
             all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
@@ -97,6 +128,7 @@ function predictAndDisplay(lgr, htr, color, link) {
 
         all_squares_display["posPredict"].push("Bas");
     }
+    */
 
     // Log et retourne le résultat
     //tensorRes.print();
