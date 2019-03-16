@@ -85,17 +85,19 @@ function generateTensorForAllSquare() {
 function expectedZone(height, width, color){
   let area = height*width;
   if (color == LIGHT_FUCHSIA_PINK || color == ULTRA_PINK || color == PALE_PINK){
+    console.log("PINK ...");
     if (area>areaLimit) return 0;
     else return 1;
   }
   else if (color == BANANA_MANIA || color == DANDELION || color == SUNSET_ORANGE){
+    console.log("YELLOW OR ORANGE ...");
     if (area>areaLimit) return 2;
     else return 3;
   }
   else{
-  console.log("SOME BLUE OR GREEN ...");
+    console.log("BLUE OR GREEN ...");
     if (area>areaLimit) return 4;
-    else return 6;
+    else return 5;
   }
 }
 
