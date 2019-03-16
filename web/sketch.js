@@ -119,7 +119,7 @@ Pour l'instant, voici le découpage choisi, arbitrairement :
 (0,x) : couleurs LIGHT_FUCHSIA_PINK, ULTRA_PINK, PALE_PINK
 (1,x) : couleurs BANANA_MANIA, DANDELION, SUNSET_ORANGE
 (2,x) : couleurs CEIL, BLUE_YONDER, VERDIGRIS, COLUMBIA_BLUE
-Exemple : un petit rectangle rose sera dans la zone 4, un grand rectangle jaune sera dans la zone 1.
+Exemple : un petit rectangle rose sera dans la zone 1, un grand rectangle jaune sera dans la zone 2.
 */
 
 /**
@@ -267,14 +267,19 @@ function draw() {
         xGap = (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
+
+        //PLUS BESOIN, DEJA PRIS EN COMPTE DANS LE DECOUPAGE DES ZONES
+        /*
         if (all_squares_display.pos[i] == "Bas") {
             yGap += 400;
         }
+        */
 
         let squareZone = zones[all_squares_display["zone"][i]];
-        console.log(all_squares_display["zone"]);
-        console.log(squareZone);
-
+        /*
+        console.log("ALL_SQUARES_DISPLAY");
+        console.log(all_squares_display);
+        */
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
         rect(xGap+squareZone[0], yGap+squareZone[1], all_squares_display.squareCoord[i].l, all_squares_display.squareCoord[i].h);
     }
@@ -286,12 +291,11 @@ function draw() {
         xGap = 700 + (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
+
         if (all_squares_display.posPredict[i] == "Bas") {
             yGap += 400;
         }
 
-        console.log("ALL_SQUARES_DISPLAY");
-        console.log(all_squares_display);
         fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
         rect(xGap, yGap, all_squares_display.predictSquare[i].l, all_squares_display.predictSquare[i].h);
     }

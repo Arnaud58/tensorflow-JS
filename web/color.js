@@ -19,7 +19,6 @@ const allColors = [ BANANA_MANIA,DANDELION,
 const nbColor = allColors.length;
 
 function chooseColor() {
-    console.log("chooseColor appelée");
     let r = int(random(0, nbColor));
     return allColors[r];
 }

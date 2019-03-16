@@ -88,11 +88,13 @@ function expectedZone(height, width, color){
     console.log("PINK ...");
     if (area>areaLimit) return 0;
     else return 1;
+    
   }
   else if (color == BANANA_MANIA || color == DANDELION || color == SUNSET_ORANGE){
     console.log("YELLOW OR ORANGE ...");
     if (area>areaLimit) return 2;
     else return 3;
+
   }
   else{
     console.log("BLUE OR GREEN ...");
