@@ -92,6 +92,7 @@ async function trainAllSquares() {
 
 async function loadAndTrain(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
+    console.log(contents);
     resetTrain();
     all_squares_learn = contents;
 
@@ -104,12 +105,14 @@ async function loadAndTrain(ev) {
             subSquare = contents.squareLearn.splice(0, j * 2);
             subPos = contents.posLearn.splice(0, j);
             subLinks = contents.linksLearn.splice(0, j);
-            subColor = contents.colorLearn.splice(0, j);
+            subColor = contents.colorLearn.splice(0, j*3);
+            subZones = contents.zoneLearn.splice(0,j*6);
 
-            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor};
+            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor, zoneLearn: subZones};
+            console.log(all_squares_learn);
 
             // Add to the display screen
-            addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10);
+            addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]*390+10);
             // Train the data
             await trainAllSquares();
 
@@ -122,6 +125,7 @@ async function loadAndTrain(ev) {
             contents.posLearn = subPos.concat(contents.posLearn);
             contents.linksLearn = subLinks.concat(contents.linksLearn);
             contents.colorLearn = subColor.concat(contents.colorLearn);
+            contents.zoneLearn = subColor.concat(contents.zoneLearn);
         }
     }
 

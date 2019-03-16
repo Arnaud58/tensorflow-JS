@@ -86,19 +86,22 @@ function textToUser(msg) {
  * @param {int} l
  * @param {int} h
  */
-function addToDisplayLearn(l, h) {
+function addToDisplayLearn(l, h, color) {
     all_squares_display["squareCoord"].push({ l: l, h: h});
 
     // Si grand rectangle, va en haut, sinon va en bas
+    /*
     if (predictLH(h, l)) {
         all_squares_display["pos"].push("Haut");
     } else {
         all_squares_display["pos"].push("Bas");
     }
+    */
+    all_squares_display["zone"].push(expectedZone(h,l,color));
 
 
     // Lui choisit une couleur random (pour affichage)
-    let color = chooseColor();
+    //let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
 }
@@ -281,7 +284,7 @@ function draw() {
         console.log(all_squares_display);
         */
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
-        rect(xGap+squareZone[0], yGap+squareZone[1], all_squares_display.squareCoord[i].l, all_squares_display.squareCoord[i].h);
+        rect(/*xGap+*/squareZone[0], /*yGap+*/squareZone[1], all_squares_display.squareCoord[i].l/2, all_squares_display.squareCoord[i].h/2);
     }
 
     strokeWeight(1);
@@ -299,7 +302,7 @@ function draw() {
         let predictSquareZone = zones[all_squares_display["zonePredict"][i]];
         //console.log(all_squares_display["zonePredict"][i]);
         fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
-        rect(xGap+predictSquareZone[0], yGap+predictSquareZone[1], all_squares_display.predictSquare[i].l, all_squares_display.predictSquare[i].h);
+        rect(/*xGap+*/700+predictSquareZone[0], /*yGap*/+predictSquareZone[1], all_squares_display.predictSquare[i].l/2, all_squares_display.predictSquare[i].h/2);
     }
 
     // Si activé par le bouton, rajoute un nouveau rectangle d'entrainement

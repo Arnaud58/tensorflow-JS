@@ -51,7 +51,7 @@ function predictTheTests() {
     let correctTest = 0;
     resetPredict();
 
-    // Parcourt tous les carré de la partie apprentissage et les prédict
+    // Parcourt tous les carrés de la partie apprentissage et les prédit
     for (i = 0; i < all_squares_learn.posLearn.length; i += 1) {
         let res = predictAndDisplay(
             all_squares_learn.squareLearn[i * 2] * 390 + 10,
