@@ -64,7 +64,7 @@ function generateTensorFor1Square(l, h, colorSquare, link) {
 function generateTensorForAllSquare() {
     res = [];
 
-    for (j = 0; j < all_squares_learn.posLearn.length; j++) {
+    for (j = 0; j < all_squares_learn.zoneLearn.length; j++) {
         if (scaleIsActive) {
             append(res, all_squares_learn.squareLearn[j * 2]);
             append(res, all_squares_learn.squareLearn[j * 2 + 1]);
@@ -73,13 +73,14 @@ function generateTensorForAllSquare() {
             append(res, all_squares_learn.linksLearn[j] / 10);
         }
         if (colorIsActive) {
+            //console.log(all_squares_learn.colorLearn[j]);
             append(res, all_squares_learn.colorLearn[j][0] / 255);
             append(res, all_squares_learn.colorLearn[j][1] / 255);
             append(res, all_squares_learn.colorLearn[j][2] / 255);
         }
     }
 
-    return tf.tensor2d(res, [all_squares_learn.posLearn.length, nbinputShape]);
+    return tf.tensor2d(res, [all_squares_learn.zoneLearn.length, nbinputShape]);
 }
 
 function expectedZone(height, width, color){
@@ -88,7 +89,7 @@ function expectedZone(height, width, color){
     console.log("PINK ...");
     if (area>areaLimit) return 0;
     else return 1;
-    
+
   }
   else if (color == BANANA_MANIA || color == DANDELION || color == SUNSET_ORANGE){
     console.log("YELLOW OR ORANGE ...");

@@ -279,9 +279,10 @@ function draw() {
         */
 
         let squareZone = zones[all_squares_display["zone"][i]];
+
         /*
-        console.log("ALL_SQUARES_DISPLAY");
-        console.log(all_squares_display);
+        console.log("color");
+        console.log(all_squares_display.color);
         */
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
         rect(/*xGap+*/squareZone[0], /*yGap+*/squareZone[1], all_squares_display.squareCoord[i].l/2, all_squares_display.squareCoord[i].h/2);

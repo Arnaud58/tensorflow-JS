@@ -52,7 +52,7 @@ function predictTheTests() {
     resetPredict();
 
     // Parcourt tous les carrés de la partie apprentissage et les prédit
-    for (i = 0; i < all_squares_learn.posLearn.length; i += 1) {
+    for (i = 0; i < all_squares_learn.zoneLearn.length; i += 1) {
         let res = predictAndDisplay(
             all_squares_learn.squareLearn[i * 2] * 390 + 10,
             all_squares_learn.squareLearn[i * 2 + 1] * 390 + 10,
@@ -80,6 +80,7 @@ function predictTheTests() {
  * @returns {[array,boolean]} Le tableau contient un tableau qui représente le tensor de la prédiction, le boolen vaux Vrai si la prédiction est mauvaise et Faux sinon
  */
 function predictAndDisplay(lgr, htr, color, link) {
+  console.log(color);
     // Si la hauteur et la largeur n'es pas bonne, ne rien faire et alerter
     if (lgr > 400 || htr > 400 || lgr < 10 || htr < 10) {
         console.error("Largeur et hauteur doivent être entre 10 et 400");

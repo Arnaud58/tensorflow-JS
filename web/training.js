@@ -81,9 +81,8 @@ async function trainSquare(l, h, color, link) {
 async function trainAllSquares() {
     // xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
 
-
     xs = generateTensorForAllSquare();
-    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.zoneLearn.length, 6]);
+    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.zoneLearn.length, 6]); //6 = taille du vecteur en sortie
     //ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
     console.warn("Training !");
@@ -92,21 +91,48 @@ async function trainAllSquares() {
 
 async function loadAndTrain(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
-    console.log(contents);
+    //console.log(contents);
     resetTrain();
     all_squares_learn = contents;
 
     textToUser("Train the data ! ");
-    let trainSize = contents.posLearn.length;
+    let trainSize = contents.zoneLearn.length;
+
 
     // A  MODIFIER POUR RAJOUTER LES ZONES
     all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn};
     console.log("ALL_SQUARES_LEARN");
     console.log(all_squares_learn);
     for (i = 0; i < inputNBrepetition; i++) {
-        for (j = 1; j < trainSize; j++) {
-          addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]*390+10);
+        for (j = 0; j < trainSize; j++) {
+
+          console.log("rectangle n°");
+          console.log(j);
+          console.log(all_squares_learn.colorLearn[j]);
+          //addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]);
+          /* --- REMPLIT LES CHAMPS MANQUANTS DANS ALL_SQUARES_DISPLAY --- */
+          all_squares_display.squareCoord.push({ l: contents.squareLearn[j * 2] * 390 + 10, h: contents.squareLearn[j * 2 + 1] * 390 + 10});
+        //  all_squares_display["zone"].push(contents.zoneLearn[j * 2] * 390 + 10);
+          all_squares_display.color.push({r:contents.colorLearn[j][0], g:contents.colorLearn[j][1], b:contents.colorLearn[j][2]});
+          // Si grand rectangle, va en haut, sinon va en bas
+          if (predictLH(contents.squareLearn[j * 2] * 390,  contents.squareLearn[j * 2 + 1] * 390 + 10)) {
+              all_squares_display.pos.push("Haut");
+              //all_squares_learn["posLearn"].push([1, 0]);
+          } else {
+              all_squares_display.pos.push("Bas");
+              //all_squares_learn["posLearn"].push([0, 1]);
+          }
+
+          //détermine la zone où il doit être placé
+          let expectZone = expectedZone(contents.squareLearn[j * 2] * 390, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]);
+          all_squares_display.zone.push(expectZone);
+
+          /* --------------------------------------------------------------*/
+          console.log("ALL_SQUARES_DISPLAY");
+          console.log(all_squares_display);
           await trainAllSquares();
+          console.log("ALL_SQUARES_DISPLAY après train");
+          console.log(all_squares_display);
           let percent = (j / trainSize) * 100;
           document.querySelector('#progress1').MaterialProgress.setProgress(parseInt(percent.toFixed(0)));
           document.querySelector('#progress2').innerHTML = percent.toFixed(2) + " %";
