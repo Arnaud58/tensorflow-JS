@@ -130,9 +130,11 @@ async function loadAndTrain(ev) {
           /* --------------------------------------------------------------*/
           console.log("ALL_SQUARES_DISPLAY");
           console.log(all_squares_display);
+          /*
           await trainAllSquares();
           console.log("ALL_SQUARES_DISPLAY après train");
           console.log(all_squares_display);
+          */
           let percent = (j / trainSize) * 100;
           document.querySelector('#progress1').MaterialProgress.setProgress(parseInt(percent.toFixed(0)));
           document.querySelector('#progress2').innerHTML = percent.toFixed(2) + " %";
@@ -169,6 +171,7 @@ async function loadAndTrain(ev) {
 
     }
     */
+    await trainAllSquares();
     document.querySelector('#progress1').MaterialProgress.setProgress(100);
     document.querySelector('#progress2').innerHTML = "100 %";
     console.warn("Train finish ");
