@@ -80,7 +80,7 @@ function predictTheTests() {
  * @returns {[array,boolean]} Le tableau contient un tableau qui représente le tensor de la prédiction, le boolen vaux Vrai si la prédiction est mauvaise et Faux sinon
  */
 function predictAndDisplay(lgr, htr, color, link) {
-  console.log(color);
+  //console.log(color);
     // Si la hauteur et la largeur n'es pas bonne, ne rien faire et alerter
     if (lgr > 400 || htr > 400 || lgr < 10 || htr < 10) {
         console.error("Largeur et hauteur doivent être entre 10 et 400");
@@ -104,7 +104,7 @@ function predictAndDisplay(lgr, htr, color, link) {
 
     // Lui donne une couleur en fonction de si il est bien placé où non
     let resZone = checkResZone(res);
-    console.log(resZone);
+    //console.log(resZone);
     all_squares_display["zonePredict"].push(resZone);
     if (resZone==expectedZone(htr, lgr, color)){
       isCorrect = true;
@@ -142,7 +142,7 @@ function loadAndPredict(ev) {
     let cpt = 0;
     let correctTest = 0;
     resetPredict();
-    console.log(contents);
+    //console.log(contents);
 
     // Parcourt tous les carré de la partie apprentisage et les prédict
     for (i = 0; i < contents.squareLearn.length; i += 2) {

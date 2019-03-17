@@ -101,13 +101,11 @@ async function loadAndTrain(ev) {
 
     // A  MODIFIER POUR RAJOUTER LES ZONES
     all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn};
-    console.log("ALL_SQUARES_LEARN");
-    console.log(all_squares_learn);
+
+    //console.log("ALL_SQUARES_LEARN");
+    //console.log(all_squares_learn);
     for (i = 0; i < inputNBrepetition; i++) {
         for (j = 0; j < trainSize; j++) {
-
-          console.log("rectangle n°");
-          console.log(j);
           //console.log(all_squares_learn.colorLearn[j]);
           //addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]);
           /* --- REMPLIT LES CHAMPS MANQUANTS DANS ALL_SQUARES_DISPLAY --- */
@@ -132,9 +130,10 @@ async function loadAndTrain(ev) {
           all_squares_display.zone.push(expectZone);
 
           /* --------------------------------------------------------------*/
-          console.log("ALL_SQUARES_DISPLAY");
-          console.log(all_squares_display);
+        //console.log("ALL_SQUARES_DISPLAY");
+          //console.log(all_squares_display);
           /*
+
           await trainAllSquares();
           console.log("ALL_SQUARES_DISPLAY après train");
           console.log(all_squares_display);

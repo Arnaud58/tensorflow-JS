@@ -85,11 +85,6 @@ function generateTensorForAllSquare() {
 
 function expectedZone(height, width, color){
   let area = height*width;
-  console.log("couleur entrée dans expectedZone");
-  console.log(color);
-  console.log(color[0]);
-  console.log(color[1]);
-  console.log(color[2]);
   let condFuchsia = (color[0]==249 && color[1]==132 && color[2]==239);
   let condUltraPink = (color[0]==255 && color[1]==111 && color[2]==255);
   let condPalePink = (color[0]==250 && color[1]==218 && color[2]==221);
@@ -98,7 +93,6 @@ function expectedZone(height, width, color){
   let condSunset = (color[0]==253 && color[1]==94 && color[2]==83);
   let condPink = condFuchsia || condUltraPink || condPalePink;
   let condOrange = condBanana || condDandelion || condSunset;
-  console.log(condDandelion);
   if (color == LIGHT_FUCHSIA_PINK || color ==  [249, 132, 239] || color == ULTRA_PINK || color == [255, 111, 255] || color == PALE_PINK || color ==  [250, 218, 221] || condPink){
     console.log("PINK ...");
     if (area>areaLimit) return 0;
