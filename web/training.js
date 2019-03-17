@@ -108,7 +108,7 @@ async function loadAndTrain(ev) {
 
           console.log("rectangle n°");
           console.log(j);
-          console.log(all_squares_learn.colorLearn[j]);
+          //console.log(all_squares_learn.colorLearn[j]);
           //addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]);
           /* --- REMPLIT LES CHAMPS MANQUANTS DANS ALL_SQUARES_DISPLAY --- */
           all_squares_display.squareCoord.push({ l: contents.squareLearn[j * 2] * 390 + 10, h: contents.squareLearn[j * 2 + 1] * 390 + 10});
@@ -125,6 +125,10 @@ async function loadAndTrain(ev) {
 
           //détermine la zone où il doit être placé
           let expectZone = expectedZone(contents.squareLearn[j * 2] * 390, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]);
+          /*console.log("zone et couleur");
+          console.log(expectZone);
+          console.log(contents.colorLearn[j]);
+          */
           all_squares_display.zone.push(expectZone);
 
           /* --------------------------------------------------------------*/
