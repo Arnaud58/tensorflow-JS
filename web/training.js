@@ -100,6 +100,19 @@ async function loadAndTrain(ev) {
     let trainSize = contents.posLearn.length;
 
     // A  MODIFIER POUR RAJOUTER LES ZONES
+    all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn};
+    console.log("ALL_SQUARES_LEARN");
+    console.log(all_squares_learn);
+    for (i = 0; i < inputNBrepetition; i++) {
+        for (j = 1; j < trainSize; j++) {
+          addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]*390+10);
+          await trainAllSquares();
+          let percent = (j / trainSize) * 100;
+          document.querySelector('#progress1').MaterialProgress.setProgress(parseInt(percent.toFixed(0)));
+          document.querySelector('#progress2').innerHTML = percent.toFixed(2) + " %";
+        }
+    }
+    /*
     for (i = 0; i < inputNBrepetition; i++) {
         for (j = 1; j < trainSize; j++) {
             subSquare = contents.squareLearn.splice(0, j * 2);
@@ -127,8 +140,9 @@ async function loadAndTrain(ev) {
             contents.colorLearn = subColor.concat(contents.colorLearn);
             contents.zoneLearn = subColor.concat(contents.zoneLearn);
         }
-    }
 
+    }
+    */
     document.querySelector('#progress1').MaterialProgress.setProgress(100);
     document.querySelector('#progress2').innerHTML = "100 %";
     console.warn("Train finish ");
