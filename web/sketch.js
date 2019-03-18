@@ -1,8 +1,8 @@
 //let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 //let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
-let all_squares_display = { squareCoord: [], pos: [], color: [], zone:[], predictSquare: [], posPredict: [], zonePredict: [] };
-let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn:[] };
+let all_squares_display = { squareCoord: [], pos: [], color: [], zone: [], predictSquare: [], posPredict: [], zonePredict: [] };
+let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
 let zones;
 let nbZones;
@@ -49,7 +49,7 @@ function reset() {
     //all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
     let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zonePredict: [] };
-    let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn:[] };
+    let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
     textToUser("Nouveau réseau créé !");
 }
@@ -62,7 +62,7 @@ function resetPredict() {
 }
 
 function resetTrain() {
-    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: []};
+    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
     all_squares_display.squareCoord = [];
     all_squares_display.pos = [];
     all_squares_display.color = [];
@@ -87,7 +87,8 @@ function textToUser(msg) {
  * @param {int} h
  */
 function addToDisplayLearn(l, h, color) {
-    all_squares_display["squareCoord"].push({ l: l, h: h});
+    // console.log(color)
+    all_squares_display["squareCoord"].push({ l: l, h: h });
 
     // Si grand rectangle, va en haut, sinon va en bas
     /*
@@ -97,7 +98,7 @@ function addToDisplayLearn(l, h, color) {
         all_squares_display["pos"].push("Bas");
     }
     */
-    all_squares_display["zone"].push(expectedZone(h,l,color));
+    all_squares_display["zone"].push(expectedZone(h, l, color));
 
 
     // Lui choisit une couleur random (pour affichage)
@@ -126,22 +127,22 @@ Exemple : un petit rectangle rose sera dans la zone 1, un grand rectangle jaune 
 */
 
 /**
-* Découpe l'aire de travail en plusieurs zones pour permettre la classification
-* @param {int} height hauteur de la zone à découper
-* @param {int} width largeur de la zone à découper
-* @param {int} shift décalage de la zone par rapport au bord gauche du canvas
-* @param {xZones} nombre de zones voulue sur l'axe horizontal
-* @param {yZones} nombre de zones voulue sur l'axe vertical
-*/
-function sliceInZones(height, width, xZones, yZones){
-  let zones = []
-  let k = 0;
-  for (let i=0; i<xZones;i++){
-    for (let j=0; j<yZones; j++){
-      zones[k++] = [i*width/xZones, j*height/yZones];
+ * Découpe l'aire de travail en plusieurs zones pour permettre la classification
+ * @param {int} height hauteur de la zone à découper
+ * @param {int} width largeur de la zone à découper
+ * @param {int} shift décalage de la zone par rapport au bord gauche du canvas
+ * @param {xZones} nombre de zones voulue sur l'axe horizontal
+ * @param {yZones} nombre de zones voulue sur l'axe vertical
+ */
+function sliceInZones(height, width, xZones, yZones) {
+    let zones = []
+    let k = 0;
+    for (let i = 0; i < xZones; i++) {
+        for (let j = 0; j < yZones; j++) {
+            zones[k++] = [i * width / xZones, j * height / yZones];
+        }
     }
-  }
-  return zones;
+    return zones;
 }
 
 function setup() {
@@ -255,14 +256,14 @@ function draw() {
     noFill();
     strokeWeight(1);
     //stroke('#D3D3D3');
-    for (let i = 0; i<zones.length; i++){
-      line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
-      line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
+    for (let i = 0; i < zones.length; i++) {
+        line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
+        line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
     }
     //Côté prédictions
-    for (let i = 0; i<zones.length; i++){
-      line(zones[i][0]+gapPosition+100, 0, zones[i][0]+gapPosition+100, canvasHeight); //lignes verticales
-      line(gapPosition+100, zones[i][1], canvasWidth, zones[i][1]); //lignes horizontales
+    for (let i = 0; i < zones.length; i++) {
+        line(zones[i][0] + gapPosition + 100, 0, zones[i][0] + gapPosition + 100, canvasHeight); //lignes verticales
+        line(gapPosition + 100, zones[i][1], canvasWidth, zones[i][1]); //lignes horizontales
     }
 
     // Dessine chaque rectangle d'entrainement de all_squares_display
@@ -285,7 +286,7 @@ function draw() {
         console.log(all_squares_display.color);
         */
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
-        rect(/*xGap+*/squareZone[0], /*yGap+*/squareZone[1], all_squares_display.squareCoord[i].l/2, all_squares_display.squareCoord[i].h/2);
+        rect( /*xGap+*/ squareZone[0], /*yGap+*/ squareZone[1], all_squares_display.squareCoord[i].l / 2, all_squares_display.squareCoord[i].h / 2);
     }
 
     strokeWeight(1);
@@ -303,7 +304,7 @@ function draw() {
         let predictSquareZone = zones[all_squares_display["zonePredict"][i]];
         //console.log(all_squares_display["zonePredict"][i]);
         fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
-        rect(/*xGap+*/700+predictSquareZone[0], /*yGap*/+predictSquareZone[1], all_squares_display.predictSquare[i].l/2, all_squares_display.predictSquare[i].h/2);
+        rect( /*xGap+*/ 700 + predictSquareZone[0], /*yGap*/ +predictSquareZone[1], all_squares_display.predictSquare[i].l / 2, all_squares_display.predictSquare[i].h / 2);
     }
 
     // Si activé par le bouton, rajoute un nouveau rectangle d'entrainement

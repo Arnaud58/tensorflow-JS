@@ -83,40 +83,38 @@ function generateTensorForAllSquare() {
     return tf.tensor2d(res, [all_squares_learn.zoneLearn.length, nbinputShape]);
 }
 
-function expectedZone(height, width, color){
-  let area = height*width;
-  let condFuchsia = (color[0]==249 && color[1]==132 && color[2]==239);
-  let condUltraPink = (color[0]==255 && color[1]==111 && color[2]==255);
-  let condPalePink = (color[0]==250 && color[1]==218 && color[2]==221);
-  let condBanana = (color[0]==255 && color[1]==255 && color[2]==0);
-  let condDandelion = (color[0]==240 && color[1]==225 && color[2]==48);
-  let condSunset = (color[0]==253 && color[1]==94 && color[2]==83);
-  let condPink = condFuchsia || condUltraPink || condPalePink;
-  let condOrange = condBanana || condDandelion || condSunset;
-  if (color == LIGHT_FUCHSIA_PINK || color ==  [249, 132, 239] || color == ULTRA_PINK || color == [255, 111, 255] || color == PALE_PINK || color ==  [250, 218, 221] || condPink){
-    //console.log("PINK ...");
-    if (area>areaLimit) return 0;
-    else return 1;
+function expectedZone(height, width, color) {
+    let area = height * width;
+    let condFuchsia = (color[0] == 249 && color[1] == 132 && color[2] == 239);
+    let condUltraPink = (color[0] == 255 && color[1] == 111 && color[2] == 255);
+    let condPalePink = (color[0] == 250 && color[1] == 218 && color[2] == 221);
+    let condBanana = (color[0] == 255 && color[1] == 255 && color[2] == 0);
+    let condDandelion = (color[0] == 240 && color[1] == 225 && color[2] == 48);
+    let condSunset = (color[0] == 253 && color[1] == 94 && color[2] == 83);
+    let condPink = condFuchsia || condUltraPink || condPalePink;
+    let condOrange = condBanana || condDandelion || condSunset;
+    if (color == LIGHT_FUCHSIA_PINK || color == [249, 132, 239] || color == ULTRA_PINK || color == [255, 111, 255] || color == PALE_PINK || color == [250, 218, 221] || condPink) {
+        //console.log("PINK ...");
+        if (area > areaLimit) return 0;
+        else return 1;
 
-  }
-  else if (color == BANANA_MANIA || color == [255, 255, 0] || color == DANDELION || color == [240, 225, 48] || color == SUNSET_ORANGE || color == [253, 94, 83] || condOrange){
-    //console.log("YELLOW OR ORANGE ...");
-    if (area>areaLimit) return 2;
-    else return 3;
+    } else if (color == BANANA_MANIA || color == [255, 255, 0] || color == DANDELION || color == [240, 225, 48] || color == SUNSET_ORANGE || color == [253, 94, 83] || condOrange) {
+        //console.log("YELLOW OR ORANGE ...");
+        if (area > areaLimit) return 2;
+        else return 3;
 
-  }
-  else{
-    //console.log("BLUE OR GREEN ...");
-    if (area>areaLimit) return 4;
-    else return 5;
-  }
+    } else {
+        //console.log("BLUE OR GREEN ...");
+        if (area > areaLimit) return 4;
+        else return 5;
+    }
 }
 
-function vectorFromExpectedZone(zoneExpected){
-  let res = []  //construit un vecteur de la forme [0,0,1,0,0,0] pour représenter les zones possibles
-  for (let i=0; i<6; i++){
-    if (i==zoneExpected) res.push(1);
-    else res.push(0);
-  }
-  return res;
+function vectorFromExpectedZone(zoneExpected) {
+    let res = [] //construit un vecteur de la forme [0,0,1,0,0,0] pour représenter les zones possibles
+    for (let i = 0; i < 6; i++) {
+        if (i == zoneExpected) res.push(1);
+        else res.push(0);
+    }
+    return res;
 }

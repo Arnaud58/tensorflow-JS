@@ -91,7 +91,7 @@ async function trainAllSquares() {
 
 async function loadAndTrain(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
-    //console.log(contents);
+    console.log(contents);
     resetTrain();
     all_squares_learn = contents;
 
@@ -100,63 +100,20 @@ async function loadAndTrain(ev) {
 
 
     // A  MODIFIER POUR RAJOUTER LES ZONES
-    all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn};
+    all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn }
 
-    //console.log("ALL_SQUARES_LEARN");
-    //console.log(all_squares_learn);
-    for (i = 0; i < inputNBrepetition; i++) {
-        for (j = 0; j < trainSize; j++) {
-          //console.log(all_squares_learn.colorLearn[j]);
-          //addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]);
-          /* --- REMPLIT LES CHAMPS MANQUANTS DANS ALL_SQUARES_DISPLAY --- */
-          all_squares_display.squareCoord.push({ l: contents.squareLearn[j * 2] * 390 + 10, h: contents.squareLearn[j * 2 + 1] * 390 + 10});
-        //  all_squares_display["zone"].push(contents.zoneLearn[j * 2] * 390 + 10);
-          all_squares_display.color.push({r:contents.colorLearn[j][0], g:contents.colorLearn[j][1], b:contents.colorLearn[j][2]});
-          // Si grand rectangle, va en haut, sinon va en bas
-          if (predictLH(contents.squareLearn[j * 2] * 390,  contents.squareLearn[j * 2 + 1] * 390 + 10)) {
-              all_squares_display.pos.push("Haut");
-              //all_squares_learn["posLearn"].push([1, 0]);
-          } else {
-              all_squares_display.pos.push("Bas");
-              //all_squares_learn["posLearn"].push([0, 1]);
-          }
-
-          //détermine la zone où il doit être placé
-          let expectZone = expectedZone(contents.squareLearn[j * 2] * 390, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]);
-          /*console.log("zone et couleur");
-          console.log(expectZone);
-          console.log(contents.colorLearn[j]);
-          */
-          all_squares_display.zone.push(expectZone);
-
-          /* --------------------------------------------------------------*/
-        //console.log("ALL_SQUARES_DISPLAY");
-          //console.log(all_squares_display);
-          /*
-
-          await trainAllSquares();
-          console.log("ALL_SQUARES_DISPLAY après train");
-          console.log(all_squares_display);
-          */
-          let percent = (j / trainSize) * 100;
-          document.querySelector('#progress1').MaterialProgress.setProgress(parseInt(percent.toFixed(0)));
-          document.querySelector('#progress2').innerHTML = percent.toFixed(2) + " %";
-        }
-    }
-    /*
     for (i = 0; i < inputNBrepetition; i++) {
         for (j = 1; j < trainSize; j++) {
             subSquare = contents.squareLearn.splice(0, j * 2);
             subPos = contents.posLearn.splice(0, j);
             subLinks = contents.linksLearn.splice(0, j);
-            subColor = contents.colorLearn.splice(0, j*3);
-            subZones = contents.zoneLearn.splice(0,j*6);
+            subColor = contents.colorLearn.splice(0, j);
+            subZones = contents.zoneLearn.splice(0, j);
 
-            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor, zoneLearn: subZones};
-            console.log(all_squares_learn);
+            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor, zoneLearn: subZones };
 
             // Add to the display screen
-            addToDisplayLearn(contents.squareLearn[j * 2] * 390 + 10, contents.squareLearn[j * 2 + 1] * 390 + 10, contents.colorLearn[j]*390+10);
+            addToDisplayLearn(subSquare[(j - 1) * 2] * 390 + 10, subSquare[(j - 1) * 2 + 1] * 390 + 10, subColor[j - 1]);
             // Train the data
             await trainAllSquares();
 
@@ -169,12 +126,11 @@ async function loadAndTrain(ev) {
             contents.posLearn = subPos.concat(contents.posLearn);
             contents.linksLearn = subLinks.concat(contents.linksLearn);
             contents.colorLearn = subColor.concat(contents.colorLearn);
-            contents.zoneLearn = subColor.concat(contents.zoneLearn);
+            contents.zoneLearn = subZones.concat(contents.zoneLearn);
         }
 
     }
-    */
-    await trainAllSquares();
+
     document.querySelector('#progress1').MaterialProgress.setProgress(100);
     document.querySelector('#progress2').innerHTML = "100 %";
     console.warn("Train finish ");

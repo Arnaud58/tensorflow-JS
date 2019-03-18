@@ -24,21 +24,21 @@ function predictLH(l, h) {
 
 
 /**
-* Retourne le numéro de la zone obtenue en résultat en fonction du tableau retourné
-* par le réseau neuronal
-* @param {float[int]} resArray le tableau contenant les résultats retournés par TensorFlow
-* @return le numéro de la zone correpondante
-*/
-function checkResZone(resArray){
-  let res = 0;
-  let maxValue = 0;
-  for (let i = 0; i<6; i++){
-    if (resArray[i]>maxValue) {
-      maxValue = resArray[i];
-      res = i;
+ * Retourne le numéro de la zone obtenue en résultat en fonction du tableau retourné
+ * par le réseau neuronal
+ * @param {float[int]} resArray le tableau contenant les résultats retournés par TensorFlow
+ * @return le numéro de la zone correpondante
+ */
+function checkResZone(resArray) {
+    let res = 0;
+    let maxValue = 0;
+    for (let i = 0; i < 6; i++) {
+        if (resArray[i] > maxValue) {
+            maxValue = resArray[i];
+            res = i;
+        }
     }
-  }
-  return res;
+    return res;
 }
 
 /**
@@ -80,7 +80,7 @@ function predictTheTests() {
  * @returns {[array,boolean]} Le tableau contient un tableau qui représente le tensor de la prédiction, le boolen vaux Vrai si la prédiction est mauvaise et Faux sinon
  */
 function predictAndDisplay(lgr, htr, color, link) {
-  //console.log(color);
+    //console.log(color);
     // Si la hauteur et la largeur n'es pas bonne, ne rien faire et alerter
     if (lgr > 400 || htr > 400 || lgr < 10 || htr < 10) {
         console.error("Largeur et hauteur doivent être entre 10 et 400");
@@ -106,12 +106,12 @@ function predictAndDisplay(lgr, htr, color, link) {
     let resZone = checkResZone(res);
     //console.log(resZone);
     all_squares_display["zonePredict"].push(resZone);
-    if (resZone==expectedZone(htr, lgr, color)){
-      isCorrect = true;
-      all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
-    }else{
-      all_squares_display["colorPredict"].push({ r: 255, g: 0, b: 0 });
-      isCorrect = false;
+    if (resZone == expectedZone(htr, lgr, color)) {
+        isCorrect = true;
+        all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
+    } else {
+        all_squares_display["colorPredict"].push({ r: 255, g: 0, b: 0 });
+        isCorrect = false;
     }
     /*
     if (res[0] > 0.5) {
@@ -147,7 +147,7 @@ function loadAndPredict(ev) {
 
     // Parcourt tous les carré de la partie apprentisage et les prédict
     for (i = 0; i < contents.squareLearn.length; i += 2) {
-        let res = predictAndDisplay(contents.squareLearn[i] * 390 + 10, contents.squareLearn[i + 1] * 390 + 10);
+        let res = predictAndDisplay(contents.squareLearn[i] * 390 + 10, contents.squareLearn[i + 1] * 390 + 10, contents.colorLearn[i / 2], contents.linksLearn[i / 2]);
         if (res[1]) {
             correctTest++;
         }
