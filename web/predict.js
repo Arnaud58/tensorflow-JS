@@ -138,6 +138,7 @@ function predictAndDisplay(lgr, htr, color, link) {
 }
 
 function loadAndPredict(ev) {
+    //A MODIFIER POUR PRENDRE EN COMPTE LES ZONES ET LES COULEURS
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
     let cpt = 0;
     let correctTest = 0;

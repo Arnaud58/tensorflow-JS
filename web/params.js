@@ -94,19 +94,19 @@ function expectedZone(height, width, color){
   let condPink = condFuchsia || condUltraPink || condPalePink;
   let condOrange = condBanana || condDandelion || condSunset;
   if (color == LIGHT_FUCHSIA_PINK || color ==  [249, 132, 239] || color == ULTRA_PINK || color == [255, 111, 255] || color == PALE_PINK || color ==  [250, 218, 221] || condPink){
-    console.log("PINK ...");
+    //console.log("PINK ...");
     if (area>areaLimit) return 0;
     else return 1;
 
   }
   else if (color == BANANA_MANIA || color == [255, 255, 0] || color == DANDELION || color == [240, 225, 48] || color == SUNSET_ORANGE || color == [253, 94, 83] || condOrange){
-    console.log("YELLOW OR ORANGE ...");
+    //console.log("YELLOW OR ORANGE ...");
     if (area>areaLimit) return 2;
     else return 3;
 
   }
   else{
-    console.log("BLUE OR GREEN ...");
+    //console.log("BLUE OR GREEN ...");
     if (area>areaLimit) return 4;
     else return 5;
   }
