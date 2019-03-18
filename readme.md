@@ -79,6 +79,17 @@ Onglet _Save and Load Model_ : (__REMARQUE :__ Ne fonctionne qu'avec Google Chro
 - *Upload Json Model* et *Upload weights*. Charge le fichier json et le .bin contenant le modèle et les poids (de la même forme que ceux téléchargeables via *Save Model*)
 - *Load Model*. Charge le modèle après que l'on ait préalablement chargé les fichiers requis via les deux boutons précédents.
 
+
+(dans branche classif-zones) <br/>
+
+Nouvel onglet _Params_ : <br/>
+Permet de cocher les paramètres que l'on veut prendre en compte pour la classification (taille, nb de liens, couleurs).
+
+Pour l'instant, fonctionnel lorsque l'on classifie en fonction de la taille et des couleurs. <br/>
+Pour pouvoir tester notre réseau, nous avons choisi arbitrairement une classification qui découpe l'aire de travail en 6 zones, chacune correspondant à une combinaison (taille, couleur). Par exemple les grands rectangles roses doivent être placés dans la 1ère zone. <br/>
+Cela est fonctionnel lorsque l'on génère des rectangles à partir de l'interface. <br/>
+L'entraînement à partir d'un fichier fonctionne également mais les résultats sont mauvais pour l'instant, nous cherchons à régler ce problème.
+
 Serveur
 =======
 
