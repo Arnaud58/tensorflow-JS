@@ -5,8 +5,11 @@
 function predictFromUser() {
     let lgr = parseInt(select("#largeur").value());
     let htr = parseInt(select("#hauteur").value());
+    let col = allColors[parseInt(select("#couleur").value())];
+    console.log(col);
 
-    predictAndDisplay(lgr, htr);
+    //nb de liens à rajouter plus tard
+    predictAndDisplay(lgr, htr, col, 10);
 }
 
 /**
@@ -106,6 +109,7 @@ function predictAndDisplay(lgr, htr, color, link) {
     let resZone = checkResZone(res);
     //console.log(resZone);
     all_squares_display["zonePredict"].push(resZone);
+    console.log(all_squares_display);
     if (resZone == expectedZone(htr, lgr, color)) {
         isCorrect = true;
         all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });

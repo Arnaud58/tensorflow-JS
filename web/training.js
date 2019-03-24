@@ -97,9 +97,7 @@ async function loadAndTrain(ev) {
 
     textToUser("Train the data ! ");
     let trainSize = contents.zoneLearn.length;
-
-
-    // A  MODIFIER POUR RAJOUTER LES ZONES
+    
     all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn }
 
     for (i = 0; i < inputNBrepetition; i++) {
