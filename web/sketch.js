@@ -130,7 +130,6 @@ Exemple : un petit rectangle rose sera dans la zone 1, un grand rectangle jaune 
  * Découpe l'aire de travail en plusieurs zones pour permettre la classification
  * @param {int} height hauteur de la zone à découper
  * @param {int} width largeur de la zone à découper
- * @param {int} shift décalage de la zone par rapport au bord gauche du canvas
  * @param {xZones} nombre de zones voulue sur l'axe horizontal
  * @param {yZones} nombre de zones voulue sur l'axe vertical
  */
@@ -223,7 +222,7 @@ function setup() {
 }
 
 /*
- * Fonction appelé par p5 à chaque frame
+ * Fonction appelée par p5 à chaque frame
  */
 function draw() {
     // Arrière plan
@@ -255,7 +254,6 @@ function draw() {
     //Côté apprentissage
     noFill();
     strokeWeight(1);
-    //stroke('#D3D3D3');
     for (let i = 0; i < zones.length; i++) {
         line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
         line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
@@ -281,10 +279,7 @@ function draw() {
 
         let squareZone = zones[all_squares_display["zone"][i]];
 
-        /*
-        console.log("color");
-        console.log(all_squares_display.color);
-        */
+
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
         rect( /*xGap+*/ squareZone[0], /*yGap+*/ squareZone[1], all_squares_display.squareCoord[i].l / 2, all_squares_display.squareCoord[i].h / 2);
     }
