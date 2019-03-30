@@ -41,12 +41,6 @@ function computeNbinputShape() {
     return res;
 }
 
-/**
-* Returns the number of necessary zones, based on which parameters are activated
-*/
-function nbZones(){
-  TODO
-}
 
 
 function generateTensorFor1Square(l, h, colorSquare, link) {

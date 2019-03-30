@@ -7,6 +7,10 @@ let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLe
 let zones;
 let nbZones;
 
+//nb de zones selon l'axe horizontal ou vertical
+let xZones;
+let yZones;
+
 let jsonUpload;
 let weightsUpload;
 
@@ -105,6 +109,33 @@ function addToDisplayLearn(l, h, color) {
     //let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
+}
+
+/**
+* Returns the number of necessary zones, based on which parameters are activated
+*/
+function setNbZones(){
+  if (scaleIsActive && !colorIsActive) return 2;
+  else if (!scaleIsActive && colorIsActive) return 3;
+  else if (scaleIsActive && colorIsActive) return 6;
+  //à voir plus tard pour les liens
+}
+
+
+function setNbZonesXY(){
+  if (scaleIsActive && !colorIsActive){
+    xZones = 1;
+    yZones = 2;
+  }
+  else if (!scaleIsActive && colorIsActive){
+    xZones = 3;
+    yZones = 1;
+  }
+  else if (scaleIsActive && colorIsActive){
+    xZones = 3;
+    yZones = 2;
+  }
+  //à voir plus tard pour les liens
 }
 
 /*
@@ -232,8 +263,12 @@ function draw() {
     const canvasWidth = 1300;
     const gapPosition = 600;
 
+    /*
     const xZones = 3;
     const yZones = 2;
+    */
+    nbZones = setNbZones();
+    setNbZonesXY();
 
     // Draw le contours des 2 rectangles
     noFill();
