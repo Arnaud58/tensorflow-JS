@@ -40,11 +40,10 @@ function createNeuralNetwork() {
             activation: activationType
         }));
     }
-
     ///couche de sortie
     let outputLayer = tf.layers.dense({
         //units: 2,
-        units: 6,  //si 6 zones de classification possibles
+        units: nbZones,  //en sortie, doit choisir l'une des zones de classification
         activation: 'softmax'
     });
     model.add(outputLayer);

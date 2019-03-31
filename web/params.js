@@ -25,6 +25,9 @@ function checkActiveParams() {
     nbinputShape = computeNbinputShape();
 
     textToUser("Nouveaux paramètres enregistrés");
+
+    nbZones = setNbZones();
+    setNbZonesXY();
 }
 
 function computeNbinputShape() {
@@ -84,7 +87,19 @@ function generateTensorForAllSquare() {
     return tf.tensor2d(res, [all_squares_learn.zoneLearn.length, nbinputShape]);
 }
 
-function expectedZone(height, width, color) {
+function expectedZone(height, width, color){
+  if (scaleIsActive && !colorIsActive) return expectedZoneScale(height, width, color);
+  else if (!scaleIsActive && colorIsActive) return expectedZoneColor(height, width, color);
+  else if (scaleIsActive && colorIsActive) return expectedZoneScaleColor(height, width, color);
+}
+
+function expectedZoneScale(height, width, color) {
+    let area = height * width;
+    if (area > areaLimit) return 0;
+    else return 1;
+}
+
+function expectedZoneColor(height, width, color) {
     let area = height * width;
     let condFuchsia = (color[0] == 249 && color[1] == 132 && color[2] == 239);
     let condUltraPink = (color[0] == 255 && color[1] == 111 && color[2] == 255);
@@ -94,12 +109,31 @@ function expectedZone(height, width, color) {
     let condSunset = (color[0] == 253 && color[1] == 94 && color[2] == 83);
     let condPink = condFuchsia || condUltraPink || condPalePink;
     let condOrange = condBanana || condDandelion || condSunset;
-    if (color == LIGHT_FUCHSIA_PINK || color == [249, 132, 239] || color == ULTRA_PINK || color == [255, 111, 255] || color == PALE_PINK || color == [250, 218, 221] || condPink) {
+    if (condPink) {
+        return 0;
+    } else if (condOrange) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
+
+function expectedZoneScaleColor(height, width, color) {
+    let area = height * width;
+    let condFuchsia = (color[0] == 249 && color[1] == 132 && color[2] == 239);
+    let condUltraPink = (color[0] == 255 && color[1] == 111 && color[2] == 255);
+    let condPalePink = (color[0] == 250 && color[1] == 218 && color[2] == 221);
+    let condBanana = (color[0] == 255 && color[1] == 255 && color[2] == 0);
+    let condDandelion = (color[0] == 240 && color[1] == 225 && color[2] == 48);
+    let condSunset = (color[0] == 253 && color[1] == 94 && color[2] == 83);
+    let condPink = condFuchsia || condUltraPink || condPalePink;
+    let condOrange = condBanana || condDandelion || condSunset;
+    if (condPink) {
         //console.log("PINK ...");
         if (area > areaLimit) return 0;
         else return 1;
 
-    } else if (color == BANANA_MANIA || color == [255, 255, 0] || color == DANDELION || color == [240, 225, 48] || color == SUNSET_ORANGE || color == [253, 94, 83] || condOrange) {
+    } else if (condOrange) {
         //console.log("YELLOW OR ORANGE ...");
         if (area > areaLimit) return 2;
         else return 3;
@@ -113,7 +147,7 @@ function expectedZone(height, width, color) {
 
 function vectorFromExpectedZone(zoneExpected) {
     let res = [] //construit un vecteur de la forme [0,0,1,0,0,0] pour représenter les zones possibles
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < nbZones; i++) {
         if (i == zoneExpected) res.push(1);
         else res.push(0);
     }

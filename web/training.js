@@ -63,7 +63,7 @@ async function trainSquare(l, h, color, link) {
     // xs = tf.tensor2d([l, h], [1, 2]);
 
     xs = generateTensorFor1Square(l, h, color, link);
-    ys = tf.tensor2d(res, [1, 6]);
+    ys = tf.tensor2d(res, [1, nbZones]);
 
 
 
@@ -82,7 +82,7 @@ async function trainAllSquares() {
     // xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
 
     xs = generateTensorForAllSquare();
-    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.zoneLearn.length, 6]); //6 = taille du vecteur en sortie
+    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.zoneLearn.length, nbZones]); //nbZones = taille du vecteur en sortie
     //ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
     console.warn("Training !");
@@ -97,7 +97,7 @@ async function loadAndTrain(ev) {
 
     textToUser("Train the data ! ");
     let trainSize = contents.zoneLearn.length;
-    
+
     all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn }
 
     for (i = 0; i < inputNBrepetition; i++) {

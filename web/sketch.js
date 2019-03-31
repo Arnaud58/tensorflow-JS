@@ -5,7 +5,7 @@ let all_squares_display = { squareCoord: [], pos: [], color: [], zone: [], predi
 let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
 let zones;
-let nbZones;
+let nbZones = 2;
 
 //nb de zones selon l'axe horizontal ou vertical
 let xZones;
@@ -267,8 +267,8 @@ function draw() {
     const xZones = 3;
     const yZones = 2;
     */
-    nbZones = setNbZones();
-    setNbZonesXY();
+    //nbZones = setNbZones();
+    //setNbZonesXY();
 
     // Draw le contours des 2 rectangles
     noFill();

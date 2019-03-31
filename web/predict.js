@@ -35,7 +35,7 @@ function predictLH(l, h) {
 function checkResZone(resArray) {
     let res = 0;
     let maxValue = 0;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < nbZones; i++) {
         if (resArray[i] > maxValue) {
             maxValue = resArray[i];
             res = i;
@@ -109,7 +109,6 @@ function predictAndDisplay(lgr, htr, color, link) {
     let resZone = checkResZone(res);
     //console.log(resZone);
     all_squares_display["zonePredict"].push(resZone);
-    console.log(all_squares_display);
     if (resZone == expectedZone(htr, lgr, color)) {
         isCorrect = true;
         all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
