@@ -1,7 +1,8 @@
+let dataConfusion;
+
 /**
  * Fonction qui ajoute aux tableau à prédire la séléction de l'utilisateur
  */
-
 function predictFromUser() {
     let lgr = parseInt(select("#largeur").value());
     let htr = parseInt(select("#hauteur").value());
@@ -52,6 +53,30 @@ function checkResZone(resArray) {
 function predictTheTests() {
     let cpt = 0;
     let correctTest = 0;
+    let rows = 1;
+    let cols = 1;
+    let value = [];
+
+    dataConfusion = [];
+
+    if (scaleIsActive) {
+        rows *= 2;
+        cols *= 2;
+        value.push(0);
+        value.push(0);
+    }
+    if (colorIsActive) {
+        rows *= 3;
+        cols *= 3;
+        value.push(0);
+        value.push(0);
+        value.push(0);
+    }
+
+    for (i = 0; i < rows; i++) {
+        dataConfusion.push(value.slice());
+    }
+
     resetPredict();
 
     // Parcourt tous les carrés de la partie apprentissage et les prédit
@@ -73,6 +98,9 @@ function predictTheTests() {
     select("#percentSuccess").html(parseInt((correctTest / cpt) * 10000) / 100 + "%");
     console.warn("Correct : " + parseInt((correctTest / cpt) * 10000) / 100 + "%");
     textToUser("Réussite de : " + parseInt((correctTest / cpt) * 10000) / 100 + "%");
+
+    let finalData = { values: dataConfusion };
+    tfvis.render.confusionMatrix(document.getElementById("confusion"), finalData);
 }
 
 /**
@@ -107,32 +135,16 @@ function predictAndDisplay(lgr, htr, color, link) {
 
     // Lui donne une couleur en fonction de si il est bien placé où non
     let resZone = checkResZone(res);
-    //console.log(resZone);
+    let eptZone = expectedZone(htr, lgr, color);
     all_squares_display["zonePredict"].push(resZone);
-    if (resZone == expectedZone(htr, lgr, color)) {
+    if (resZone == eptZone) {
         isCorrect = true;
         all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
     } else {
         all_squares_display["colorPredict"].push({ r: 255, g: 0, b: 0 });
         isCorrect = false;
     }
-    /*
-    if (res[0] > 0.5) {
-        if (predictLH(lgr, htr)) {
-            all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
-            isCorrect = true;
-        } else { all_squares_display["colorPredict"].push({ r: 255, g: 0, b: 0 }); }
-
-        all_squares_display["posPredict"].push("Haut");
-    } else {
-        if (!predictLH(lgr, htr)) {
-            all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
-            isCorrect = true;
-        } else { all_squares_display["colorPredict"].push({ r: 255, g: 0, b: 0 }); }
-
-        all_squares_display["posPredict"].push("Bas");
-    }
-    */
+    dataConfusion[resZone][eptZone] += 1;
 
     // Log et retourne le résultat
     //tensorRes.print();
