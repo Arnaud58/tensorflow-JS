@@ -23,7 +23,7 @@ let callbacks;
 
 //aire au delà de laquelle un rectangle est considéré comme étant grand
 const areaLimit = 30000;
-const metrics = ['loss', 'acc'];
+const metrics = ['loss', 'val_loss'];
 
 /**
  * Sert à télécharger une variable sur son bureau

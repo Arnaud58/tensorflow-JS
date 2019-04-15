@@ -65,6 +65,17 @@ async function trainSquare(l, h, color, link) {
     xs = generateTensorFor1Square(l, h, color, link);
     ys = tf.tensor2d(res, [1, nbZones]);
 
+    let config = {
+        epochs: inputNBrepetition,
+        callbacks: {
+            onEpochEnd: async(epoch, logs) => {
+                console.log(logs.loss);
+                console.log(logs);
+            }
+        },
+        callbacks: callbacks
+    };
+
     console.warn("Training !");
     await model.fit(xs, ys, config);
 }
@@ -83,22 +94,15 @@ async function trainAllSquares() {
     //ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
 
     let config = {
-        shuffle: true,
-        epochs: all_squares_learn.zoneLearn.length,
+        epochs: inputNBrepetition,
         callbacks: {
-            // affichage de la valeur du loss a la fin de chaque itération
             onEpochEnd: async(epoch, logs) => {
                 console.log(logs.loss);
                 console.log(logs);
-                console.log("Vinish E");
-            },
-            onEpochBegin: async(epoch) => {
-                console.log("Vegin E");
             }
         },
         callbacks: callbacks
     };
-
 
     console.warn("Training !");
     await model.fit(xs, ys, config);
