@@ -8,8 +8,8 @@
 
     <title>Test Prédiction</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.1">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.js"></script>
 
@@ -36,6 +36,7 @@
                 <a href="#learning-panel" class="mdl-tabs__tab">Learning</a>
                 <a href="#predictions-panel" class="mdl-tabs__tab">Predictions</a>
                 <a href="#saveloadmodel-panel" class="mdl-tabs__tab">Save or Load Model</a>
+                <a href="#graph-panel" class="mdl-tabs__tab">Graph</a>
 
                 <p id="nbRect"></p>
                 <!-- affiche le nb de rectanges générés -->
@@ -228,6 +229,10 @@
                     <button class="mdl-button mdl-js-button mdl-button--raised" id="loadModel">Load model</button>
                 </div>
                 <!-- </div> -->
+            </div>
+            <div class="mdl-tabs__panel" id="graph-panel">
+                <div id="epoch"></div>
+
             </div>
         </div>
         <div id="demo-snackbar" class="mdl-js-snackbar mdl-snackbar">

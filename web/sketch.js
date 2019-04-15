@@ -19,8 +19,11 @@ let autoAjout = false;
 
 let _snackbarContainer;
 
+let callbacks;
+
 //aire au delà de laquelle un rectangle est considéré comme étant grand
 const areaLimit = 30000;
+const metrics = ['loss', 'acc'];
 
 /**
  * Sert à télécharger une variable sur son bureau
@@ -112,30 +115,28 @@ function addToDisplayLearn(l, h, color) {
 }
 
 /**
-* Returns the number of necessary zones, based on which parameters are activated
-*/
-function setNbZones(){
-  if (scaleIsActive && !colorIsActive) return 2;
-  else if (!scaleIsActive && colorIsActive) return 3;
-  else if (scaleIsActive && colorIsActive) return 6;
-  //à voir plus tard pour les liens
+ * Returns the number of necessary zones, based on which parameters are activated
+ */
+function setNbZones() {
+    if (scaleIsActive && !colorIsActive) return 2;
+    else if (!scaleIsActive && colorIsActive) return 3;
+    else if (scaleIsActive && colorIsActive) return 6;
+    //à voir plus tard pour les liens
 }
 
 
-function setNbZonesXY(){
-  if (scaleIsActive && !colorIsActive){
-    xZones = 1;
-    yZones = 2;
-  }
-  else if (!scaleIsActive && colorIsActive){
-    xZones = 3;
-    yZones = 1;
-  }
-  else if (scaleIsActive && colorIsActive){
-    xZones = 3;
-    yZones = 2;
-  }
-  //à voir plus tard pour les liens
+function setNbZonesXY() {
+    if (scaleIsActive && !colorIsActive) {
+        xZones = 1;
+        yZones = 2;
+    } else if (!scaleIsActive && colorIsActive) {
+        xZones = 3;
+        yZones = 1;
+    } else if (scaleIsActive && colorIsActive) {
+        xZones = 3;
+        yZones = 2;
+    }
+    //à voir plus tard pour les liens
 }
 
 /*
@@ -248,6 +249,9 @@ function setup() {
         console.log("LoadModel appelée");
         loadModelFromFiles();
     });
+
+    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics);
+    callbacks.onBatchEnd = null;
 
     createNeuralNetwork();
 }
