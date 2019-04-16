@@ -5,6 +5,8 @@ let inputNBrepetition;
 let inputLearningRate;
 let learningRate;
 
+//let modelStructure = {nbLayers: 1, nbNeurons: [1], activationFun:[elu]};
+
 //const learningRate = 0.01;
 
 let model;
@@ -32,7 +34,7 @@ function createNeuralNetwork() {
     getNetworksParam();
 
     model = tf.sequential();
-    repetition
+    //repetition
 
     //première couche traîtée à part car il faut rajouter l'inputShape
     let firstHiddenLayer = tf.layers.dense({

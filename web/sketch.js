@@ -194,12 +194,13 @@ function setup() {
     /* Boutons dans onglet Neural */
     button = select("#create");
     button.mousePressed(reset);
-
+    /*
     button = select("#addLayer");
     button.mousePressed(addLayer);
 
     button = select("#removeLayer");
     button.mousePressed(removeLayer);
+    */
 
     /* Boutons dans onglet Learning */
 
