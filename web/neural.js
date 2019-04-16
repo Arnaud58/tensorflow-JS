@@ -9,6 +9,14 @@ let learningRate;
 
 let model;
 
+function addLayer(){
+  //TODO
+}
+
+function removeLayer(){
+  //TODO
+}
+
 function getNetworksParam() {
     inputNBCouches = parseInt(document.getElementById("couches").value);
     inputNBNeurones = parseInt(document.getElementById("neurones").value);

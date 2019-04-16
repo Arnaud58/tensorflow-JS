@@ -186,8 +186,34 @@ function setup() {
     jsonUpload = document.getElementById('json-upload');
     weightsUpload = document.getElementById('weights-upload');
 
-    let button = select("#Add1");
+    /* Boutons dans onglet Params */
+
+    let button = select("#chooseParams");
+    button.mousePressed(checkActiveParams);
+
+    /* Boutons dans onglet Neural */
+    button = select("#create");
+    button.mousePressed(reset);
+
+    button = select("#addLayer");
+    button.mousePressed(addLayer);
+
+    button = select("#removeLayer");
+    button.mousePressed(removeLayer);
+
+    /* Boutons dans onglet Learning */
+
+    button = select("#Add1");
     button.mousePressed(addSquare);
+
+    buttonAutoAdd = select("#AddFrame");
+    buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
+
+    var fileT = document.querySelector("#trainFile");
+    var readerTrain = new FileReader();
+    readerTrain.onload = loadAndTrain;
+
+    /* Boutons dans onglet Predict */
 
     button = select("#predict");
     button.mousePressed(predictFromUser);
@@ -195,14 +221,16 @@ function setup() {
     button = select("#predictTests");
     button.mousePressed(predictTheTests);
 
-    button = select("#create");
-    button.mousePressed(reset);
+    var fileP = document.querySelector("#predictFile");
+    var readerPredict = new FileReader();
+    readerPredict.onload = loadAndPredict;
+
+    /* Boutons dans onglet Save and Load Model */
+
 
     button = select("#saveModel");
     button.mousePressed(saveModel);
 
-    button = select("#chooseParams");
-    button.mousePressed(checkActiveParams);
 
     /*
     button = select("#loadModel");
@@ -212,16 +240,11 @@ function setup() {
     button = select("#saveLearn");
     button.mousePressed(function() { download(all_squares_learn, "training.json"); });
 
-    buttonAutoAdd = select("#AddFrame");
-    buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
 
-    var fileP = document.querySelector("#predictFile");
-    var readerPredict = new FileReader();
-    readerPredict.onload = loadAndPredict;
 
-    var fileT = document.querySelector("#trainFile");
-    var readerTrain = new FileReader();
-    readerTrain.onload = loadAndTrain;
+
+
+
 
     fileP.addEventListener("change", function() {
         var file = this.files[0];
