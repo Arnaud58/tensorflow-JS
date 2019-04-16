@@ -5,13 +5,53 @@ let inputNBrepetition;
 let inputLearningRate;
 let learningRate;
 
-//let modelStructure = {nbLayers: 1, nbNeurons: [1], activationFun:[elu]};
+let modelStructure = {nbLayers: 1, nbNeurons: [1], activationFun:["elu"]};
 
 //const learningRate = 0.01;
 
 let model;
 
 function addLayer(){
+
+  modelStructure.nbLayers ++;
+  modelStructure.nbNeurons.push(1);
+  modelStructure.activationFun.push("elu");
+
+
+  let tr = document.createElement("tr");
+  tr.id = "layer"+modelStructure.nbLayers;
+
+  let td_num = document.createElement("td");
+  td_num.innerText = modelStructure.nbLayers;
+  tr.appendChild(td_num);
+
+  let td_nbNeurons = document.createElement("td");
+  let input_neuron = document.createElement("input");
+  input_neuron.type = "number";
+  input_neuron.min = "1";
+  input_neuron.max = "1000";
+  input_neuron.id = "nbNeuron1";
+  input_neuron.value = "1";
+  td_nbNeurons.appendChild(input_neuron);
+  tr.appendChild(td_nbNeurons);
+
+  let td_activation = document.createElement("td");
+  let selectActivation = document.createElement("select");
+  let fonctions = ["elu", "selu", "relu" ,"LeakyReLU", "PReLU", "ThresholdedReLU",
+                  "tanh","sigmoid", "linear","softmax", "softplus", "softsign"];
+  let nbFun = fonctions.length;
+  for (let i=0; i<nbFun; i++){
+    let opt = document.createElement("option");
+    opt.value = fonctions[i];
+    opt.innerText = fonctions[i];
+    selectActivation.appendChild(opt);
+  }
+  td_activation.appendChild(selectActivation);
+  tr.appendChild(td_activation);
+
+  document.getElementById("struct").querySelector("tbody").appendChild(tr);
+
+
   //TODO
 }
 
@@ -20,6 +60,7 @@ function removeLayer(){
 }
 
 function getNetworksParam() {
+    //A MODIFIER
     inputNBCouches = parseInt(document.getElementById("couches").value);
     inputNBNeurones = parseInt(document.getElementById("neurones").value);
     activationType = document.getElementById("activation").value;

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Test Prédiction</title>
+    <title>Test Prediction</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
@@ -33,6 +33,7 @@
             <div class="mdl-tabs__tab-bar">
                 <a href="#params-panel" class="mdl-tabs__tab is-active">Parameters</a>
                 <a href="#neural-panel" class="mdl-tabs__tab">Neural</a>
+                <a href="#new-neural-panel" class="mdl-tabs__tab">New Neural</a>
                 <a href="#learning-panel" class="mdl-tabs__tab">Learning</a>
                 <a href="#predictions-panel" class="mdl-tabs__tab">Predictions</a>
                 <a href="#saveloadmodel-panel" class="mdl-tabs__tab">Save or Load Model</a>
@@ -72,6 +73,11 @@
                 <input class="mdl-button mdl-js-button mdl-button--raised" type="button" value="Validate" id="chooseParams" />
             </div>
 
+
+            <!-- ANCIEN NEURAL PANEL -->
+
+
+
             <div class="mdl-tabs__panel" id="neural-panel">
                 <table>
                     <tr>
@@ -79,7 +85,7 @@
                             <label for="couches">Nombre de couches : </label>
                         </td>
                         <td>
-                             <input type="number" min="0" max="1000" id="couches" value="1" /> 
+                             <input type="number" min="0" max="1000" id="couches" value="1" />
                             <!-- <button id="removeLayer">-</button>
                             <button id="addLayer">+</button>
                           -->
@@ -128,6 +134,89 @@
                         <td>
                             <label for="repetition">Nombre de répétitions de l'apprentissage : </label>
                             <td>
+                                <td>
+                                    <input type="number" id="repetition" min="1" max="20" value="1" />
+                                </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input class="mdl-button mdl-js-button mdl-button--raised" type="button" value="create" id="create" />
+                        </td>
+                    </tr>
+                </table>
+              </div>
+
+
+
+
+
+            <div class="mdl-tabs__panel" id="new-neural-panel">
+                <table style="text-align: left">
+                    <tr>
+                        <td>
+                            <p id="nbLayers"></p>
+                        </td>
+                        <td>
+                            <!-- <input type="number" min="0" max="1000" id="couches" value="1" /> -->
+                            <button id="removeLayer">-</button>
+                            <button id="addLayer">+</button>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          Structure of the neural network :
+                        </td>
+                        <td>
+                            <!-- <input type="number" min="1" max="1000" id="neurones" value="1" /> -->
+                            <table style="text-align: center; display: inline-block;" border="1" id="struct">
+                              <thead>
+                                <tr>
+                                  <!-- <th colspan="3">Structure du réseau :</th> -->
+                                  <td> N° of the layer </td> <td> Number of neurons</td> <td> Activation function </td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr id="layer1">
+                                  <td>1  </td>
+                                  <td>  <input type="number" min="1" max="1000" id="nbNeuron1" value="1" />  </td>
+                                  <td>
+                                    <select id="activation">
+                                                    <option value="elu">elu</option>
+                                                    <option value="selu">selu</option>
+                                                    <option value="relu">reLU</option>
+                                                    <option value="LeakyReLU">LeakyReLU</option>
+                                                    <option value="PReLU">PReLU</option>
+                                                    <option value="ThresholdedReLU">thresholdedReLU</option>
+                                                    <option value="tanh">tanh</option>
+                                                    <option value="sigmoid">sigmoid</option>
+                                                    <option value="linear">linear</option>
+                                                    <option value="softmax">softmax</option>
+                                                    <option value="softplus">softplus</option>
+                                                    <option value="softsign">softsign</option>
+
+                                    </select>
+                                  </td>
+                                </tr>
+
+                            </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="learningRate">Learning Rate : </label>
+                          </td>
+                                <td>
+                                    <input type="number" id="learningrate" min="0" max="1" value="0.1" step="0.01" />
+                                </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="repetition">Nombre de répétitions de l'apprentissage : </label>
+                          </td>
                                 <td>
                                     <input type="number" id="repetition" min="1" max="20" value="1" />
                                 </td>
