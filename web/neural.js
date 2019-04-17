@@ -30,13 +30,14 @@ function addLayer(){
   input_neuron.type = "number";
   input_neuron.min = "1";
   input_neuron.max = "1000";
-  input_neuron.id = "nbNeuron1";
+  input_neuron.id = "nbNeuron"+modelStructure.nbLayers;
   input_neuron.value = "1";
   td_nbNeurons.appendChild(input_neuron);
   tr.appendChild(td_nbNeurons);
 
   let td_activation = document.createElement("td");
   let selectActivation = document.createElement("select");
+  selectActivation.id = "activation"+modelStructure.nbLayers;
   let fonctions = ["elu", "selu", "relu" ,"LeakyReLU", "PReLU", "ThresholdedReLU",
                   "tanh","sigmoid", "linear","softmax", "softplus", "softsign"];
   let nbFun = fonctions.length;
@@ -51,21 +52,29 @@ function addLayer(){
 
   document.getElementById("struct").querySelector("tbody").appendChild(tr);
 
-
-  //TODO
 }
 
 function removeLayer(){
-  //TODO
+    let structure = document.getElementById("struct").querySelector("tbody");
+    let idToRemove = "layer"+modelStructure.nbLayers; //on récupère l'id de la dernière couche
+    let layerToRemove = document.getElementById(idToRemove);
+    structure.removeChild(layerToRemove);
+    modelStructure.nbLayers--;
+    modelStructure.nbNeurons.pop();
+    modelStructure.activationFun.pop();
+
 }
 
 function getNetworksParam() {
-    //A MODIFIER
-    inputNBCouches = parseInt(document.getElementById("couches").value);
-    inputNBNeurones = parseInt(document.getElementById("neurones").value);
-    activationType = document.getElementById("activation").value;
     inputNBrepetition = parseInt(document.getElementById("repetition").value);
     learningRate = parseFloat(document.getElementById("learningrate").value);
+    for (let i=1; i<=modelStructure.nbLayers; i++){
+      let inputNBNeurones = parseInt(document.getElementById("nbNeuron"+i).value);
+      let activationType = document.getElementById("activation"+i).value;
+      modelStructure.nbNeurons[i-1] = inputNBNeurones;
+      modelStructure.activationFun[i-1] = activationType;
+    }
+    console.log(modelStructure);
 }
 
 /*
@@ -80,15 +89,15 @@ function createNeuralNetwork() {
     //première couche traîtée à part car il faut rajouter l'inputShape
     let firstHiddenLayer = tf.layers.dense({
         inputShape: [nbinputShape],
-        units: inputNBNeurones,
-        activation: activationType
+        units: modelStructure.nbNeurons[0],
+        activation: modelStructure.activationFun[0]
     });
     model.add(firstHiddenLayer);
 
-    for (let i = 1; i < inputNBCouches; i++) {
+    for (let i = 1; i < modelStructure.nbLayers; i++) {
         model.add(tf.layers.dense({
-            units: inputNBNeurones,
-            activation: activationType
+            units: modelStructure.nbNeurons[i],
+            activation: modelStructure.activationFun[i]
         }));
     }
     ///couche de sortie

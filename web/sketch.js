@@ -196,7 +196,7 @@ function setup() {
     button.mousePressed(reset);
 
     //affiche nombre de couches
-    select("#nbLayers").html("Number of Layers :      " + modelStructure.nbLayers);
+    select("#nbLayers").html("Number of Hidden Layers :      " + modelStructure.nbLayers);
 
 
     button = select("#addLayer");
@@ -204,7 +204,7 @@ function setup() {
 
     button = select("#removeLayer");
     button.mousePressed(removeLayer);
-    
+
 
     /* Boutons dans onglet Learning */
 
