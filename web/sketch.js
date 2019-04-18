@@ -278,7 +278,7 @@ function setup() {
         loadModelFromFiles();
     });
 
-    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics);
+    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics, { width: 800, height: 400});
     callbacks.onBatchEnd = null;
 
     createNeuralNetwork();

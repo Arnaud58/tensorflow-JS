@@ -100,7 +100,7 @@ function predictTheTests() {
     textToUser("Réussite de : " + parseInt((correctTest / cpt) * 10000) / 100 + "%");
 
     let finalData = { values: dataConfusion };
-    tfvis.render.confusionMatrix(document.getElementById("confusion"), finalData);
+    tfvis.render.confusionMatrix(document.getElementById("confusion"), finalData, { width: 400, height: 400 });
 }
 
 /**
