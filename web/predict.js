@@ -155,10 +155,37 @@ function predictAndDisplay(lgr, htr, color, link) {
 function loadAndPredict(ev) {
     //A MODIFIER POUR PRENDRE EN COMPTE LES ZONES ET LES COULEURS
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
+    console.log(contents);
     let cpt = 0;
     let correctTest = 0;
     resetPredict();
     //console.log(contents);
+
+    //AJOUT MATRICE CONFUSION
+    let rows = 1;
+    let cols = 1;
+    let value = []; 
+    dataConfusion = [];
+
+    if (scaleIsActive) {
+        rows *= 2;
+        cols *= 2;
+        value.push(0);
+        value.push(0);
+    }
+    if (colorIsActive) {
+        rows *= 3;
+        cols *= 3;
+        value.push(0);
+        value.push(0);
+        value.push(0);
+    }
+
+    for (i = 0; i < rows; i++) {
+        dataConfusion.push(value.slice());
+    }
+
+
 
     // Parcourt tous les carré de la partie apprentisage et les prédict
     for (i = 0; i < contents.squareLearn.length; i += 2) {

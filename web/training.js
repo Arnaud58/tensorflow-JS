@@ -83,7 +83,7 @@ async function trainSquare(l, h, color, link) {
 /**
  * Train the current model with the squares
  * inside the all_squares_learn.squareLearn array
- * The return of the train funcion is stock in a promise
+ * The return of the train funcion is stocked in a promise
  * inside the var oldHistory
  */
 async function trainAllSquares() {
