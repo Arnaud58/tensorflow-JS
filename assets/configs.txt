@@ -1,0 +1,199 @@
+Tests
+
+Configs à tester :
+
+Les fichiers de tests ont 1000 rectangles
+
+Fichiers d'apprentissage et de tests :
+- taille
+  Apprentissage : train-size-500.js
+  Test : test-size.js
+
+- couleur (400 rectangles)
+Apprentissage : (400 rectangles)
+Test
+
+- couleur et taille (800 rectangles)
+Apprentissage : (400 rectangles)
+Test
+
+
+
+
+------------------------------------------------------
+
+TAILLE
+
+** deux couches
+* 2 - 2
+  elu : Train 92.2 / Test 90.9
+  relu : Train 90.6 / Test 90.5
+  leakyRelu : 92.6 / Test 90.8
+* 3 - 3
+  elu : Train 84 / Test 84.51
+  relu : Train 97.4 / Test 97.3
+  leakyRelu : Train 92.4 / Test 90.4
+* 4 - 4
+  elu : Train 92.4 / Test 90.9
+  relu : Train 90.6 / Test 90.2
+  leakyRelu : Train 91.2 / Test
+* 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+
+** trois couches
+* 2 - 2 - 2
+  elu : Train 93 / Test 91.7
+  relu : Train 50.4 (tout en haut) / Test 51.74
+  leakyRelu : Train 87 / Test 85.01
+* 3 - 3 - 3
+  elu : Train 96.6 / Test 97
+  relu : Train 50.4 / Test 51.74
+  leakyRelu : Train 90 / Test 90.6
+* 4 - 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+
+** quatre couches
+* 2 - 2 - 2 - 2
+  elu :
+  relu :
+  leakyRelu :
+* 3 - 3 - 3 - 3
+  elu :
+  relu :
+  leakyRelu :
+* 4 - 4 - 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5 - 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+-----------------------------------------------------
+
+COULEUR
+
+** deux couches
+* 2 - 2
+  elu :
+  relu :
+  leakyRelu :
+* 3 - 3
+  elu :
+  relu :
+  leakyRelu :
+* 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+
+** trois couches
+* 2 - 2 - 2
+  elu :
+  relu :
+  leakyRelu :
+* 3 - 3 - 3
+  elu :
+  relu :
+  leakyRelu :
+* 4 - 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+
+** quatre couches
+* 2 - 2 - 2 - 2
+  elu :
+  relu :
+  leakyRelu :
+* 3 - 3 - 3 - 3
+  elu :
+  relu :
+  leakyRelu :
+* 4 - 4 - 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5 - 5 - 5
+
+--------------------------------------------
+
+TAILLE ET COULEUR
+
+** deux couches
+* 2 - 2
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 3 - 3
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 4 - 4
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 5 - 5
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+
+** trois couches
+* 2 - 2 - 2
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 3 - 3 - 3
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 4 - 4 - 4
+  elu :
+  relu :
+  perelu :
+leakyRelu :
+* 5 - 5 - 5
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+
+** quatre couches
+* 2 - 2 - 2 - 2
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 3 - 3 - 3 - 3
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 4 - 4 - 4 - 4
+  elu :
+  relu :
+  perelu :
+  leakyRelu :
+* 5 - 5 - 5 - 5
