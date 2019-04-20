@@ -6,16 +6,16 @@ Les fichiers de tests ont 1000 rectangles
 
 Fichiers d'apprentissage et de tests :
 - taille
-  Apprentissage : train-size-500.js
-  Test : test-size.js
+  Apprentissage : train-size-500.json
+  Test : test-size.json
 
 - couleur
 Apprentissage : train-color-500.json
-Test : test-color.js
+Test : test-color.json
 
 - couleur et taille
 Apprentissage : train-size-color-1500.json (3000 rectangles)
-Test
+Test : test-size-color.jsons
 
 
 Procédure suivie pour chaque config à tester :
