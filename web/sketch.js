@@ -21,6 +21,8 @@ let _snackbarContainer;
 
 let callbacks;
 
+let selectedRec = null;
+
 //aire au delà de laquelle un rectangle est considéré comme étant grand
 const areaLimit = 30000;
 const metrics = ['loss', 'val_loss'];
@@ -205,30 +207,13 @@ function setup() {
     button = select("#removeLayer");
     button.mousePressed(removeLayer);
 
-
-    /* Boutons dans onglet Learning */
-
-    button = select("#Add1");
-    button.mousePressed(addSquare);
-
-    buttonAutoAdd = select("#AddFrame");
-    buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
-
-    var fileT = document.querySelector("#trainFile");
-    var readerTrain = new FileReader();
-    readerTrain.onload = loadAndTrain;
-
     /* Boutons dans onglet Predict */
 
     button = select("#predict");
-    button.mousePressed(predictFromUser);
+    button.mousePressed(addSquareCanvas);
 
     button = select("#predictTests");
     button.mousePressed(predictTheTests);
-
-    var fileP = document.querySelector("#predictFile");
-    var readerPredict = new FileReader();
-    readerPredict.onload = loadAndPredict;
 
     /* Boutons dans onglet Save and Load Model */
 
@@ -241,25 +226,6 @@ function setup() {
     button = select("#loadModel");
     button.mousePressed(loadModel);
     */
-
-    button = select("#saveLearn");
-    button.mousePressed(function() { download(all_squares_learn, "training.json"); });
-
-
-
-
-
-
-
-    fileP.addEventListener("change", function() {
-        var file = this.files[0];
-        readerPredict.readAsText(file);
-    });
-
-    fileT.addEventListener("change", function() {
-        var file = this.files[0];
-        readerTrain.readAsText(file);
-    });
 
     var fileLoadJsonModel = document.querySelector("#json-upload");
     fileLoadJsonModel.addEventListener("change", function() {
@@ -278,10 +244,24 @@ function setup() {
         loadModelFromFiles();
     });
 
-    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics, { width: 800, height: 400});
+    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics, { width: 800, height: 400 });
     callbacks.onBatchEnd = null;
 
     createNeuralNetwork();
+}
+
+/*
+ * Ajoute un rectangle au canvas
+ */
+function addSquareCanvas() {
+    let lgr = parseInt(select("#largeur").value());
+    let htr = parseInt(select("#hauteur").value());
+    let col = allColors[parseInt(select("#couleur").value())];
+    console.log(col);
+
+    all_squares_display.squareCoord.push({ l: lgr, h: htr });
+    all_squares_display.color.push({ r: col[0], g: col[1], b: col[2] });
+    all_squares_display.pos.push({ x: 200, y: 200 });
 }
 
 /*
@@ -312,65 +292,40 @@ function draw() {
     fill(0);
     strokeWeight(2);
     stroke('#222222');
-    rect(gapPosition, 0, 100, 800);
-
-    zones = sliceInZones(canvasHeight, gapPosition, xZones, yZones);
-    //console.log(zones);
-
-    //Trace les délimitations de zones
-    //Côté apprentissage
-    noFill();
-    strokeWeight(1);
-    for (let i = 0; i < zones.length; i++) {
-        line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
-        line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
-    }
-    //Côté prédictions
-    for (let i = 0; i < zones.length; i++) {
-        line(zones[i][0] + gapPosition + 100, 0, zones[i][0] + gapPosition + 100, canvasHeight); //lignes verticales
-        line(gapPosition + 100, zones[i][1], canvasWidth, zones[i][1]); //lignes horizontales
-    }
 
     // Dessine chaque rectangle d'entrainement de all_squares_display
     for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
-        xGap = (i % 50) * 5;
-        yGap = (int(i / 50) * 20) + 20;
-
-
-        //PLUS BESOIN, DEJA PRIS EN COMPTE DANS LE DECOUPAGE DES ZONES
-        /*
-        if (all_squares_display.pos[i] == "Bas") {
-            yGap += 400;
-        }
-        */
-
-        let squareZone = zones[all_squares_display["zone"][i]];
-
-
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
-        rect( /*xGap+*/ squareZone[0], /*yGap+*/ squareZone[1], all_squares_display.squareCoord[i].l / 2, all_squares_display.squareCoord[i].h / 2);
+        rect(all_squares_display.pos[i].x, all_squares_display.pos[i].y, all_squares_display.squareCoord[i].l / 2, all_squares_display.squareCoord[i].h / 2);
     }
 
     strokeWeight(1);
     stroke('#222222');
-    // Dessine les rectangles prédits
-    for (i = 0; i < all_squares_display.predictSquare.length; i++) {
-        xGap = 700 + (i % 50) * 5;
-        yGap = (int(i / 50) * 20) + 20;
+}
 
-        /*
-        if (all_squares_display.posPredict[i] == "Bas") {
-            yGap += 400;
+
+
+function mousePressed() {
+    for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
+        if (mouseX > all_squares_display.pos[i].x &&
+            mouseX < all_squares_display.pos[i].x + all_squares_display.squareCoord[i].l / 2 &&
+            mouseY > all_squares_display.pos[i].y &&
+            mouseY < all_squares_display.pos[i].y + all_squares_display.squareCoord[i].h / 2
+        ) {
+            selectedRec = i;
+            return false;
         }
-        */
-        let predictSquareZone = zones[all_squares_display["zonePredict"][i]];
-        //console.log(all_squares_display["zonePredict"][i]);
-        fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
-        rect( /*xGap+*/ 700 + predictSquareZone[0], /*yGap*/ +predictSquareZone[1], all_squares_display.predictSquare[i].l / 2, all_squares_display.predictSquare[i].h / 2);
     }
 
-    // Si activé par le bouton, rajoute un nouveau rectangle d'entrainement
-    if (autoAjout) {
-        addSquare();
+    selectedRec = null;
+}
+
+function mouseDragged() {
+    if (selectedRec == null) {
+        return false;
     }
+
+    all_squares_display.pos[selectedRec].x = mouseX;
+    all_squares_display.pos[selectedRec].y = mouseY;
+
 }

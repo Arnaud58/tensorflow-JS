@@ -33,8 +33,7 @@
             <div class="mdl-tabs__tab-bar">
                 <a href="#params-panel" class="mdl-tabs__tab is-active">Parameters</a>
                 <a href="#neural-panel" class="mdl-tabs__tab">Neural</a>
-                <a href="#learning-panel" class="mdl-tabs__tab">Learning</a>
-                <a href="#predictions-panel" class="mdl-tabs__tab">Predictions</a>
+                <a href="#predictions-panel" class="mdl-tabs__tab">Squares</a>
                 <a href="#saveloadmodel-panel" class="mdl-tabs__tab">Save or Load Model</a>
                 <a href="#graph-panel" class="mdl-tabs__tab">Graph</a>
 
@@ -155,30 +154,6 @@
                     </tr>
                 </table>
             </div>
-            <div class="mdl-tabs__panel" id="learning-panel">
-                <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--2-col">
-                        <button class="mdl-button mdl-js-button mdl-button--raised" id="Add1">Add one learn square</button>
-                    </div>
-                    <div class="mdl-cell mdl-cell--2-col">
-                        <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
-                                <i>Train from file</i>
-                                <input type="file" id="trainFile" style="display: none;">
-                            </label>
-                    </div>
-                    <div class="mdl-cell mdl-cell--3-col">
-                        <button style="width: 300px;" class="mdl-button mdl-js-button mdl-button--raised" id="AddFrame">Ajout auto : désactivé</button>
-                    </div>
-                    <div class="mdl-cell mdl-cell--2-col">
-                        <button class="mdl-button mdl-js-button mdl-button--raised" id="saveLearn">Save</button>
-                    </div>
-
-                </div>
-                <div class="mdl-grid">
-                    <div id="progress1" class="mdl-progress mdl-js-progress"></div>
-                    <p id="progress2"></p>
-                </div>
-            </div>
             <div class="mdl-tabs__panel" id="predictions-panel">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col">
@@ -211,18 +186,11 @@
                                 </select>
 
                     <div class="mdl-cell mdl-cell--2-col">
-                        <button class="mdl-button mdl-js-button mdl-button--raised" id="predict">Predict</button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised" id="predict">Add</button>
                     </div>
                     <div class="mdl-cell mdl-cell--2-col">
-                        <button class="mdl-button mdl-js-button mdl-button--raised" id="predictTests">Predict the tests</button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised" id="predictTests">Replace all</button>
                         <p id="percentSuccess"></p>
-                    </div>
-
-                    <div class="mdl-cell mdl-cell--2-col">
-                        <label class="mdl-button mdl-js-button mdl-button--file mdl-button--raised">
-                            <i>Predict from a file</i>
-                            <input type="file" id="predictFile" style="display: none;">
-                        </label>
                     </div>
                 </div>
             </div>
