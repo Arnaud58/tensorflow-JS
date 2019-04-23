@@ -1,0 +1,216 @@
+Tests
+
+Configs à tester :
+
+Les fichiers de tests ont 1000 rectangles
+
+Fichiers d'apprentissage et de tests :
+- taille
+  Apprentissage : train-size-500.json
+  Test : test-size.json
+
+- couleur
+Apprentissage : train-color-500.json
+Test : test-color.json
+
+- couleur et taille
+Apprentissage : train-size-color-1500.json (3000 rectangles)
+Test : test-size-color.jsons
+
+
+Procédure suivie pour chaque config à tester :
+- Train From File : train-XX-XX.json
+- Predicts the Tests
+- Predict From File : test-XX.json
+
+
+
+------------------------------------------------------
+
+TAILLE
+
+** deux couches
+* 2 - 2
+  elu : Train 92.2 / Test 90.9
+  relu : Train 90.6 / Test 90.5
+  leakyRelu : 92.6 / Test 90.8
+* 3 - 3
+  elu : Train 84 / Test 84.51
+  relu : Train 93.8 / Test 93
+  leakyRelu : Train 92.4 / Test 90.4
+* 4 - 4
+  elu : Train 92.4 / Test 90.9
+  relu : Train 90.6 / Test 90.2
+  leakyRelu : Train 91.2 / Test
+* 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+
+** trois couches
+* 2 - 2 - 2
+  elu : Train 93 / Test 91.7
+  relu : Train 50.4 (tout en haut) / Test 51.74
+  leakyRelu : Train 87 / Test 85.01
+* 3 - 3 - 3
+  elu : Train 95 / Test 94.1
+  relu : Train 50.4 / Test 51.74
+  leakyRelu : Train 90 / Test 90.6
+* 4 - 4 - 4
+  elu : 91.4 / 90.7
+  relu : 90.2 / 88.51
+  leakyRelu :
+* 5 - 5 - 5
+  elu : 99 / 98.7
+  relu : 93.2 / 92.3
+  leakyRelu : 94 / 92.6
+
+** quatre couches
+* 2 - 2 - 2 - 2
+  elu : 92.4 / 91.1
+  relu :
+  leakyRelu :
+* 3 - 3 - 3 - 3
+  elu : 93 / 91.5
+  relu :
+  leakyRelu :
+* 4 - 4 - 4 - 4
+  elu : 98.8 / 99.2
+  relu :
+  leakyRelu :
+* 5 - 5 - 5 - 5
+  elu : 98.8 / 99.4
+  relu :
+  leakyRelu :
+-----------------------------------------------------
+
+COULEUR
+
+** deux couches
+* 2 - 2
+  elu :
+  relu :
+  leakyRelu :
+* 3 - 3
+  elu :
+  relu :
+  leakyRelu :
+* 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+
+** trois couches
+* 2 - 2 - 2
+  elu :
+  relu :
+  leakyRelu :
+* 3 - 3 - 3
+  elu :
+  relu :
+  leakyRelu :
+* 4 - 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5 - 5
+  elu :
+  relu :
+  leakyRelu :
+
+** quatre couches
+* 2 - 2 - 2 - 2
+  elu :
+  relu :
+  leakyRelu :
+* 3 - 3 - 3 - 3
+  elu :
+  relu :
+  leakyRelu :
+* 4 - 4 - 4 - 4
+  elu :
+  relu :
+  leakyRelu :
+* 5 - 5 - 5 - 5
+
+--------------------------------------------
+
+TAILLE ET COULEUR
+
+** deux couches
+* 2 - 2
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+* 3 - 3
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+* 4 - 4
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+* 5 - 5
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+
+** trois couches
+* 2 - 2 - 2
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+* 3 - 3 - 3
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+* 4 - 4 - 4
+  elu :
+  relu :
+  prelu :
+leakyRelu :
+* 5 - 5 - 5
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+
+** quatre couches
+* 2 - 2 - 2 - 2
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+* 3 - 3 - 3 - 3
+  elu :
+  relu :
+  prelu :
+  leakyRelu :
+* 4 - 4 - 4 - 4
+  elu : Train 86.28 / Test 85.65
+  relu :
+  prelu :
+  leakyRelu :
+* 5 - 5 - 5 - 5
+  elu : Train 95.97 / Test 94.72
+  relu :
+  prelu :
+  leakyRelu :
+* 6 - 6 - 6 - 6
+  elu : Train 97.16 / Test 96.01
+  relu :
+  prelu :
+  leakyRelu :
+
+  ** cinq couches
+  * 4 - 4 - 4 - 4 - 4 : Train 91.55 / Test 52.09 (CONTEXT_LOST_WEBGL: loseContext: context lost)

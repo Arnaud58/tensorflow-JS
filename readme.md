@@ -60,7 +60,14 @@ Ce qui a été réalisé
 (dans branche Master) <br/>
 
 Onglet _Neural_ : <br/>
-Une interface permet de paramétrer le réseau neuronal (nb de couches, nb de neurones, fonctions d'activation, learning rate)
+Une interface permet de paramétrer le réseau neuronal (nb de couches, et pour chacune de ces couches le nb de neurones et la fonction d'activation, learning rate)
+
+Onglet _Param_ : <br/>
+Permet de cocher les paramètres que l'on veut prendre en compte pour la classification (taille, nb de liens, couleurs).
+Fonctionnel, que l'on choisisse la taille, les couleurs, ou les deux en même temps. La prise en compte des liens sera traitée plus tard. <br/>
+Pour pouvoir tester notre réseau, nous avons choisi arbitrairement une classification qui découpe l'aire de travail en 6 zones, chacune correspondant à une combinaison (taille, couleur). Par exemple les grands rectangles roses doivent être placés dans la 1ère zone. <br/>
+Cela est fonctionnel lorsque l'on génère des rectangles à partir de l'interface. <br/>
+L'entraînement à partir d'un fichier fonctionne également mais les résultats sont mauvais pour l'instant, nous cherchons à régler ce problème.
 
 Onglet _Learning_ : <br/>
 Interaction avec des boutons permettant de décider le nombre de rectangles qui vont servir pour l'apprentissage et décider des données d'entrée pour la prédiction.
@@ -78,6 +85,10 @@ Onglet _Save and Load Model_ : (__REMARQUE :__ Ne fonctionne qu'avec Google Chro
 - *Save Model*. Télécharge la configuration du modèle et les poids dans deux fichiers `my-model-1.json` et `my-model-1.weights.bin`
 - *Upload Json Model* et *Upload weights*. Charge le fichier json et le .bin contenant le modèle et les poids (de la même forme que ceux téléchargeables via *Save Model*)
 - *Load Model*. Charge le modèle après que l'on ait préalablement chargé les fichiers requis via les deux boutons précédents.
+
+Onglet _Graph_ : <br/>
+Affiche le graphe d'erreurs et la matrice de confusion
+
 
 Serveur
 =======

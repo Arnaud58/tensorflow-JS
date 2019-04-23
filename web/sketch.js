@@ -1,6 +1,15 @@
-let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
-let all_squares_learn = { squareLearn: [], posLearn: [] };
+//let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
+//let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
+let all_squares_display = { squareCoord: [], pos: [], color: [], zone: [], predictSquare: [], posPredict: [], zonePredict: [] };
+let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
+
+let zones;
+let nbZones = 2;
+
+//nb de zones selon l'axe horizontal ou vertical
+let xZones;
+let yZones;
 
 let jsonUpload;
 let weightsUpload;
@@ -9,6 +18,12 @@ let buttonAutoAdd;
 let autoAjout = false;
 
 let _snackbarContainer;
+
+let callbacks;
+
+//aire au delà de laquelle un rectangle est considéré comme étant grand
+const areaLimit = 30000;
+const metrics = ['loss', 'val_loss'];
 
 /**
  * Sert à télécharger une variable sur son bureau
@@ -37,8 +52,11 @@ function download(content, fileName, contentType = "application/json") {
 function reset() {
     createNeuralNetwork();
 
-    all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
-    all_squares_learn = { squareLearn: [], posLearn: [] };
+    //all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
+    //all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
+
+    let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zonePredict: [] };
+    let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
     textToUser("Nouveau réseau créé !");
 }
@@ -47,13 +65,15 @@ function resetPredict() {
     all_squares_display["predictSquare"] = [];
     all_squares_display["posPredict"] = [];
     all_squares_display["colorPredict"] = [];
+    all_squares_display["zonePredict"] = [];
 }
 
 function resetTrain() {
-    all_squares_learn = { squareLearn: [], posLearn: [] };
+    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
     all_squares_display.squareCoord = [];
     all_squares_display.pos = [];
     all_squares_display.color = [];
+    all_squares_display.zone = [];
 }
 
 /**
@@ -70,22 +90,90 @@ function textToUser(msg) {
 
 /**
  * Ajoute un rectangle sur la partie gauche du canvas
- * @param {int} l 
- * @param {int} h 
+ * @param {int} l
+ * @param {int} h
  */
-function addToDisplayLearn(l, h) {
+function addToDisplayLearn(l, h, color) {
+    // console.log(color)
     all_squares_display["squareCoord"].push({ l: l, h: h });
 
     // Si grand rectangle, va en haut, sinon va en bas
+    /*
     if (predictLH(h, l)) {
         all_squares_display["pos"].push("Haut");
     } else {
         all_squares_display["pos"].push("Bas");
     }
+    */
+    all_squares_display["zone"].push(expectedZone(h, l, color));
 
-    // Lui choisis une couleur random (pour affichage)
-    let color = chooseColor();
+
+    // Lui choisit une couleur random (pour affichage)
+    //let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
+
+}
+
+/**
+ * Returns the number of necessary zones, based on which parameters are activated
+ */
+function setNbZones() {
+    if (scaleIsActive && !colorIsActive) return 2;
+    else if (!scaleIsActive && colorIsActive) return 3;
+    else if (scaleIsActive && colorIsActive) return 6;
+    //à voir plus tard pour les liens
+}
+
+
+function setNbZonesXY() {
+    if (scaleIsActive && !colorIsActive) {
+        xZones = 1;
+        yZones = 2;
+    } else if (!scaleIsActive && colorIsActive) {
+        xZones = 3;
+        yZones = 1;
+    } else if (scaleIsActive && colorIsActive) {
+        xZones = 3;
+        yZones = 2;
+    }
+    //à voir plus tard pour les liens
+}
+
+/*
+Pour pouvoir classifier les rectangles selon leur couleur et leur taille, on découpe la zone
+de placement en plusieurs zones, chaque zone correspondant à des caractéristiques particulières.
+Pour l'instant, voici le découpage choisi, arbitrairement :
+*-------*-------*-------*
+|   0   |   2   |   4   |
+| (0,0) | (1,0) | (2,0) |
+*-------*-------*-------*
+|   1   |   3   |   5   |
+| (0,1) | (1,1) | (2,1) |
+*-------*-------*-------*
+(x,0) : Grand rectangle
+(x,1) : Petit rectangle
+(0,x) : couleurs LIGHT_FUCHSIA_PINK, ULTRA_PINK, PALE_PINK
+(1,x) : couleurs BANANA_MANIA, DANDELION, SUNSET_ORANGE
+(2,x) : couleurs CEIL, BLUE_YONDER, VERDIGRIS, COLUMBIA_BLUE
+Exemple : un petit rectangle rose sera dans la zone 1, un grand rectangle jaune sera dans la zone 2.
+*/
+
+/**
+ * Découpe l'aire de travail en plusieurs zones pour permettre la classification
+ * @param {int} height hauteur de la zone à découper
+ * @param {int} width largeur de la zone à découper
+ * @param {xZones} nombre de zones voulue sur l'axe horizontal
+ * @param {yZones} nombre de zones voulue sur l'axe vertical
+ */
+function sliceInZones(height, width, xZones, yZones) {
+    let zones = []
+    let k = 0;
+    for (let i = 0; i < xZones; i++) {
+        for (let j = 0; j < yZones; j++) {
+            zones[k++] = [i * width / xZones, j * height / yZones];
+        }
+    }
+    return zones;
 }
 
 function setup() {
@@ -98,8 +186,39 @@ function setup() {
     jsonUpload = document.getElementById('json-upload');
     weightsUpload = document.getElementById('weights-upload');
 
-    let button = select("#Add1");
+    /* Boutons dans onglet Params */
+
+    let button = select("#chooseParams");
+    button.mousePressed(checkActiveParams);
+
+    /* Boutons dans onglet Neural */
+    button = select("#create");
+    button.mousePressed(reset);
+
+    //affiche nombre de couches
+    select("#nbLayers").html("Number of Hidden Layers :      " + modelStructure.nbLayers);
+
+
+    button = select("#addLayer");
+    button.mousePressed(addLayer);
+
+    button = select("#removeLayer");
+    button.mousePressed(removeLayer);
+
+
+    /* Boutons dans onglet Learning */
+
+    button = select("#Add1");
     button.mousePressed(addSquare);
+
+    buttonAutoAdd = select("#AddFrame");
+    buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
+
+    var fileT = document.querySelector("#trainFile");
+    var readerTrain = new FileReader();
+    readerTrain.onload = loadAndTrain;
+
+    /* Boutons dans onglet Predict */
 
     button = select("#predict");
     button.mousePressed(predictFromUser);
@@ -107,12 +226,16 @@ function setup() {
     button = select("#predictTests");
     button.mousePressed(predictTheTests);
 
-    button = select("#create");
-    button.mousePressed(reset);
+    var fileP = document.querySelector("#predictFile");
+    var readerPredict = new FileReader();
+    readerPredict.onload = loadAndPredict;
+
+    /* Boutons dans onglet Save and Load Model */
 
 
     button = select("#saveModel");
     button.mousePressed(saveModel);
+
 
     /*
     button = select("#loadModel");
@@ -122,16 +245,11 @@ function setup() {
     button = select("#saveLearn");
     button.mousePressed(function() { download(all_squares_learn, "training.json"); });
 
-    buttonAutoAdd = select("#AddFrame");
-    buttonAutoAdd.mousePressed(function() { autoAjout = !autoAjout; if (autoAjout) { buttonAutoAdd.elt.innerText = "Ajout auto : activé"; } else { buttonAutoAdd.elt.innerText = "Ajout auto : désactivé"; } });
 
-    var fileP = document.querySelector("#predictFile");
-    var readerPredict = new FileReader();
-    readerPredict.onload = loadAndPredict;
 
-    var fileT = document.querySelector("#trainFile");
-    var readerTrain = new FileReader();
-    readerTrain.onload = loadAndTrain;
+
+
+
 
     fileP.addEventListener("change", function() {
         var file = this.files[0];
@@ -160,57 +278,95 @@ function setup() {
         loadModelFromFiles();
     });
 
-
+    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics, { width: 800, height: 400});
+    callbacks.onBatchEnd = null;
 
     createNeuralNetwork();
 }
 
 /*
- * Fonction appelé par p5 à chaque frame
+ * Fonction appelée par p5 à chaque frame
  */
 function draw() {
     // Arrière plan
     background(255);
 
+    const canvasHeight = 800;
+    const canvasWidth = 1300;
+    const gapPosition = 600;
+
+    /*
+    const xZones = 3;
+    const yZones = 2;
+    */
+    //nbZones = setNbZones();
+    //setNbZonesXY();
+
     // Draw le contours des 2 rectangles
     noFill();
     strokeWeight(4);
     stroke('#222222');
-    rect(0, 0, 1300, 800);
+    rect(0, 0, canvasWidth, canvasHeight);
 
     // Draw le gap entre les deux
     fill(0);
     strokeWeight(2);
     stroke('#222222');
-    rect(600, 0, 100, 800);
+    rect(gapPosition, 0, 100, 800);
 
-    // Déssine chaque rectangle d'entrainement de all_squares_display
+    zones = sliceInZones(canvasHeight, gapPosition, xZones, yZones);
+    //console.log(zones);
+
+    //Trace les délimitations de zones
+    //Côté apprentissage
+    noFill();
+    strokeWeight(1);
+    for (let i = 0; i < zones.length; i++) {
+        line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
+        line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
+    }
+    //Côté prédictions
+    for (let i = 0; i < zones.length; i++) {
+        line(zones[i][0] + gapPosition + 100, 0, zones[i][0] + gapPosition + 100, canvasHeight); //lignes verticales
+        line(gapPosition + 100, zones[i][1], canvasWidth, zones[i][1]); //lignes horizontales
+    }
+
+    // Dessine chaque rectangle d'entrainement de all_squares_display
     for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
         xGap = (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
+
+        //PLUS BESOIN, DEJA PRIS EN COMPTE DANS LE DECOUPAGE DES ZONES
+        /*
         if (all_squares_display.pos[i] == "Bas") {
             yGap += 400;
         }
+        */
+
+        let squareZone = zones[all_squares_display["zone"][i]];
 
 
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
-        rect(xGap, yGap, all_squares_display.squareCoord[i].l, all_squares_display.squareCoord[i].h);
+        rect( /*xGap+*/ squareZone[0], /*yGap+*/ squareZone[1], all_squares_display.squareCoord[i].l / 2, all_squares_display.squareCoord[i].h / 2);
     }
 
     strokeWeight(1);
-    // Déssine les rectangles prédits
+    stroke('#222222');
+    // Dessine les rectangles prédits
     for (i = 0; i < all_squares_display.predictSquare.length; i++) {
         xGap = 700 + (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
+        /*
         if (all_squares_display.posPredict[i] == "Bas") {
             yGap += 400;
         }
-
-
+        */
+        let predictSquareZone = zones[all_squares_display["zonePredict"][i]];
+        //console.log(all_squares_display["zonePredict"][i]);
         fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
-        rect(xGap, yGap, all_squares_display.predictSquare[i].l, all_squares_display.predictSquare[i].h);
+        rect( /*xGap+*/ 700 + predictSquareZone[0], /*yGap*/ +predictSquareZone[1], all_squares_display.predictSquare[i].l / 2, all_squares_display.predictSquare[i].h / 2);
     }
 
     // Si activé par le bouton, rajoute un nouveau rectangle d'entrainement
