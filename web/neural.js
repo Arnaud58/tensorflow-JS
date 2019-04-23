@@ -38,7 +38,7 @@ function addLayer() {
     let td_activation = document.createElement("td");
     let selectActivation = document.createElement("select");
     selectActivation.id = "activation" + modelStructure.nbLayers;
-    let fonctions = ["elu", "selu", "relu", "LeakyReLU", "PReLU", "ThresholdedReLU",
+    let fonctions = ["elu", "selu", "relu", "LeakyReLU", "ThresholdedReLU",
         "tanh", "sigmoid", "linear", "softmax", "softplus", "softsign"
     ];
     let nbFun = fonctions.length;
