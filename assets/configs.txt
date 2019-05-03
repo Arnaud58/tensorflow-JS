@@ -207,10 +207,10 @@ leakyRelu :
   prelu :
   leakyRelu :
 * 6 - 6 - 6 - 6
-  elu : Train 97.16 / Test 96.01
-  relu :
+  elu : Train 97.16 / Test 96.01 (valeur max, sinon dans les 90 %)
+  relu : Train 46.50 / Test 40.13
   prelu :
-  leakyRelu :
+  leakyRelu : Train 45.87 / Test 43.52
 
   ** cinq couches
   * 4 - 4 - 4 - 4 - 4 : Train 91.55 / Test 52.09 (CONTEXT_LOST_WEBGL: loseContext: context lost)
