@@ -23,6 +23,8 @@ let callbacks;
 
 //aire au delà de laquelle un rectangle est considéré comme étant grand
 const areaLimit = 30000;
+//nb de liens à partir duquel une classe est considérée comme étant fortement liée
+const links_max = 10;
 const metrics = ['loss', 'val_loss'];
 
 /**
@@ -118,31 +120,65 @@ function addToDisplayLearn(l, h, color) {
  * Returns the number of necessary zones, based on which parameters are activated
  */
 function setNbZones() {
-    if (scaleIsActive && !colorIsActive) return 2;
-    else if (!scaleIsActive && colorIsActive) return 3;
-    else if (scaleIsActive && colorIsActive) return 6;
-    //à voir plus tard pour les liens
+    if (scaleIsActive && !colorIsActive && !linksIsActive) return 2;
+    else if (!scaleIsActive && colorIsActive && !linksIsActive) return 3;
+    else if (scaleIsActive && colorIsActive && !linksIsActive) return 6;
+    else if (!scaleIsActive && !colorIsActive && linksIsActive) return 2;
+    else if (scaleIsActive && !colorIsActive && linksIsActive) return 4;
+    else if (!scaleIsActive && colorIsActive && linksIsActive) return 6;
+    else if (scaleIsActive && colorIsActive && linksIsActive) return 6;
 }
 
 
 function setNbZonesXY() {
-    if (scaleIsActive && !colorIsActive) {
+    if (scaleIsActive && !colorIsActive && !linksIsActive) {
         xZones = 1;
         yZones = 2;
-    } else if (!scaleIsActive && colorIsActive) {
+    } else if (!scaleIsActive && colorIsActive && !linksIsActive) {
         xZones = 3;
         yZones = 1;
-    } else if (scaleIsActive && colorIsActive) {
+    } else if (scaleIsActive && colorIsActive && !linksIsActive) {
+        xZones = 3;
+        yZones = 2;
+    } else if (!scaleIsActive && !colorIsActive && linksIsActive) {
+        xZones = 1;
+        yZones = 2;
+    } else if (scaleIsActive && !colorIsActive && linksIsActive) {
+        xZones = 2;
+        yZones = 2;
+    } else if (!scaleIsActive && colorIsActive && linksIsActive) {
+        xZones = 3;
+        yZones = 2;
+    }else if (scaleIsActive && colorIsActive && linksIsActive) {
         xZones = 3;
         yZones = 2;
     }
-    //à voir plus tard pour les liens
+
 }
 
 /*
 Pour pouvoir classifier les rectangles selon leur couleur et leur taille, on découpe la zone
 de placement en plusieurs zones, chaque zone correspondant à des caractéristiques particulières.
-Pour l'instant, voici le découpage choisi, arbitrairement :
+Pour l'instant, voici les découpage choisis, arbitrairement :
+
+TAILLE :
+*-------*
+|   0   |
+*-------*
+|   1   |
+*-------*
+0 : Grand rectangle
+1 : Petit rectangle
+
+COULEUR :
+*-------*-------*-------*
+|   0   |   1   |   2   |
+*-------*-------*-------*
+0 : rose
+1 : jaune et orange
+2 : bleu et vert
+
+COULEUR + TAILLE :
 *-------*-------*-------*
 |   0   |   2   |   4   |
 | (0,0) | (1,0) | (2,0) |
@@ -152,10 +188,44 @@ Pour l'instant, voici le découpage choisi, arbitrairement :
 *-------*-------*-------*
 (x,0) : Grand rectangle
 (x,1) : Petit rectangle
-(0,x) : couleurs LIGHT_FUCHSIA_PINK, ULTRA_PINK, PALE_PINK
-(1,x) : couleurs BANANA_MANIA, DANDELION, SUNSET_ORANGE
-(2,x) : couleurs CEIL, BLUE_YONDER, VERDIGRIS, COLUMBIA_BLUE
+(0,x) : rose
+(1,x) : jaune et orange
+(2,x) : bleu et vert
 Exemple : un petit rectangle rose sera dans la zone 1, un grand rectangle jaune sera dans la zone 2.
+
+
+TAILLE + NB LIENS
+*-------*-------*
+|   0   |   2   |
+| (0,0) | (1,0) |
+*-------*-------*
+|   1   |   3   |
+| (0,1) | (1,1) |
+*-------*-------*
+(x,0) : Bcp de liens
+(x,1) : Peu de liens
+(0,x) : Grands rectangles
+(1,x) : Petits rectangles
+
+
+COULEUR + NB LIENS
+*-------*-------*-------*
+|   0   |   2   |   4   |
+| (0,0) | (1,0) | (2,0) |
+*-------*-------*-------*
+|   1   |   3   |   5   |
+| (0,1) | (1,1) | (2,1) |
+*-------*-------*-------*
+(x,0) : Bcp de liens
+(x,1) : Peu de liens
+(0,x) : rose
+(1,x) : jaune et orange
+(2,x) : bleu et vert
+
+TAILLE + COULEUR + NB DE LIENS
+Dans ce cas, le nb de liens devient prioritaire par rapport et la taille ne compte plus
+Même classification que pour COULEUR + LIENS
+
 */
 
 /**
