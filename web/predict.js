@@ -139,9 +139,9 @@ function predictAndDisplay(lgr, htr, color, link) {
     all_squares_display["zonePredict"].push(resZone);
     if (resZone == eptZone) {
         isCorrect = true;
-        all_squares_display["colorPredict"].push({ r: 0, g: 255, b: 0 });
+        all_squares_display.colorPredict.push({ r: 0, g: 255, b: 0 });
     } else {
-        all_squares_display["colorPredict"].push({ r: 255, g: 0, b: 0 });
+        all_squares_display.colorPredict.push({ r: 255, g: 0, b: 0 });
         isCorrect = false;
     }
     dataConfusion[resZone][eptZone] += 1;
@@ -164,7 +164,7 @@ function loadAndPredict(ev) {
     //AJOUT MATRICE CONFUSION
     let rows = 1;
     let cols = 1;
-    let value = []; 
+    let value = [];
     dataConfusion = [];
 
     if (scaleIsActive) {

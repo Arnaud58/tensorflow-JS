@@ -1,7 +1,7 @@
 //let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 //let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
-let all_squares_display = { squareCoord: [], pos: [], color: [], zone: [], predictSquare: [], posPredict: [], zonePredict: [] };
+let all_squares_display = { squareCoord: [], pos: [], color: [], zone: [], predictSquare: [], posPredict: [], zonePredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
 let zones;
