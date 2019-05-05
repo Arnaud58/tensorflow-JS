@@ -1,7 +1,7 @@
 //let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
 //let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
-let all_squares_display = { squareCoord: [], pos: [], color: [], zone: [], predictSquare: [], posPredict: [], zonePredict: [], colorPredict: [] };
+let all_squares_display = { squareCoord: [], pos: [], color: [], links: [], zone: [], predictSquare: [], posPredict: [], zonePredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
 let zones;
@@ -406,19 +406,18 @@ function draw() {
         xGap = (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
-
-        //PLUS BESOIN, DEJA PRIS EN COMPTE DANS LE DECOUPAGE DES ZONES
-        /*
-        if (all_squares_display.pos[i] == "Bas") {
-            yGap += 400;
-        }
-        */
-
         let squareZone = zones[all_squares_display["zone"][i]];
 
-
+        if (all_squares_learn["linksLearn"][i]>links_max){
+            stroke('rgb(0,255,0)');
+            strokeWeight(4);
+        }else{
+            stroke('black');
+            strokeWeight(1);
+        }
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
         rect( /*xGap+*/ squareZone[0], /*yGap+*/ squareZone[1], all_squares_display.squareCoord[i].l / 2, all_squares_display.squareCoord[i].h / 2);
+
     }
 
     strokeWeight(1);
@@ -436,7 +435,7 @@ function draw() {
         let predictSquareZone = zones[all_squares_display["zonePredict"][i]];
         //console.log(all_squares_display["zonePredict"][i]);
         fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
-        rect( /*xGap+*/ 700 + predictSquareZone[0], /*yGap*/ +predictSquareZone[1], all_squares_display.predictSquare[i].l / 2, all_squares_display.predictSquare[i].h / 2);
+        rect( /*xGap+*/ 700 + predictSquareZone[0], /*yGap+*/ predictSquareZone[1], all_squares_display.predictSquare[i].l / 2, all_squares_display.predictSquare[i].h / 2);
     }
 
     // Si activé par le bouton, rajoute un nouveau rectangle d'entrainement

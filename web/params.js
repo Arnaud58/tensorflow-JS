@@ -107,7 +107,9 @@ function expectedZoneScale(height, width) {
 }
 
 function expectedZoneLinks(nblinks){
-    if (nblinks>links_max) return 0;
+    if (nblinks>links_max){
+        return 0;
+    }
     else return 1;
 }
 
