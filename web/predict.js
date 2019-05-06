@@ -72,6 +72,13 @@ function predictTheTests() {
         value.push(0);
         value.push(0);
     }
+    if (linksIsActive) {
+        rows *= 2;
+        cols *= 2;
+        value.push(0);
+        value.push(0);
+    }
+
 
     for (i = 0; i < rows; i++) {
         dataConfusion.push(value.slice());
@@ -180,14 +187,19 @@ function loadAndPredict(ev) {
         value.push(0);
         value.push(0);
     }
+    if (linksIsActive) {
+        rows *= 2;
+        cols *= 2;
+        value.push(0);
+        value.push(0);
+    }
+
 
     for (i = 0; i < rows; i++) {
         dataConfusion.push(value.slice());
     }
 
-
-
-    // Parcourt tous les carré de la partie apprentisage et les prédict
+    // Parcourt tous les carrés de la partie apprentisage et les prédit
     for (i = 0; i < contents.squareLearn.length; i += 2) {
         let res = predictAndDisplay(contents.squareLearn[i] * 390 + 10, contents.squareLearn[i + 1] * 390 + 10, contents.colorLearn[i / 2], contents.linksLearn[i / 2]);
         if (res[1]) {

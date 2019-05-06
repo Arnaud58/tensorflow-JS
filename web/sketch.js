@@ -95,7 +95,7 @@ function textToUser(msg) {
  * @param {int} l
  * @param {int} h
  */
-function addToDisplayLearn(l, h, color) {
+function addToDisplayLearn(l, h, color, nblinks) {
     // console.log(color)
     all_squares_display["squareCoord"].push({ l: l, h: h });
 
@@ -107,7 +107,7 @@ function addToDisplayLearn(l, h, color) {
         all_squares_display["pos"].push("Bas");
     }
     */
-    all_squares_display["zone"].push(expectedZone(h, l, color));
+    all_squares_display["zone"].push(expectedZone(h, l, color, nblinks));
 
 
     // Lui choisit une couleur random (pour affichage)
