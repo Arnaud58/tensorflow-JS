@@ -64,10 +64,11 @@ Une interface permet de paramétrer le réseau neuronal (nb de couches, et pour 
 
 Onglet _Param_ : <br/>
 Permet de cocher les paramètres que l'on veut prendre en compte pour la classification (taille, nb de liens, couleurs).
-Fonctionnel, que l'on choisisse la taille, les couleurs, ou les deux en même temps. La prise en compte des liens sera traitée plus tard. <br/>
-Pour pouvoir tester notre réseau, nous avons choisi arbitrairement une classification qui découpe l'aire de travail en 6 zones, chacune correspondant à une combinaison (taille, couleur). Par exemple les grands rectangles roses doivent être placés dans la 1ère zone. <br/>
-Cela est fonctionnel lorsque l'on génère des rectangles à partir de l'interface. <br/>
-L'entraînement à partir d'un fichier fonctionne également mais les résultats sont mauvais pour l'instant, nous cherchons à régler ce problème.
+Fonctionnel, que l'on choisisse la taille, les couleurs, les liens ou plusieurs paramètres en même temps. <br/>
+Pour pouvoir tester notre réseau, nous avons choisi arbitrairement une classification qui découpe l'aire de travail en plusieurs zones, selon les paramètres choisis. <br/>
+Par exemple, lorsque l'on choisi la taille et la couleur comme paramètres, les grands rectangles roses doivent être placés dans la 1ère zone. <br/>
+Pour simplifier le problème, lorsque qu'on coche la taille, la couleur et le nombre de liens en même temps, le nombre de liens devient prioritaire par rapport à la taille. <br/>
+*Remarque :* Les rectangles avec un grand nombre de liens (>10) seront affichés avec un contour vert.
 
 Onglet _Learning_ : <br/>
 Interaction avec des boutons permettant de décider le nombre de rectangles qui vont servir pour l'apprentissage et décider des données d'entrée pour la prédiction.
@@ -106,7 +107,7 @@ Liens utiles
 ============
 
  [Enregistrer JSON](https://stackoverflow.com/questions/34156282/how-do-i-save-json-to-local-text-file)
- 
+
  [Doc tensorflow - matrice de confusion](https://js.tensorflow.org/api_vis/latest/#render.confusionMatrix)
 
  Pour sauvegarder le modèle : <br/>
