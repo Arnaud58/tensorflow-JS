@@ -180,7 +180,14 @@
                 </div>
             </div>
             <div class="mdl-tabs__panel" id="predictions-panel">
-                <div class="mdl-grid">
+
+                <table style="text-align: left">
+
+
+
+                    <tr>
+                    <td>
+                    <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="largeur">
@@ -195,8 +202,15 @@
                             <span class="mdl-textfield__error">Input is not a number!</span>
                         </div>
                     </div>
+                    <div class="mdl-cell mdl-cell--2-col">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="nblinks">
+                            <label class="mdl-textfield__label" for="nblinks">Nb de liens</label>
+                            <span class="mdl-textfield__error">Input is not a number!</span>
+                        </div>
+                    </div>
                     <!-- INSERER CHAMP POUR CHOIX COULEUR -->
-                    <select id="couleur">
+                        <select id="couleur">
                                     <option value="8">Light Fuchsia Pink</option>
                                     <option value="9">Ultra Pink</option>
                                     <option value="0">Banana Mania</option>
@@ -213,6 +227,11 @@
                     <div class="mdl-cell mdl-cell--2-col">
                         <button class="mdl-button mdl-js-button mdl-button--raised" id="predict">Predict</button>
                     </div>
+                    </div>
+                </td>
+                </tr>
+                </table>
+                    <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col">
                         <button class="mdl-button mdl-js-button mdl-button--raised" id="predictTests">Predict the tests</button>
                         <p id="percentSuccess"></p>

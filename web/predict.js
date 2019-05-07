@@ -7,10 +7,11 @@ function predictFromUser() {
     let lgr = parseInt(select("#largeur").value());
     let htr = parseInt(select("#hauteur").value());
     let col = allColors[parseInt(select("#couleur").value())];
+    let links = parseInt(select("#nblinks").value());
     console.log(col);
 
     //nb de liens à rajouter plus tard
-    predictAndDisplay(lgr, htr, col, 10);
+    predictAndDisplay(lgr, htr, col, links);
 }
 
 /**
