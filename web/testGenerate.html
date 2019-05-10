@@ -43,33 +43,58 @@
             </div>
 
             <div class="mdl-tabs__panel is-active" id="params-panel">
-                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-                    <thead>
-                        <tr>
-                            <th class="mdl-data-table__cell--non-numeric">Parameters</th>
-                            <th>Entry</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="scaleParam" class="is-selected">
-                            <td class="mdl-data-table__cell--non-numeric">Scale</td>
-                            <td>2</td>
-                        </tr>
-                        <tr id="linkParam">
-                            <td class="mdl-data-table__cell--non-numeric">Link</td>
-                            <td>1</td>
-                        </tr>
-                        <tr id="colorParam">
-                            <td class="mdl-data-table__cell--non-numeric">Color</td>
-                            <td>3</td>
-                        </tr>
-                        <tr id="otherParam">
-                            <td class="mdl-data-table__cell--non-numeric">Other</td>
-                            <td>?</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <input class="mdl-button mdl-js-button mdl-button--raised" type="button" value="Validate" id="chooseParams" />
+
+                <table>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                            <thead>
+                                <tr>
+                                    <th class="mdl-data-table__cell--non-numeric">Parameters</th>
+                                    <th>Entry</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="scaleParam" class="is-selected">
+                                    <td class="mdl-data-table__cell--non-numeric">Scale</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr id="linkParam">
+                                    <td class="mdl-data-table__cell--non-numeric">Link</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr id="colorParam">
+                                    <td class="mdl-data-table__cell--non-numeric">Color</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr id="otherParam">
+                                    <td class="mdl-data-table__cell--non-numeric">Other</td>
+                                    <td>?</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <input class="mdl-button mdl-js-button mdl-button--raised" type="button" value="Validate" id="chooseParams" />
+
+                    </td>
+                    <td>
+                    <div>Remarques :
+                    <ul>
+                        <li> Les rectangles avec un grand nombre de liens sont affichés avec un contour vert. </li>
+                        <li> Quand les trois paramètres Taille, Couleur et Nb de liens sont sélectionnés en même temps,
+                            le nombre de liens devient prioritaire par rapport à la taille. Cela revient donc à une classification
+                            par couleur et par nombre de liens.</li>
+                    </ul>
+                    </div>
+                    </td>
+
+                   </tr>
+                </tbody>
+             </table>
             </div>
 
 
