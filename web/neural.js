@@ -11,6 +11,10 @@ let modelStructure = { nbLayers: 1, nbNeurons: [1], activationFun: ["elu"] };
 
 let model;
 
+/**
+* Fonction déclenchée lorsque l'on demande l'ajout d'une couche supplémentaire.
+* Ajoute une couche paramétrable sur l'interface graphique.
+*/
 function addLayer() {
 
     modelStructure.nbLayers++;
@@ -55,6 +59,11 @@ function addLayer() {
 
 }
 
+/**
+* Fonction déclenchée lorsque l'on demande la suppression d'une couche.
+* Supprime la dernière couche paramétrable dans le tableau de l'interface
+*  graphique de l'onglet Neural.
+*/
 function removeLayer() {
     let structure = document.getElementById("struct").querySelector("tbody");
     let idToRemove = "layer" + modelStructure.nbLayers; //on récupère l'id de la dernière couche
@@ -66,6 +75,9 @@ function removeLayer() {
 
 }
 
+/**
+* Récupère les paramètres de configuration choisis par l'utilisateur
+*/
 function getNetworksParam() {
     inputNBrepetition = parseInt(document.getElementById("repetition").value);
     learningRate = parseFloat(document.getElementById("learningrate").value);
@@ -79,7 +91,8 @@ function getNetworksParam() {
 }
 
 /*
-Création d'un réseau neuronal à partir des paramètres choisis par l'utilisateur
+Création d'un réseau neuronal à partir des paramètres choisis par l'utilisateur.
+Déclenchée quand l'utilisateur valide la configuration sur l'onglet Neural
 */
 function createNeuralNetwork() {
     getNetworksParam();
@@ -115,7 +128,8 @@ function createNeuralNetwork() {
 }
 
 /**
-Save the model and downland it in two files called "my-model-1.json" and "my-model-1.weights.bin"
+* Sauvegarde le modèle et le télécharge dans deux fichiers nommés
+* "my-model-1.json" et "my-model-1.weights.bin"
 */
 async function saveModel() {
     saveResult = await model.save('downloads://my-model-1');
@@ -124,7 +138,8 @@ async function saveModel() {
 }
 
 /**
-Load a model
+* Charge le modèle à partir des fichiers donnés.
+* Ces fichiers doivent correspondre aux mêmes types que ceux renvoyés par model.save 
 */
 async function loadModelFromFiles() {
     model = await tf.loadModel(

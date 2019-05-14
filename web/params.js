@@ -3,6 +3,10 @@ let linksIsActive = false;
 let colorIsActive = false;
 let nbinputShape = 2;
 
+/**
+* Récupère les paramètres cochés dans l'onglet Params et calcule le nombre de
+* zones de classification nécessaires en conséquence.
+*/
 function checkActiveParams() {
 
     if (document.getElementById('scaleParam').className == 'is-selected')
@@ -30,6 +34,10 @@ function checkActiveParams() {
     setNbZonesXY();
 }
 
+/**
+* Calcule la taille de l'entrée du réseau neuronal en fonction des paramètres
+* actifs
+*/
 function computeNbinputShape() {
     res = 0;
     if (scaleIsActive) {
@@ -45,7 +53,10 @@ function computeNbinputShape() {
 }
 
 
-
+/**
+* Génère un tenseur représentant le rectangles dont les caractéristiques sont
+* données en arguments en fonction des paramètres actifs pour l'apprentissage
+*/
 function generateTensorFor1Square(l, h, colorSquare, link) {
     res = [];
 
@@ -65,6 +76,10 @@ function generateTensorFor1Square(l, h, colorSquare, link) {
     return tf.tensor2d(res, [1, nbinputShape]);
 }
 
+/**
+* Génère un tenseur représentant les données pour tous les rectangles en
+* fonction des paramètres actifs pour l'apprentissage
+*/
 function generateTensorForAllSquare() {
     res = [];
 
@@ -88,6 +103,13 @@ function generateTensorForAllSquare() {
 }
 
 
+/**
+* Retourne le numéro zone correspondant à un rectangle en fonction de ses caractéristiques
+* @param {int} height la hauteur du rectangle
+* @param {int} width la largeur du rectangle
+* @param {int[]} color valeurs RGB de la couleur du rectangle
+* @param {int} nbLinks le nombre de liens associé au rectangle
+*/
 function expectedZone(height, width, color, nblinks){
   if (scaleIsActive && !colorIsActive && !linksIsActive) return expectedZoneScale(height, width);
   else if (!scaleIsActive && colorIsActive && !linksIsActive) return expectedZoneColor(height, width, color);
@@ -100,12 +122,23 @@ function expectedZone(height, width, color, nblinks){
  }
 
 
+/**
+* Retourne le numéro zone correspondant à un rectangle en fonction de ses caractéristiques
+* dans le cas où le seule paramètre actif est la taille
+* @param {int} height la hauteur du rectangle
+* @param {int} width la largeur du rectangle
+*/
 function expectedZoneScale(height, width) {
     let area = height * width;
     if (area > areaLimit) return 0;
     else return 1;
 }
 
+/**
+* Retourne le numéro zone correspondant à un rectangle en fonction de ses caractéristiques
+* dans le cas où le seule paramètre actif est le nombre de liens
+* @param {int} nbLinks le nombre de liens associé au rectangle
+*/
 function expectedZoneLinks(nblinks){
     if (nblinks>links_max){
         return 0;
@@ -113,6 +146,11 @@ function expectedZoneLinks(nblinks){
     else return 1;
 }
 
+/**
+* Retourne le numéro zone correspondant à un rectangle en fonction de ses caractéristiques
+* dans le cas où le seule paramètre actif est la couleur
+* @param {int[]} color valeurs RGB de la couleur du rectangle
+*/
 function expectedZoneColor(color) {
     let area = height * width;
     let condFuchsia = (color[0] == 249 && color[1] == 132 && color[2] == 239);

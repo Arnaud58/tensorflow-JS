@@ -10,22 +10,8 @@ function predictFromUser() {
     let links = parseInt(select("#nblinks").value());
     console.log(col);
 
-    //nb de liens à rajouter plus tard
     predictAndDisplay(lgr, htr, col, links);
 }
-
-/**
- * Retourne vrai si on a affaire à un grand rectangle et false sinon
- * @param {int} l La largeur du rectangle
- * @param {int} h La hauteur du rectangle
- */
-function predictLH(l, h) {
-    if (h * l > areaLimit) {
-        return true;
-    }
-    return false;
-}
-
 
 
 /**
@@ -49,7 +35,7 @@ function checkResZone(resArray) {
 /**
  * Prédit les donnée d'apprentisage (all_squares_learn.squareLearn)
  * et les affiches sur la partie droite du canvas
- * donne un % de réussite des prédictions
+ * Donne un % de réussite des prédictions
  */
 function predictTheTests() {
     let cpt = 0;
@@ -116,6 +102,8 @@ function predictTheTests() {
  * Renvoie le résultat de la prédiction (voir  model.predict()) et si la prédiction est corrécte ou mauvaise
  * @param {int} lgr La largeur du rectangle
  * @param {int} htr La hauteur du rectangle
+ * @param {int[]} color tableau contenant les valeurs RGB de la couleur
+ * @param {int} link nombre de liens associé au rectangle
  * @returns {[array,boolean]} Le tableau contient un tableau qui représente le tensor de la prédiction, le boolen vaux Vrai si la prédiction est mauvaise et Faux sinon
  */
 function predictAndDisplay(lgr, htr, color, link) {
@@ -129,15 +117,15 @@ function predictAndDisplay(lgr, htr, color, link) {
     tensorRes = model.predict(tf.variable(generateTensorFor1Square((lgr - 10) / 390, (htr - 10) / 390, color, link)));
     // generateTensorFor1Square(lgr, htr)
 
-    // The result of the prediction in an Array
+    //On met le résultat de la prédiction dans un Array
     let res = Array.from(tensorRes.dataSync());
-    // Say if the prediction correspond to the reality
-    let isCorrect = false;
 
     // Rajoute le carré a prédire dans les carré à affiché
     all_squares_display.predictSquare.push({ l: lgr, h: htr });
 
-    // Lui donne une couleur en fonction de si il est bien placé où non
+    // Vérifie si la prédiction est correcte ou non et donne au rectangle une
+    //couleur en fonction de si il est bien placé où non (vert si correct, sinon rouge)
+    let isCorrect = false;
     let resZone = checkResZone(res);
     let eptZone = expectedZone(htr, lgr, color);
     all_squares_display["zonePredict"].push(resZone);
@@ -148,12 +136,15 @@ function predictAndDisplay(lgr, htr, color, link) {
         all_squares_display.colorPredict.push({ r: 255, g: 0, b: 0 });
         isCorrect = false;
     }
-    dataConfusion[resZone][eptZone] += 1;
+    dataConfusion[resZone][eptZone] += 1; //pour la matrice de confusion
 
     // Retourne le résultat
     return [res, isCorrect];
 }
 
+/**
+* Charge un fichier JSON et fait la prédiction sur les données qu'il contient
+*/
 function loadAndPredict(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
     console.log(contents);
@@ -161,7 +152,7 @@ function loadAndPredict(ev) {
     let correctTest = 0;
     resetPredict();
 
-    //AJOUT MATRICE CONFUSION
+    //MATRICE CONFUSION
     let rows = 1;
     let cols = 1;
     let value = [];

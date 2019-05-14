@@ -2,8 +2,8 @@ let xs, ys;
 let oldHistory;
 
 /**
- * Add a square to the learning array
- * and train the current model
+ * Ajoute un rectangle aux données d'apprentissage, et réalise l'apprentissage
+ * avec le modèle et les données actuelles
  */
 async function addSquare() {
     // Calcul une hauteur et une largeur random
@@ -14,7 +14,6 @@ async function addSquare() {
     all_squares_display["squareCoord"].push({ l: largeur, h: hauteur });
     all_squares_learn.squareLearn.push((largeur - 10) / 390);
     all_squares_learn.squareLearn.push((hauteur - 10) / 390);
-
 
 
     // Choisit une couleur random (pour affichage)
@@ -35,11 +34,14 @@ async function addSquare() {
 }
 
 /**
- * Train the current model with the given square
- * The return of the train funcion is stock in a promise
- * inside the var oldHistory
- * @param {int} l A normalise largeur between 0 and 1
- * @param {int} h
+ * Entraîne le modèle à partir du rectangle dont les caractéristiques sont
+ * données en paramètres.
+ * Le retour de la fonction d'entraînement est stocké dans une promesse dans la
+ * variable oldHistory
+ * @param {int} l la largeur normalisée (avec une valeur comprise entre 0 et 1)
+ * @param {int} h la hauteur normalisée
+ * @param {int[]} color tableau contenant les valeurs RBG de la couleur
+ * @param {int} link nombre de liens associé au rectangle
  */
 async function trainSquare(l, h, color, link) {
     let res;
@@ -67,10 +69,10 @@ async function trainSquare(l, h, color, link) {
 }
 
 /**
- * Train the current model with the squares
- * inside the all_squares_learn.squareLearn array
- * The return of the train funcion is stocked in a promise
- * inside the var oldHistory
+ * Entraîne le modèle avec tous les rectangles dont les données sont
+ * contenues dans all_squares_learn
+ * Le retour de la fonction d'entraînement est stocké dans une promesse dans la
+ * variable oldHistory
  */
 async function trainAllSquares() {
 
@@ -93,6 +95,10 @@ async function trainAllSquares() {
     await model.fit(xs, ys, config);
 };
 
+/**
+* Charge les données depuis un fichier JSON et entraîne le modèle à partir des
+* données ainsi récupérées
+*/
 async function loadAndTrain(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
     console.log(contents);
