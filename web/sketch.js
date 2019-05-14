@@ -26,7 +26,7 @@ const metrics = ['loss', 'val_loss'];
 
 /**
  * Sert à télécharger une variable sur son bureau
- * Ne fonction pas sous firefox
+ * Ne fonctionne pas sous firefox
  * @param {any} content La variable à télécharger
  * @param {String} fileName Le nom du fichier que l'on va télécharger
  * @param {String} contentType Le format sous lequel on veux le télécharger (JSON par défault)
