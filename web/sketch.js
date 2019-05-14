@@ -1,8 +1,7 @@
-//let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
-//let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
-let all_squares_display = { squareCoord: [], pos: [], color: [], links: [], zone: [], predictSquare: [], posPredict: [], zonePredict: [], colorPredict: [] };
-let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
+
+let all_squares_display = { squareCoord: [], color: [], links: [], zone: [], predictSquare: [], zonePredict: [], colorPredict: [] };
+let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
 let zones;
 let nbZones = 2;
@@ -54,26 +53,22 @@ function download(content, fileName, contentType = "application/json") {
 function reset() {
     createNeuralNetwork();
 
-    //all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], colorPredict: [] };
-    //all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [] };
 
-    let all_squares_display = { squareCoord: [], pos: [], color: [], predictSquare: [], posPredict: [], zonePredict: [] };
-    let all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
+    let all_squares_display = { squareCoord: [],  color: [], predictSquare: [], zonePredict: [] };
+    let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
     textToUser("Nouveau réseau créé !");
 }
 
 function resetPredict() {
     all_squares_display["predictSquare"] = [];
-    all_squares_display["posPredict"] = [];
     all_squares_display["colorPredict"] = [];
     all_squares_display["zonePredict"] = [];
 }
 
 function resetTrain() {
-    all_squares_learn = { squareLearn: [], posLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
+    all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
     all_squares_display.squareCoord = [];
-    all_squares_display.pos = [];
     all_squares_display.color = [];
     all_squares_display.zone = [];
 }
@@ -96,22 +91,8 @@ function textToUser(msg) {
  * @param {int} h
  */
 function addToDisplayLearn(l, h, color, nblinks) {
-    // console.log(color)
     all_squares_display["squareCoord"].push({ l: l, h: h });
-
-    // Si grand rectangle, va en haut, sinon va en bas
-    /*
-    if (predictLH(h, l)) {
-        all_squares_display["pos"].push("Haut");
-    } else {
-        all_squares_display["pos"].push("Bas");
-    }
-    */
     all_squares_display["zone"].push(expectedZone(h, l, color, nblinks));
-
-
-    // Lui choisit une couleur random (pour affichage)
-    //let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
 }
@@ -307,16 +288,9 @@ function setup() {
     button.mousePressed(saveModel);
 
 
-    /*
-    button = select("#loadModel");
-    button.mousePressed(loadModel);
-    */
 
     button = select("#saveLearn");
     button.mousePressed(function() { download(all_squares_learn, "training.json"); });
-
-
-
 
 
 
@@ -365,13 +339,6 @@ function draw() {
     const canvasWidth = 1300;
     const gapPosition = 600;
 
-    /*
-    const xZones = 3;
-    const yZones = 2;
-    */
-    //nbZones = setNbZones();
-    //setNbZonesXY();
-
     // Draw le contours des 2 rectangles
     noFill();
     strokeWeight(4);
@@ -385,7 +352,6 @@ function draw() {
     rect(gapPosition, 0, 100, 800);
 
     zones = sliceInZones(canvasHeight, gapPosition, xZones, yZones);
-    //console.log(zones);
 
     //Trace les délimitations de zones
     //Côté apprentissage
@@ -427,13 +393,8 @@ function draw() {
         xGap = 700 + (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
-        /*
-        if (all_squares_display.posPredict[i] == "Bas") {
-            yGap += 400;
-        }
-        */
+
         let predictSquareZone = zones[all_squares_display["zonePredict"][i]];
-        //console.log(all_squares_display["zonePredict"][i]);
         fill(all_squares_display.colorPredict[i].r, all_squares_display.colorPredict[i].g, all_squares_display.colorPredict[i].b);
         rect( /*xGap+*/ 700 + predictSquareZone[0], /*yGap+*/ predictSquareZone[1], all_squares_display.predictSquare[i].l / 2, all_squares_display.predictSquare[i].h / 2);
     }

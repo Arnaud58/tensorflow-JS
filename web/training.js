@@ -15,15 +15,9 @@ async function addSquare() {
     all_squares_learn.squareLearn.push((largeur - 10) / 390);
     all_squares_learn.squareLearn.push((hauteur - 10) / 390);
 
-    // Si grand rectangle, va en haut, sinon va en bas
-    if (predictLH(hauteur, largeur)) {
-        all_squares_display["pos"].push("Haut");
-        all_squares_learn["posLearn"].push([1, 0]);
-    } else {
-        all_squares_display["pos"].push("Bas");
-        all_squares_learn["posLearn"].push([0, 1]);
-    }
-    // Lui choisis une couleur random (pour affichage)
+
+
+    // Choisit une couleur random (pour affichage)
     let color = chooseColor();
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
@@ -49,18 +43,10 @@ async function addSquare() {
  */
 async function trainSquare(l, h, color, link) {
     let res;
-    /*
-    if (predictLH(l, h)) {
-        res = [1, 0];
-    } else {
-        res = [0, 1];
-    }
-    */
+
     let zoneExpected = expectedZone(h, l, color);
     let vectorZoneExpected = vectorFromExpectedZone(zoneExpected);
 
-
-    // xs = tf.tensor2d([l, h], [1, 2]);
 
     xs = generateTensorFor1Square(l, h, color, link);
     ys = tf.tensor2d(res, [1, nbZones]);
@@ -87,11 +73,10 @@ async function trainSquare(l, h, color, link) {
  * inside the var oldHistory
  */
 async function trainAllSquares() {
-    // xs = tf.tensor2d(all_squares_learn.squareLearn, [all_squares_learn.posLearn.length, 2]);
 
     xs = generateTensorForAllSquare();
     ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.zoneLearn.length, nbZones]); //nbZones = taille du vecteur en sortie
-    //ys = tf.tensor2d(all_squares_learn.posLearn, [all_squares_learn.posLearn.length, 2]);
+
 
     let config = {
         epochs: inputNBrepetition,
@@ -117,17 +102,16 @@ async function loadAndTrain(ev) {
     textToUser("Train the data ! ");
     let trainSize = contents.zoneLearn.length;
 
-    all_squares_learn = { squareLearn: contents.squareLearn, posLearn: contents.posLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn }
+    all_squares_learn = { squareLearn: contents.squareLearn, linksLearn: contents.linksLearn, colorLearn: contents.colorLearn, zoneLearn: contents.zoneLearn }
 
     for (i = 0; i < inputNBrepetition; i++) {
         for (j = 1; j < trainSize; j++) {
             subSquare = contents.squareLearn.splice(0, j * 2);
-            subPos = contents.posLearn.splice(0, j);
             subLinks = contents.linksLearn.splice(0, j);
             subColor = contents.colorLearn.splice(0, j);
             subZones = contents.zoneLearn.splice(0, j);
 
-            all_squares_learn = { squareLearn: subSquare, posLearn: subPos, linksLearn: subLinks, colorLearn: subColor, zoneLearn: subZones };
+            all_squares_learn = { squareLearn: subSquare, linksLearn: subLinks, colorLearn: subColor, zoneLearn: subZones };
 
             // Add to the display screen
             addToDisplayLearn(subSquare[(j - 1) * 2] * 390 + 10, subSquare[(j - 1) * 2 + 1] * 390 + 10, subColor[j - 1], subLinks[j-1]);
@@ -140,7 +124,6 @@ async function loadAndTrain(ev) {
             document.querySelector('#progress2').innerHTML = percent.toFixed(2) + " %";
 
             contents.squareLearn = subSquare.concat(contents.squareLearn);
-            contents.posLearn = subPos.concat(contents.posLearn);
             contents.linksLearn = subLinks.concat(contents.linksLearn);
             contents.colorLearn = subColor.concat(contents.colorLearn);
             contents.zoneLearn = subZones.concat(contents.zoneLearn);

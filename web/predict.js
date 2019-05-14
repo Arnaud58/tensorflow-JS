@@ -119,17 +119,13 @@ function predictTheTests() {
  * @returns {[array,boolean]} Le tableau contient un tableau qui représente le tensor de la prédiction, le boolen vaux Vrai si la prédiction est mauvaise et Faux sinon
  */
 function predictAndDisplay(lgr, htr, color, link) {
-    //console.log(color);
     // Si la hauteur et la largeur n'es pas bonne, ne rien faire et alerter
     if (lgr > 400 || htr > 400 || lgr < 10 || htr < 10) {
         console.error("Largeur et hauteur doivent être entre 10 et 400");
         return;
     }
 
-    // Predict en donnant la largeur et la hauteur normalisé
-    // tensorRes = model.predict(tf.variable(tf.tensor2d([
-    //     [(lgr - 10) / 390, (htr - 10) / 390]
-    // ], [1, 2])));
+    // Predict en donnant les valeurs normalisées
     tensorRes = model.predict(tf.variable(generateTensorFor1Square((lgr - 10) / 390, (htr - 10) / 390, color, link)));
     // generateTensorFor1Square(lgr, htr)
 
@@ -154,20 +150,16 @@ function predictAndDisplay(lgr, htr, color, link) {
     }
     dataConfusion[resZone][eptZone] += 1;
 
-    // Log et retourne le résultat
-    //tensorRes.print();
-    //console.log(isCorrect);
+    // Retourne le résultat
     return [res, isCorrect];
 }
 
 function loadAndPredict(ev) {
-    //A MODIFIER POUR PRENDRE EN COMPTE LES ZONES ET LES COULEURS
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
     console.log(contents);
     let cpt = 0;
     let correctTest = 0;
     resetPredict();
-    //console.log(contents);
 
     //AJOUT MATRICE CONFUSION
     let rows = 1;

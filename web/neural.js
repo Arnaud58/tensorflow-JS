@@ -85,7 +85,6 @@ function createNeuralNetwork() {
     getNetworksParam();
 
     model = tf.sequential();
-    //repetition
 
     //première couche traîtée à part car il faut rajouter l'inputShape
     let firstHiddenLayer = tf.layers.dense({
@@ -103,7 +102,6 @@ function createNeuralNetwork() {
     }
     ///couche de sortie
     let outputLayer = tf.layers.dense({
-        //units: 2,
         units: nbZones, //en sortie, doit choisir l'une des zones de classification
         activation: 'softmax'
     });
