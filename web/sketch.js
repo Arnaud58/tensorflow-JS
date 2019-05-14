@@ -6,9 +6,7 @@ let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneL
 let zones;
 let nbZones = 2;
 
-//nb de zones selon l'axe horizontal ou vertical
-let xZones;
-let yZones;
+
 
 let jsonUpload;
 let weightsUpload;
@@ -97,135 +95,12 @@ function addToDisplayLearn(l, h, color, nblinks) {
 
 }
 
-/**
- * Returns the number of necessary zones, based on which parameters are activated
- */
-function setNbZones() {
-    if (scaleIsActive && !colorIsActive && !linksIsActive) return 2;
-    else if (!scaleIsActive && colorIsActive && !linksIsActive) return 3;
-    else if (scaleIsActive && colorIsActive && !linksIsActive) return 6;
-    else if (!scaleIsActive && !colorIsActive && linksIsActive) return 2;
-    else if (scaleIsActive && !colorIsActive && linksIsActive) return 4;
-    else if (!scaleIsActive && colorIsActive && linksIsActive) return 6;
-    else if (scaleIsActive && colorIsActive && linksIsActive) return 6;
-}
 
 
-function setNbZonesXY() {
-    if (scaleIsActive && !colorIsActive && !linksIsActive) {
-        xZones = 1;
-        yZones = 2;
-    } else if (!scaleIsActive && colorIsActive && !linksIsActive) {
-        xZones = 3;
-        yZones = 1;
-    } else if (scaleIsActive && colorIsActive && !linksIsActive) {
-        xZones = 3;
-        yZones = 2;
-    } else if (!scaleIsActive && !colorIsActive && linksIsActive) {
-        xZones = 1;
-        yZones = 2;
-    } else if (scaleIsActive && !colorIsActive && linksIsActive) {
-        xZones = 2;
-        yZones = 2;
-    } else if (!scaleIsActive && colorIsActive && linksIsActive) {
-        xZones = 3;
-        yZones = 2;
-    }else if (scaleIsActive && colorIsActive && linksIsActive) {
-        xZones = 3;
-        yZones = 2;
-    }
-
-}
-
-/*
-Pour pouvoir classifier les rectangles selon leur couleur et leur taille, on découpe la zone
-de placement en plusieurs zones, chaque zone correspondant à des caractéristiques particulières.
-Pour l'instant, voici les découpage choisis, arbitrairement :
-
-TAILLE :
-*-------*
-|   0   |
-*-------*
-|   1   |
-*-------*
-0 : Grand rectangle
-1 : Petit rectangle
-
-COULEUR :
-*-------*-------*-------*
-|   0   |   1   |   2   |
-*-------*-------*-------*
-0 : rose
-1 : jaune et orange
-2 : bleu et vert
-
-COULEUR + TAILLE :
-*-------*-------*-------*
-|   0   |   2   |   4   |
-| (0,0) | (1,0) | (2,0) |
-*-------*-------*-------*
-|   1   |   3   |   5   |
-| (0,1) | (1,1) | (2,1) |
-*-------*-------*-------*
-(x,0) : Grand rectangle
-(x,1) : Petit rectangle
-(0,x) : rose
-(1,x) : jaune et orange
-(2,x) : bleu et vert
-Exemple : un petit rectangle rose sera dans la zone 1, un grand rectangle jaune sera dans la zone 2.
 
 
-TAILLE + NB LIENS
-*-------*-------*
-|   0   |   2   |
-| (0,0) | (1,0) |
-*-------*-------*
-|   1   |   3   |
-| (0,1) | (1,1) |
-*-------*-------*
-(x,0) : Bcp de liens
-(x,1) : Peu de liens
-(0,x) : Grands rectangles
-(1,x) : Petits rectangles
 
 
-COULEUR + NB LIENS
-*-------*-------*-------*
-|   0   |   2   |   4   |
-| (0,0) | (1,0) | (2,0) |
-*-------*-------*-------*
-|   1   |   3   |   5   |
-| (0,1) | (1,1) | (2,1) |
-*-------*-------*-------*
-(x,0) : Bcp de liens
-(x,1) : Peu de liens
-(0,x) : rose
-(1,x) : jaune et orange
-(2,x) : bleu et vert
-
-TAILLE + COULEUR + NB DE LIENS
-Dans ce cas, le nb de liens devient prioritaire par rapport et la taille ne compte plus
-Même classification que pour COULEUR + LIENS
-
-*/
-
-/**
- * Découpe l'aire de travail en plusieurs zones pour permettre la classification
- * @param {int} height hauteur de la zone à découper
- * @param {int} width largeur de la zone à découper
- * @param {xZones} nombre de zones voulue sur l'axe horizontal
- * @param {yZones} nombre de zones voulue sur l'axe vertical
- */
-function sliceInZones(height, width, xZones, yZones) {
-    let zones = []
-    let k = 0;
-    for (let i = 0; i < xZones; i++) {
-        for (let j = 0; j < yZones; j++) {
-            zones[k++] = [i * width / xZones, j * height / yZones];
-        }
-    }
-    return zones;
-}
 
 function setup() {
     // 2 rectangle de 600*800 avec un gap de 100 entre les 2
