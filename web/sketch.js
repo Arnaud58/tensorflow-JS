@@ -217,7 +217,10 @@ function draw() {
 }
 
 
-
+/**
+ * Fonction appelé quand la souri clique sur le canvas
+ * Cherche à savoir si il y a un rectangle en dessous et le sélectionne
+ */
 function mousePressed() {
     for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
         if (mouseX > all_squares_display.pos[i].x &&
@@ -233,6 +236,9 @@ function mousePressed() {
     selectedRec = null;
 }
 
+/**
+ * Fonction qui va déplacé un rectangle séléctionné le long du mouvement de la sourie 
+ */
 function mouseDragged() {
     if (selectedRec == null) {
         return false;
@@ -241,4 +247,13 @@ function mouseDragged() {
     all_squares_display.pos[selectedRec].x = mouseX;
     all_squares_display.pos[selectedRec].y = mouseY;
 
+}
+
+function mouseReleased() {
+    if (selectedRec == null) {
+        return false;
+    }
+
+    console.log("Release");
+    await trainAllSquares();
 }

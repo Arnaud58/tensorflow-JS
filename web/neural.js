@@ -12,9 +12,9 @@ let modelStructure = { nbLayers: 1, nbNeurons: [1], activationFun: ["elu"] };
 let model;
 
 /**
-* Fonction déclenchée lorsque l'on demande l'ajout d'une couche supplémentaire.
-* Ajoute une couche paramétrable sur l'interface graphique.
-*/
+ * Fonction déclenchée lorsque l'on demande l'ajout d'une couche supplémentaire.
+ * Ajoute une couche paramétrable sur l'interface graphique.
+ */
 function addLayer() {
 
     modelStructure.nbLayers++;
@@ -60,10 +60,10 @@ function addLayer() {
 }
 
 /**
-* Fonction déclenchée lorsque l'on demande la suppression d'une couche.
-* Supprime la dernière couche paramétrable dans le tableau de l'interface
-*  graphique de l'onglet Neural.
-*/
+ * Fonction déclenchée lorsque l'on demande la suppression d'une couche.
+ * Supprime la dernière couche paramétrable dans le tableau de l'interface
+ *  graphique de l'onglet Neural.
+ */
 function removeLayer() {
     let structure = document.getElementById("struct").querySelector("tbody");
     let idToRemove = "layer" + modelStructure.nbLayers; //on récupère l'id de la dernière couche
@@ -76,8 +76,8 @@ function removeLayer() {
 }
 
 /**
-* Récupère les paramètres de configuration choisis par l'utilisateur
-*/
+ * Récupère les paramètres de configuration choisis par l'utilisateur
+ */
 function getNetworksParam() {
     inputNBrepetition = parseInt(document.getElementById("repetition").value);
     learningRate = parseFloat(document.getElementById("learningrate").value);
@@ -115,7 +115,7 @@ function createNeuralNetwork() {
     }
     ///couche de sortie
     let outputLayer = tf.layers.dense({
-        units: nbZones, //en sortie, doit choisir l'une des zones de classification
+        units: 2, //en sortie, doit choisir l'une des zones de classification
         activation: 'softmax'
     });
     model.add(outputLayer);
@@ -128,9 +128,9 @@ function createNeuralNetwork() {
 }
 
 /**
-* Sauvegarde le modèle et le télécharge dans deux fichiers nommés
-* "my-model-1.json" et "my-model-1.weights.bin"
-*/
+ * Sauvegarde le modèle et le télécharge dans deux fichiers nommés
+ * "my-model-1.json" et "my-model-1.weights.bin"
+ */
 async function saveModel() {
     saveResult = await model.save('downloads://my-model-1');
     console.log("Modèle sauvegardé");
@@ -138,9 +138,9 @@ async function saveModel() {
 }
 
 /**
-* Charge le modèle à partir des fichiers donnés.
-* Ces fichiers doivent correspondre aux mêmes types que ceux renvoyés par model.save 
-*/
+ * Charge le modèle à partir des fichiers donnés.
+ * Ces fichiers doivent correspondre aux mêmes types que ceux renvoyés par model.save 
+ */
 async function loadModelFromFiles() {
     model = await tf.loadModel(
         tf.io.browserFiles([jsonUpload.files[0], weightsUpload.files[0]]));
