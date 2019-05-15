@@ -170,13 +170,14 @@ function setup() {
 function addSquareCanvas() {
     let lgr = parseInt(select("#largeur").value());
     let htr = parseInt(select("#hauteur").value());
-    let nbl = parseInt(select("#nbLinks").value());
+    let nbl = parseInt(select("#nblinks").value());
     let col = allColors[parseInt(select("#couleur").value())];
     console.log(col);
 
     all_squares_display.squareCoord.push({ l: lgr, h: htr });
     all_squares_display.color.push({ r: col[0], g: col[1], b: col[2] });
     all_squares_display.pos.push({ x: 200, y: 200 });
+    all_squares_display.links.push(nbl);
 }
 
 /*
@@ -185,6 +186,7 @@ function addSquareCanvas() {
 function draw() {
     // Arrière plan
     background(255);
+    textSize(12);
 
     const canvasHeight = 800;
     const canvasWidth = 1300;
@@ -201,10 +203,13 @@ function draw() {
     strokeWeight(2);
     stroke('#222222');
 
+
     // Dessine chaque rectangle d'entrainement de all_squares_display
     for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
         fill(all_squares_display.color[i].r, all_squares_display.color[i].g, all_squares_display.color[i].b);
         rect(all_squares_display.pos[i].x, all_squares_display.pos[i].y, all_squares_display.squareCoord[i].l / 2, all_squares_display.squareCoord[i].h / 2);
+        fill(0, 0, 0);
+        text(all_squares_display.links[i], all_squares_display.pos[i].x + 5, all_squares_display.pos[i].y + 20);
     }
 
     strokeWeight(1);
