@@ -1,3 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sketch.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sketch.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+
 let all_squares_display = { squareCoord: [], color: [], links: [], zone: [], predictSquare: [], zonePredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
@@ -50,7 +80,7 @@ function reset() {
     createNeuralNetwork();
 
 
-    let all_squares_display = { squareCoord: [], color: [], predictSquare: [], zonePredict: [] };
+    let all_squares_display = { squareCoord: [],  color: [], predictSquare: [], zonePredict: [] };
     let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
     textToUser("Nouveau réseau créé !");
@@ -92,6 +122,12 @@ function addToDisplayLearn(l, h, color, nblinks) {
     all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
 
 }
+
+
+
+
+
+
 
 
 function setup() {
@@ -189,7 +225,7 @@ function setup() {
         loadModelFromFiles();
     });
 
-    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics, { width: 800, height: 400 });
+    callbacks = tfvis.show.fitCallbacks(document.getElementById("epoch"), metrics, { width: 800, height: 400});
     callbacks.onBatchEnd = null;
 
     createNeuralNetwork();
@@ -224,27 +260,27 @@ function draw() {
     //Côté apprentissage
     noFill();
     strokeWeight(1);
-    for (let i = 0; i < zones.length; i++) {
+    for (let i = 0; i &lt; zones.length; i++) {
         line(zones[i][0], 0, zones[i][0], canvasHeight); //lignes verticales
         line(0, zones[i][1], gapPosition, zones[i][1]); //lignes horizontales
     }
     //Côté prédictions
-    for (let i = 0; i < zones.length; i++) {
+    for (let i = 0; i &lt; zones.length; i++) {
         line(zones[i][0] + gapPosition + 100, 0, zones[i][0] + gapPosition + 100, canvasHeight); //lignes verticales
         line(gapPosition + 100, zones[i][1], canvasWidth, zones[i][1]); //lignes horizontales
     }
 
     // Dessine chaque rectangle d'entrainement de all_squares_display
-    for (i = 0; i < all_squares_display["squareCoord"].length; i++) {
+    for (i = 0; i &lt; all_squares_display["squareCoord"].length; i++) {
         xGap = (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
         let squareZone = zones[all_squares_display["zone"][i]];
 
-        if (all_squares_learn["linksLearn"][i] > links_max) {
+        if (all_squares_learn["linksLearn"][i]>links_max){
             stroke('rgb(0,255,0)');
             strokeWeight(4);
-        } else {
+        }else{
             stroke('black');
             strokeWeight(1);
         }
@@ -256,7 +292,7 @@ function draw() {
     strokeWeight(1);
     stroke('#222222');
     // Dessine les rectangles prédits
-    for (i = 0; i < all_squares_display.predictSquare.length; i++) {
+    for (i = 0; i &lt; all_squares_display.predictSquare.length; i++) {
         xGap = 700 + (i % 50) * 5;
         yGap = (int(i / 50) * 20) + 20;
 
@@ -271,3 +307,26 @@ function draw() {
         addSquare();
     }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addLayer">addLayer</a></li><li><a href="global.html#addSquare">addSquare</a></li><li><a href="global.html#addToDisplayLearn">addToDisplayLearn</a></li><li><a href="global.html#checkActiveParams">checkActiveParams</a></li><li><a href="global.html#checkResZone">checkResZone</a></li><li><a href="global.html#computeNbinputShape">computeNbinputShape</a></li><li><a href="global.html#download">download</a></li><li><a href="global.html#expectedZone">expectedZone</a></li><li><a href="global.html#expectedZoneColor">expectedZoneColor</a></li><li><a href="global.html#expectedZoneColorLinks">expectedZoneColorLinks</a></li><li><a href="global.html#expectedZoneLinks">expectedZoneLinks</a></li><li><a href="global.html#expectedZoneScale">expectedZoneScale</a></li><li><a href="global.html#expectedZoneScaleColor">expectedZoneScaleColor</a></li><li><a href="global.html#expectedZoneScaleLinks">expectedZoneScaleLinks</a></li><li><a href="global.html#generateTensorFor1Square">generateTensorFor1Square</a></li><li><a href="global.html#generateTensorForAllSquare">generateTensorForAllSquare</a></li><li><a href="global.html#getNetworksParam">getNetworksParam</a></li><li><a href="global.html#loadAndPredict">loadAndPredict</a></li><li><a href="global.html#loadAndTrain">loadAndTrain</a></li><li><a href="global.html#loadModelFromFiles">loadModelFromFiles</a></li><li><a href="global.html#predictAndDisplay">predictAndDisplay</a></li><li><a href="global.html#predictFromUser">predictFromUser</a></li><li><a href="global.html#predictTheTests">predictTheTests</a></li><li><a href="global.html#removeLayer">removeLayer</a></li><li><a href="global.html#saveModel">saveModel</a></li><li><a href="global.html#setNbZones">setNbZones</a></li><li><a href="global.html#setNbZonesXY">setNbZonesXY</a></li><li><a href="global.html#sliceInZones">sliceInZones</a></li><li><a href="global.html#textToUser">textToUser</a></li><li><a href="global.html#trainAllSquares">trainAllSquares</a></li><li><a href="global.html#trainSquare">trainSquare</a></li><li><a href="global.html#vectorFromExpectedZone">vectorFromExpectedZone</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Wed May 15 2019 11:08:15 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
