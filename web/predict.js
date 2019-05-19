@@ -38,6 +38,7 @@ function checkResZone(resArray) {
  * Donne un % de réussite des prédictions
  */
 function predictTheTests() {
+    console.warn("Prediction !")
     let cpt = 0;
     let correctTest = 0;
     let rows = 1;
@@ -74,27 +75,15 @@ function predictTheTests() {
     resetPredict();
 
     // Parcourt tous les carrés de la partie apprentissage et les prédit
-    for (i = 0; i < all_squares_learn.zoneLearn.length; i += 1) {
-        let res = predictAndDisplay(
-            all_squares_learn.squareLearn[i * 2] * 390 + 10,
-            all_squares_learn.squareLearn[i * 2 + 1] * 390 + 10,
-            all_squares_learn.colorLearn[i],
-            all_squares_learn.linksLearn[i]
+    for (i = 0; i < all_squares_display.squareCoord.length; i += 1) {
+        predictAndDisplay(
+            all_squares_display.squareCoord[i].l,
+            all_squares_display.squareCoord[i].h,
+            all_squares_display.color[i],
+            all_squares_display.links[i],
+            i
         );
-
-        if (res[1]) {
-            correctTest++;
-        }
-        cpt++;
     }
-
-    // Affiche le % de réussite
-    select("#percentSuccess").html(parseInt((correctTest / cpt) * 10000) / 100 + "%");
-    console.warn("Correct : " + parseInt((correctTest / cpt) * 10000) / 100 + "%");
-    textToUser("Réussite de : " + parseInt((correctTest / cpt) * 10000) / 100 + "%");
-
-    let finalData = { values: dataConfusion };
-    tfvis.render.confusionMatrix(document.getElementById("confusion"), finalData, { width: 400, height: 400 });
 }
 
 /**
@@ -104,9 +93,10 @@ function predictTheTests() {
  * @param {int} htr La hauteur du rectangle
  * @param {int[]} color tableau contenant les valeurs RGB de la couleur
  * @param {int} link nombre de liens associé au rectangle
+ * @param {int} index index du rectangle prédir dans all_squares_display (none ou -1 si ne vient pas de all_squares_display)
  * @returns {Array[]} Le tableau contient un tableau qui représente le tensor de la prédiction et un boolen, le boolen vaux Vrai si la prédiction est mauvaise et Faux sinon
  */
-function predictAndDisplay(lgr, htr, color, link) {
+function predictAndDisplay(lgr, htr, color, link, index) {
     // Si la hauteur et la largeur n'es pas bonne, ne rien faire et alerter
     if (lgr > 400 || htr > 400 || lgr < 10 || htr < 10) {
         console.error("Largeur et hauteur doivent être entre 10 et 400");
@@ -119,27 +109,12 @@ function predictAndDisplay(lgr, htr, color, link) {
 
     //On met le résultat de la prédiction dans un Array
     let res = Array.from(tensorRes.dataSync());
+    console.log(res, tensorRes);
 
-    // Rajoute le carré a prédire dans les carré à affiché
-    all_squares_display.predictSquare.push({ l: lgr, h: htr });
-
-    // Vérifie si la prédiction est correcte ou non et donne au rectangle une
-    //couleur en fonction de si il est bien placé où non (vert si correct, sinon rouge)
-    let isCorrect = false;
-    let resZone = checkResZone(res);
-    let eptZone = expectedZone(htr, lgr, color);
-    all_squares_display["zonePredict"].push(resZone);
-    if (resZone == eptZone) {
-        isCorrect = true;
-        all_squares_display.colorPredict.push({ r: 0, g: 255, b: 0 });
-    } else {
-        all_squares_display.colorPredict.push({ r: 255, g: 0, b: 0 });
-        isCorrect = false;
+    if (index !== null && index != -1) {
+        all_squares_display.pos[i].x = (res[0] * 390) + 10;
+        all_squares_display.pos[i].y = (res[1] * 390) + 10;
     }
-    dataConfusion[resZone][eptZone] += 1; //pour la matrice de confusion
-
-    // Retourne le résultat
-    return [res, isCorrect];
 }
 
 /**

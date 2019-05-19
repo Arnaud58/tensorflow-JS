@@ -255,5 +255,5 @@ function mouseReleased() {
     }
 
     console.log("Release");
-    await trainAllSquares();
+    trainAllSquares();
 }
