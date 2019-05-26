@@ -125,7 +125,8 @@ Affiche le graphe d'erreurs et la matrice de confusion
 
 ### Branche "interactive"
 
-/!\ A COMPLETER
+Dans cette branche, un onglet __Square__ a été ajouté où l'utilisateur peut créer des rectangles lui-même et ensuite les déplacer à sa guise sur le canvas. <br/>
+*Remarque :* Cette fois, le nombre de liens est affiché sur les rectangles (alors que dans la branche master, on avait préféré ne pas l'afficher et simplement colorer le contour du rectangle en vert lorsqu'il est "fortement lié" pour des soucis de visibilité lorsqu'on a beaucoup de rectangles qui s'empilent).
 
 
 ## Détails techniques

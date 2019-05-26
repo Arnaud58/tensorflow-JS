@@ -7,8 +7,6 @@ let learningRate;
 
 let modelStructure = { nbLayers: 1, nbNeurons: [1], activationFun: ["elu"] };
 
-//const learningRate = 0.01;
-
 let model;
 
 /**
@@ -139,7 +137,7 @@ async function saveModel() {
 
 /**
 * Charge le modèle à partir des fichiers donnés.
-* Ces fichiers doivent correspondre aux mêmes types que ceux renvoyés par model.save 
+* Ces fichiers doivent correspondre aux mêmes types que ceux renvoyés par model.save
 */
 async function loadModelFromFiles() {
     model = await tf.loadModel(
