@@ -21,6 +21,7 @@ let callbacks;
 const areaLimit = 30000;
 //nb de liens à partir duquel une classe est considérée comme étant fortement liée
 const links_max = 10;
+
 const metrics = ['loss', 'val_loss'];
 
 /**

@@ -87,7 +87,6 @@ model.compile({
 
 
 
-
 ## Description de l'interface réalisée
 
 ### Branche "master"
@@ -134,7 +133,8 @@ Affiche le graphe d'erreurs et la matrice de confusion
 ### Classification
 
 Comme expliqué dans le rapport, nous avons dû pour des raisons pratiques fixer nous même la façon dont sont classifiés les rectangles selon les paramètres pris en compte. <br/>
-Ci-dessous sont décrits les types de classifications choisis pour chaque combinaison de paramètres.
+Ci-dessous sont décrits les types de classifications choisis pour chaque combinaison de paramètres. <br/>
+Par défaut, un rectangle est considéré comme "grand" si son aire dépasse 30000 pixels, et il est considéré comme "fortement lié" si son nombre de liens dépasse 10. Ces valeurs peuvent être modifiées via les variables *areaLimit* et *links_max* dans sketch.js
 
 ```
 TAILLE :

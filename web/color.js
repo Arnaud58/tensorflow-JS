@@ -18,6 +18,9 @@ const allColors = [ BANANA_MANIA,DANDELION,
 
 const nbColor = allColors.length;
 
+/**
+* Retourne une couleur aléatoire parmi celles définies
+*/
 function chooseColor() {
     let r = int(random(0, nbColor));
     return allColors[r];
