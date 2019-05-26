@@ -1,9 +1,10 @@
+
+
 let all_squares_display = { squareCoord: [], color: [], links: [], zone: [], predictSquare: [], zonePredict: [], colorPredict: [] };
 let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
 let zones;
-let nbZones = 2;
-
+let nbZones = 2; //Par défaut, deux zones de classification
 
 
 let jsonUpload;
@@ -49,7 +50,6 @@ function download(content, fileName, contentType = "application/json") {
 function reset() {
     createNeuralNetwork();
 
-
     let all_squares_display = { squareCoord: [], color: [], predictSquare: [], zonePredict: [] };
     let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
 
@@ -93,7 +93,11 @@ function addToDisplayLearn(l, h, color, nblinks) {
 
 }
 
-
+/**
+* Phase d'initialisation
+* Création des event listeners pour la récupération des données entrées par
+* l'utilsateur et appelle createNeuralNetwork()
+*/
 function setup() {
     // 2 rectangle de 600*800 avec un gap de 100 entre les 2
     _snackbarContainer = document.querySelector('#demo-snackbar');
@@ -195,7 +199,7 @@ function setup() {
     createNeuralNetwork();
 }
 
-/*
+/**
  * Fonction appelée par p5 à chaque frame
  */
 function draw() {
