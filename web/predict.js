@@ -127,7 +127,7 @@ function predictAndDisplay(lgr, htr, color, link) {
     //couleur en fonction de si il est bien placé où non (vert si correct, sinon rouge)
     let isCorrect = false;
     let resZone = checkResZone(res);
-    let eptZone = expectedZone(htr, lgr, color);
+    let eptZone = expectedZone(htr, lgr, color, link);
     all_squares_display["zonePredict"].push(resZone);
     if (resZone == eptZone) {
         isCorrect = true;
