@@ -1,5 +1,4 @@
-let all_squares_display = { squareCoord: [], pos: [], color: [], links: [], zone: [], predictSquare: [], zonePredict: [], colorPredict: [] };
-let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
+let all_squares_display = { squareCoord: [], pos: [], color: [], links: [], zone: [], predictSquare: [], zonePredict: [], colorPredict: [], posArray: [] };
 
 let zones;
 let nbZones = 2;
@@ -51,9 +50,7 @@ function download(content, fileName, contentType = "application/json") {
 function reset() {
     createNeuralNetwork();
 
-
-    let all_squares_display = { squareCoord: [], color: [], predictSquare: [], zonePredict: [] };
-    let all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
+    let all_squares_display = { squareCoord: [], color: [], predictSquare: [], zonePredict: [], posArray: [] };
 
     textToUser("Nouveau réseau créé !");
 }
@@ -65,11 +62,11 @@ function resetPredict() {
 }
 
 function resetTrain() {
-    all_squares_learn = { squareLearn: [], linksLearn: [], colorLearn: [], zoneLearn: [] };
     all_squares_display.squareCoord = [];
     all_squares_display.color = [];
     all_squares_display.zone = [];
     all_squares_display.pos = [];
+    all_squares_display.posArray = [];
 }
 
 /**
@@ -183,6 +180,8 @@ function addSquareCanvas() {
     all_squares_display.squareCoord.push({ l: lgr, h: htr });
     all_squares_display.color.push({ r: col[0], g: col[1], b: col[2] });
     all_squares_display.pos.push({ x: 200, y: 200 });
+    all_squares_display.posArray.push(200);
+    all_squares_display.posArray.push(200);
     all_squares_display.links.push(nbl);
 }
 
@@ -208,6 +207,8 @@ function addRandomSquares() {
         all_squares_display.squareCoord.push({ l: lgr, h: htr });
         all_squares_display.color.push({ r: newCol[0], g: newCol[1], b: newCol[2] });
         all_squares_display.pos.push({ x: x, y: y });
+        all_squares_display.posArray.push(x);
+        all_squares_display.posArray.push(y);
         all_squares_display.links.push(links);
 
         x += (lgr / 2);

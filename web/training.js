@@ -1,37 +1,6 @@
 let xs, ys;
 let oldHistory;
 
-/**
- * Ajoute un rectangle aux données d'apprentissage, et réalise l'apprentissage
- * avec le modèle et les données actuelles
- */
-async function addSquare() {
-    // Calcul une hauteur et une largeur random
-    largeur = int(random(10, 400));
-    hauteur = int(random(10, 400));
-
-    // La met dans le tableau all_squares_display
-    all_squares_display["squareCoord"].push({ l: largeur, h: hauteur });
-    all_squares_learn.squareLearn.push((largeur - 10) / 390);
-    all_squares_learn.squareLearn.push((hauteur - 10) / 390);
-
-
-    // Choisit une couleur random (pour affichage)
-    let color = chooseColor();
-    all_squares_display["color"].push({ r: color[0], g: color[1], b: color[2] });
-
-    let nblinks = int(random(0, 20));
-    all_squares_learn.linksLearn.push(nblinks);
-    all_squares_learn.colorLearn.push(color);
-
-    //détermine la zone où il doit être placé
-    let expectZone = expectedZone(hauteur, largeur, color, nblinks);
-    all_squares_display.zone.push(expectZone);
-    all_squares_learn.zoneLearn.push(vectorFromExpectedZone(expectZone));
-
-    select("#nbRect").html("Nombre de rectangles générés : " + all_squares_learn.squareLearn.length / 2);
-    await trainAllSquares();
-}
 
 /**
  * Entraîne le modèle à partir du rectangle dont les caractéristiques sont
@@ -64,7 +33,7 @@ async function trainSquare(l, h, color, link) {
         callbacks: callbacks
     };
 
-    console.warn("Training !", config);
+    console.warn("Training !");
     await model.fit(xs, ys, config);
 }
 
@@ -77,7 +46,7 @@ async function trainSquare(l, h, color, link) {
 async function trainAllSquares() {
 
     xs = generateTensorForAllSquare();
-    ys = tf.tensor2d(all_squares_learn.zoneLearn, [all_squares_learn.zoneLearn.length, nbZones]); //nbZones = taille du vecteur en sortie
+    ys = tf.tensor2d(all_squares_display.posArray, [all_squares_display.posArray.length / 2, 2])
 
 
     let config = {
