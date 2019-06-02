@@ -64,7 +64,7 @@ async function trainSquare(l, h, color, link) {
         callbacks: callbacks
     };
 
-    console.warn("Training !");
+    console.warn("Training !", config);
     await model.fit(xs, ys, config);
 }
 
@@ -91,14 +91,14 @@ async function trainAllSquares() {
         callbacks: callbacks
     };
 
-    console.warn("Training !");
+    console.warn("Training !", config);
     await model.fit(xs, ys, config);
 };
 
 /**
-* Charge les données depuis un fichier JSON et entraîne le modèle à partir des
-* données ainsi récupérées
-*/
+ * Charge les données depuis un fichier JSON et entraîne le modèle à partir des
+ * données ainsi récupérées
+ */
 async function loadAndTrain(ev) {
     let contents = JSON.parse(decodeURIComponent(ev.target.result));
     console.log(contents);
@@ -120,7 +120,7 @@ async function loadAndTrain(ev) {
             all_squares_learn = { squareLearn: subSquare, linksLearn: subLinks, colorLearn: subColor, zoneLearn: subZones };
 
             // Add to the display screen
-            addToDisplayLearn(subSquare[(j - 1) * 2] * 390 + 10, subSquare[(j - 1) * 2 + 1] * 390 + 10, subColor[j - 1], subLinks[j-1]);
+            addToDisplayLearn(subSquare[(j - 1) * 2] * 390 + 10, subSquare[(j - 1) * 2 + 1] * 390 + 10, subColor[j - 1], subLinks[j - 1]);
             // Train the data
             await trainAllSquares();
 

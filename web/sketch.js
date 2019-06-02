@@ -293,6 +293,5 @@ function mouseReleased() {
         return false;
     }
 
-    console.log("Release");
     trainAllSquares();
 }
