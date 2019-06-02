@@ -202,6 +202,22 @@
                         <p id="percentSuccess"></p>
                     </div>
                 </div>
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--2-col">
+                        <button class="mdl-button mdl-js-button mdl-button--raised" id="addRandomSquares">Add X randoms squares</button>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="10" id="nbSquareRandom">
+                        <label class="mdl-textfield__label" for="nblinks">Nb de rectangles à ajouté</label>
+                        <span class="mdl-textfield__error">Input is not a number!</span>
+                    </div>
+                </div>
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--2-col">
+                        <button class="mdl-button mdl-js-button mdl-button--raised" id="cleanUP">Remove all Square</button>
+                    </div>
+                    <p>Note : Ce bouton enlève juste tous les rectangles du canvas mais ne réinit pas le réseau de neurone</p>
+                </div>
             </div>
             <div class="mdl-tabs__panel" id="saveloadmodel-panel">
                 <!-- <div class="mdl-grid"> -->

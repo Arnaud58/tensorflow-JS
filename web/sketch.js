@@ -69,6 +69,7 @@ function resetTrain() {
     all_squares_display.squareCoord = [];
     all_squares_display.color = [];
     all_squares_display.zone = [];
+    all_squares_display.pos = [];
 }
 
 /**
@@ -118,6 +119,11 @@ function setup() {
     //affiche nombre de couches
     select("#nbLayers").html("Number of Hidden Layers :      " + modelStructure.nbLayers);
 
+    button = select("#addRandomSquares");
+    button.mousePressed(addRandomSquares);
+
+    button = select("#cleanUP");
+    button.mousePressed(cleanUP);
 
     button = select("#addLayer");
     button.mousePressed(addLayer);
@@ -178,6 +184,39 @@ function addSquareCanvas() {
     all_squares_display.color.push({ r: col[0], g: col[1], b: col[2] });
     all_squares_display.pos.push({ x: 200, y: 200 });
     all_squares_display.links.push(nbl);
+}
+
+function cleanUP() {
+    resetTrain();
+    resetPredict();
+}
+
+/*
+ *
+ */
+function addRandomSquares() {
+    let nbS = select("#nbSquareRandom").value();
+    let x = 100;
+    let y = 100;
+
+    for (i = 0; i < nbS; i++) {
+        let newCol = chooseColor();
+        let links = int(random(0, 20));
+        let lgr = int(random(20, 400));
+        let htr = int(random(20, 400));
+
+        all_squares_display.squareCoord.push({ l: lgr, h: htr });
+        all_squares_display.color.push({ r: newCol[0], g: newCol[1], b: newCol[2] });
+        all_squares_display.pos.push({ x: x, y: y });
+        all_squares_display.links.push(links);
+
+        x += (lgr / 2);
+        if (x >= 1200) {
+            x = 100;
+            y += 100;
+        }
+        if (y >= 800) { return; }
+    }
 }
 
 /*
