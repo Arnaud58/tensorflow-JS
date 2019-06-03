@@ -128,6 +128,10 @@ Affiche le graphe d'erreurs et la matrice de confusion
 Dans cette branche, un onglet __Square__ a été ajouté où l'utilisateur peut créer des rectangles lui-même et ensuite les déplacer à sa guise sur le canvas. <br/>
 *Remarque :* Cette fois, le nombre de liens est affiché sur les rectangles (alors que dans la branche master, on avait préféré ne pas l'afficher et simplement colorer le contour du rectangle en vert lorsqu'il est "fortement lié" pour des soucis de visibilité lorsqu'on a beaucoup de rectangles qui s'empilent).
 
+- *Add*. Ajoute sur le canvas un rectangle dont les caractéristiques sont choisies par l'utilisateur
+- *Replace all*. Réinitialise le placement des rectangles
+- *Add X randoms*. Ajoute X rectangles avec des caractéristiques aléatoires, X étant un nombre entré par l'utilisateur
+- *Remove all square*. Supprime tous les rectangles (mais ne réinitialise pas le réseau neuronal)
 
 ## Détails techniques
 
@@ -627,8 +631,8 @@ Ajoute un rectangle sur la partie gauche du canvas
 
 | Param | Type |
 | --- | --- |
-| l | <code>int</code> | 
-| h | <code>int</code> | 
+| l | <code>int</code> |
+| h | <code>int</code> |
 
 ## training.js
 
